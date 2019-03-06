@@ -1,0 +1,93 @@
+<!--title-->
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel wd-panel dark-panel">
+      <h3>SLA Messages</h3>
+    </div>
+  </div>
+</div>
+
+<div class="example-header">
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+  </mat-form-field>
+</div>
+
+<div class="mat-elevation-z8">
+
+  <table mat-table [dataSource]="dataSource" matSort>
+
+    <!-- Unique Request ID Column -->
+    <ng-container matColumnDef="unique_request_id">
+      <th *matHeaderCellDef mat-sort-header> Unique Request ID </th>
+      <td *matCellDef="let row"> {{row.unique_request_id}} </td>
+    </ng-container>
+
+    <!-- Channel Column -->
+    <ng-container matColumnDef="channel">
+      <th *matHeaderCellDef mat-sort-header> Channel </th>
+      <td *matCellDef="let row"> {{row.channel}} </td>
+    </ng-container>
+
+    <!-- Client IP Column -->
+    <ng-container matColumnDef="client_ip">
+      <th *matHeaderCellDef mat-sort-header> Client IP </th>
+      <td *matCellDef="let row"> {{row.client_ip}} </td>
+    </ng-container>
+
+    <!-- Comm.Ver Column -->
+    <ng-container matColumnDef="comm_ver">
+      <th *matHeaderCellDef mat-sort-header> Comm.Ver </th>
+      <td *matCellDef="let row"> {{row.comm_ver}} </td>
+    </ng-container>
+
+    <!-- Response Time Column -->
+    <ng-container matColumnDef="responseTime">
+      <th *matHeaderCellDef mat-sort-header> Response Time </th>
+      <td *matCellDef="let row"> {{row.responseTime}} </td>
+    </ng-container>
+
+    <!-- Date Column -->
+    <ng-container matColumnDef="date">
+      <th *matHeaderCellDef mat-sort-header> Date </th>
+      <td *matCellDef="let row" > {{row.date}} </td>
+    </ng-container>
+
+    <!-- Login ID Column -->
+    <ng-container matColumnDef="login_id">
+      <th *matHeaderCellDef mat-sort-header> Login ID </th>
+      <td *matCellDef="let row"> {{row.login_id}} </td>
+    </ng-container>
+
+    <!-- Message Column -->
+    <ng-container matColumnDef="message">
+      <th *matHeaderCellDef mat-sort-header> Message </th>
+      <td *matCellDef="let row"> {{row.message}} </td>
+    </ng-container>
+
+    <!-- Message Type  Column -->
+    <ng-container matColumnDef="message_type">
+      <th *matHeaderCellDef mat-sort-header> Message Type </th>
+      <td *matCellDef="let row" > {{row.message_type}} </td>
+    </ng-container>
+
+    <!-- Session ID Column -->
+    <ng-container matColumnDef="session_id">
+      <th *matHeaderCellDef mat-sort-header> Session ID </th>
+      <td *matCellDef="let row"> {{row.session_id}} </td>
+    </ng-container>
+
+    <!-- Tenant Code Column -->
+    <ng-container matColumnDef="tenantCode">
+      <th *matHeaderCellDef mat-sort-header> Tenant Code </th>
+      <td *matCellDef="let row"> {{row.tenantCode}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+  <mat-paginator [pageSizeOptions]="[5, 8, 10]" [length]="100"
+                 [pageSize]="10" showFirstLastButtons></mat-paginator>
+</div>
+

@@ -1,0 +1,70 @@
+<!--title-->
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel wd-panel dark-panel">
+      <h3>Session Details</h3>
+    </div>
+  </div>
+</div>
+
+    <div class="example-header">
+      <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+      </mat-form-field>
+    </div>
+
+    <div class="mat-elevation-z8">
+
+      <table mat-table [dataSource]="dataSource" matSort>
+
+        <!-- Client Channel Column -->
+        <ng-container matColumnDef="clientChannel">
+          <th *matHeaderCellDef mat-sort-header> Client Channel </th>
+          <td *matCellDef="let row"> {{row.clientChannel}} </td>
+        </ng-container>
+
+        <!-- Client IP Column -->
+        <ng-container matColumnDef="clientIp">
+          <th *matHeaderCellDef mat-sort-header> Client IP </th>
+          <td *matCellDef="let row"> {{row.clientIp}} </td>
+        </ng-container>
+
+        <!-- Start Time Column -->
+        <ng-container matColumnDef="startTime">
+          <th *matHeaderCellDef mat-sort-header> Start Time </th>
+          <td *matCellDef="let row"> {{row.startTime}} </td>
+        </ng-container>
+
+        <!-- Login ID Column -->
+        <ng-container matColumnDef="loginId">
+          <th *matHeaderCellDef mat-sort-header> Login ID </th>
+          <td *matCellDef="let row" [style.color]="row.color"> {{row.loginId}} </td>
+        </ng-container>
+
+        <!-- Up Time ID Column -->
+        <ng-container matColumnDef="upTime">
+          <th *matHeaderCellDef mat-sort-header> Up Time </th>
+          <td *matCellDef="let row" [style.color]="row.color"> {{row.upTime}} </td>
+        </ng-container>
+
+        <!-- Session ID Column -->
+        <ng-container matColumnDef="sessionId">
+          <th *matHeaderCellDef mat-sort-header> Session ID </th>
+          <td *matCellDef="let row" [style.color]="row.color"> {{row.sessionId}} </td>
+        </ng-container>
+
+        <!-- Session ID Column -->
+        <ng-container matColumnDef="status">
+          <th *matHeaderCellDef mat-sort-header> Status </th>
+          <td *matCellDef="let row" [style.color]="row.color"> {{row.status}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+
+
+    </div>
+<mat-paginator [pageSizeOptions]="[5, 8, 10]" [length]="100"
+               [pageSize]="10" showFirstLastButtons></mat-paginator>
