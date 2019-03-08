@@ -25,6 +25,7 @@ export class WebSocketConnectionService {
   nodeBlockUpdated: Subject<string> = new Subject<string>();
   cpuHistoryUpdated: Subject<{}> = new Subject<{}>();
   sysMetricUpdated: Subject<{}> = new Subject<{}>();
+
   public connect(url): Subject<MessageEvent> {
     if (!this.subject) {
       this.subject = this.create(url);

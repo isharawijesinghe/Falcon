@@ -17,7 +17,9 @@ export class SessionsComponent implements OnInit {
   dataSource: MatTableDataSource<SessionData>;
 
   constructor(private restConnectionService : RestConnectionService) {
+
     const sessiondata: SessionData[] = [];
+
     this.restConnectionService.getSessions().subscribe(data => {
       this.Sessiondata = data;
       for(let sessionData of this.Sessiondata){
@@ -27,6 +29,7 @@ export class SessionsComponent implements OnInit {
       this.dataSource = new MatTableDataSource(sessiondata);
       console.log(this.dataSource);
     });
+
   }
 
   ngOnInit() {
@@ -39,9 +42,11 @@ export class SessionsComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
+
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
+
   }
 
 }

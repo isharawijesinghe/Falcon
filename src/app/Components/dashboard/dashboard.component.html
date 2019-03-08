@@ -1,4 +1,6 @@
 <div class="container-fluid">
+
+  <!--dashboard detail display-->
   <div class="row">
     <div class="col-md-2">
       <div class="stat" style="display: inline">
@@ -37,4 +39,47 @@
       </div>
     </div>
   </div>
+
+<!--dashboard table and block view display-->
+  <div class="row">
+    <div class="col-md-7">
+      <div ng-show="true" class="panel wd-panel">
+        <table class="wd-table">
+          <thead>
+          <tr>
+            <th>NODE</th>
+            <th>IP</th>
+            <th>STATE</th>
+            <th>MEMORY (MB)</th>
+            <th>THREADS</th>
+            <th>CPU %</th>
+            <th>Last</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let node of websocketConnectionService.view?.nodes">
+            <td>{{node['nodeName']}}</td>
+            <td>{{node['ip']}}</td>
+            <td>{{node['state']}}</td>
+            <td>{{node['metric']?.usedMemory}}/ {{node['metric']?.maxMemory}}</td>
+            <td>{{node['metric']?.threadCount}}</td>
+            <td>{{node['metric']?.systemCpuUsage}}</td>
+            <td>{{node['metric']?.lastUpdateTime}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="col-md-5">
+      <div class="panel wd-panel" id="dashboard-blocks">
+        <div class="wd-panel-heading">
+          Block view
+        </div>
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"></svg>
+      </div>
+    </div>
+
+  </div>
+
 </div>
