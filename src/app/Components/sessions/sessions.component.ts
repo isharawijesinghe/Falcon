@@ -2,6 +2,8 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {RestConnectionService} from '../../Services/rest-connection.service';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 
+
+
 @Component({
   selector: 'app-sessions',
   templateUrl: './sessions.component.html',

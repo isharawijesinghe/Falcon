@@ -2,40 +2,44 @@
 
   <!--dashboard detail display-->
   <div class="row">
-    <div class="col-md-2">
-      <div class="stat" style="display: inline">
-        <h1>{{sysMetricObject['disconnects']}}</h1>
-        <h4>Disconnections</h4>
-      </div>
-    </div>
-    <div class="col-md-2">
-      <div class="stat" style="display: inline">
-        <h1>{{sysMetricObject['failed']}}</h1>
-        <h4>Lost Messages</h4>
-      </div>
-    </div>
-    <div class="col-md-2">
-      <div class="stat" style="display: inline">
-        <h1>{{sysMetricObject['tps'] | number : fractionSize}}</h1>
-        <h4>Transactions /s</h4>
-      </div>
-    </div>
-    <div class="col-md-2">
-      <div class="stat" style="display: inline">
-        <h1>{{sysMetricObject['rtt']}}</h1>
-        <h4>Round Trip Time</h4>
-      </div>
-    </div>
-    <div class="col-md-2">
-      <div class="stat" style="display: inline">
-        <h1>{{sysMetricObject['requests'] | number : fractionSize}}</h1>
-        <h4>Total Requests</h4>
-      </div>
-    </div>
-    <div class="col-md-2">
-      <div class="stat" style="display: inline">
-        <h1>{{sysMetricObject['clients']}}</h1>
-        <h4>Connected Clients</h4>
+    <div class="panel wd-panel">
+      <div class="stat-container">
+        <div class="col-md-2">
+          <div class="stat">
+            <h1>{{sysMetricObject['disconnects']}}</h1>
+            <h4>Disconnections</h4>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="stat">
+            <h1>{{sysMetricObject['failed']}}</h1>
+            <h4>Lost Messages</h4>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="stat">
+            <h1>{{sysMetricObject['tps'] | number : fractionSize}}</h1>
+            <h4>Transactions /s</h4>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="stat">
+            <h1>{{sysMetricObject['rtt']}}</h1>
+            <h4>Round Trip Time</h4>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="stat">
+            <h1>{{sysMetricObject['requests'] | number : fractionSize}}</h1>
+            <h4>Total Requests</h4>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="stat">
+            <h1>{{sysMetricObject['clients']}}</h1>
+            <h4>Connected Clients</h4>
+          </div>
+        </div>
       </div>
     </div>
   </div>

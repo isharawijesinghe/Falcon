@@ -1,20 +1,21 @@
-<div class="d-flex" id="wrapper">
+<div class="d-flex" id="header-box">
 
-  <div class="container-fluid">
-    <div class="row">
+  <div class="container-fluid" >
+    <div class="row" id="navbar-row">
       <div class="col-12">
         <app-header-nav-bar></app-header-nav-bar>
       </div>
     </div>
-
-    <div class="row">
-      <div class="col-2">
+    <div class="row" id="nav-space"></div>
+    <div class="row" id="data-content">
+      <div class="col-side-custom">
         <!-- Sidebar -->
         <app-side-nav-bar></app-side-nav-bar>
         <!-- /#sidebar-wrapper -->
       </div>
-      <div class="col-10">
+      <div class="col-content-custom">
         <!-- Page Content -->
+
         <div id="page-content-wrapper">
 
           <div class="container-fluid">
@@ -23,12 +24,12 @@
               <router-outlet></router-outlet>
             </div>
           </div>
-        </div>
-
       </div>
+        <!-- /#page-content-wrapper -->
     </div>
 
   </div>
-  <!-- /#page-content-wrapper -->
+
 </div>
 <!-- /#wrapper -->
+</div>

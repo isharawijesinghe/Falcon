@@ -1,7 +1,9 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 @import "~font-awesome/css/font-awesome.css";
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
-
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~@angular/material/prebuilt-themes/pink-bluegrey.css";
+/*@import "~@angular/material/prebuilt-themes/purple-green.css;*/
 
 
 /*Define basic colors in black and white theme*/
@@ -81,12 +83,16 @@
   /*margin-left: -4px;*/
   /*margin-right: -4px;*/
 /*}*/
+html{
+  overflow: hidden;
+}
+
 .wd-row .wd-col {
   padding-left: 4px;
   padding-right: 4px;
 }
 .wd-panel {
-  background-color: #3c3f47;
+  background-color: #292a34;
   border: none;
   margin-bottom: 15px;
   text-align: center;
