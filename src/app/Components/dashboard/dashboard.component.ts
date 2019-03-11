@@ -61,14 +61,14 @@ export class DashboardComponent implements OnInit {
       .append('g')
       .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-    const rh = height * 0.09,
-      rw = width * 0.18;
+    const rh = height * 0.1,
+      rw = width * 0.2;
 
     // const rh = height * 0.1,
     //   rw = width * 0.2;
 
     const noOfSerialComponents = 4;
-    const noOfGaps = 2 * noOfSerialComponents;
+    const noOfGaps = 1.8 * noOfSerialComponents;
 
     const shGateway = (height - dataGateway.length * rh) / (dataGateway.length + 1);
     const shOms = (height - dataAura.length * rh - dataOms.length * rh) / ((dataOms.length + dataAura.length) + 1);
@@ -100,6 +100,15 @@ export class DashboardComponent implements OnInit {
     calculateLinks(dataOms, dataDfix, shOms, shDfix);
     calculateLinks(dataGateway, dataAura, shGateway, null);
     calculateLinks(dataDfix, dataExchange, shDfix, shExchange);
+
+    console.log('widath '+ (width - noOfSerialComponents * rw)/ noOfGaps);
+    console.log('row widath '+ width/noOfGaps);
+    console.log("padding space " + (width - noOfSerialComponents * rw)/ noOfGaps);
+    console.log("genuine space " + ((width - noOfSerialComponents * rw)/ noOfGaps + (width / noOfGaps) * 0));
+    console.log("genuine space " + ((width - noOfSerialComponents * rw)/ noOfGaps+(width / noOfGaps) * 1));
+    console.log("genuine space " + ((width - noOfSerialComponents * rw)/ noOfGaps+(width / noOfGaps) * 2));
+    console.log("genuine space " + ((width - noOfSerialComponents * rw)/ noOfGaps+(width / noOfGaps) * 3));
+
 
     // draw components
     const gGateway = svg.selectAll('.gatewayModule')

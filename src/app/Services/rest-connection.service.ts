@@ -11,11 +11,6 @@ export class RestConnectionService {
   urlParameter: any;
   message: any;
 
-  //
-  // private messageSource = new BehaviorSubject('default message');
-  // currentMessage = this.messageSource.asObservable();
-
-
   constructor(private  http: HttpClient) { }
 
   authenticate = false;
@@ -55,6 +50,25 @@ export class RestConnectionService {
   getSLAMessage(){
     return this.http.get('http://localhost:8060/watchdogclient/messages/sla');
   }
+
+  getViewInfo(){
+    return this.http.get('http://localhost:8060/watchdogclient/view');
+  }
+
+  // get client request details
+
+  getRoutesDetails(clientID){
+    return this.http.get('http://localhost:8060/watchdogclient/route/' + clientID);
+  }
+
+  getRoutesHistory(clientIdHistory){
+    return this.http.get('http://localhost:8060/watchdogclient/route/history/' + clientIdHistory);
+  }
+
+  getAllRoutes(){
+    return this.http.get('http://localhost:8060/watchdogclient/route/all/');
+  }
+
   // service for specific message
 
   fetchSpecificMessages() {
