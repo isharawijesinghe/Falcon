@@ -63,14 +63,14 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let node of websocketConnectionService.view?.nodes" id="#{{node['state']}}">
-            <td>{{node['nodeName']}}</td>
-            <td>{{node['ip']}}</td>
+          <tr *ngFor="let node of websocketConnectionService.view?.nodes" id="{{node['state']}}">
+            <td class="{{node['state']}}">{{node['nodeName']}}</td>
+            <td class="{{node['state']}}">{{node['ip']}}</td>
             <td class="{{node['state']}}">{{node['state']}}</td>
-            <td>{{node['metric']?.usedMemory}}/ {{node['metric']?.maxMemory}}</td>
-            <td>{{node['metric']?.threadCount}}</td>
-            <td>{{node['metric']?.systemCpuUsage}}</td>
-            <td>{{node['metric']?.lastUpdateTime}}</td>
+            <td class="{{node['state']}}">{{node['metric']?.usedMemory}}/ {{node['metric']?.maxMemory}}</td>
+            <td class="{{node['state']}}">{{node['metric']?.threadCount}}</td>
+            <td class="{{node['state']}}">{{node['metric']?.systemCpuUsage}}</td>
+            <td class="{{node['state']}}">{{node['metric']?.lastUpdateTime}}</td>
           </tr>
           </tbody>
         </table>

@@ -14,10 +14,7 @@
   padding-top: 15px;
 }
 
-.CONNECTED{
-  color: #1eff11;
+#CLOSED{
+  background-color: rgba(212, 0, 6, 0.59);
 }
 
-#CLOSED{
-  background-color: #d43f3a;
-}
