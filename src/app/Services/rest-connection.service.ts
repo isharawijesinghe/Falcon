@@ -13,7 +13,7 @@ export class RestConnectionService {
 
   constructor(private  http: HttpClient) { }
 
-  authenticate = false;
+  authenticate = true;
 
   // function;
   // changeMessage(message: any) {

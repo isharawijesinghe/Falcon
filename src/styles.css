@@ -1,5 +1,6 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 @import "~font-awesome/css/font-awesome.css";
+/*@import "~@angular/material/_theming.scss";*/
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import "~@angular/material/prebuilt-themes/pink-bluegrey.css";
@@ -93,7 +94,7 @@ html{
 }
 .wd-panel {
   background-color: #292a34;
-  border: none;
+  /*border: none;*/
   margin-bottom: 15px;
   text-align: center;
   color: #fff;
@@ -553,3 +554,6 @@ svg {
 }
 
 
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

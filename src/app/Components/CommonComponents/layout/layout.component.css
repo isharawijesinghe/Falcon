@@ -18,7 +18,7 @@
 }
 
 #data-content{
-  background-color: #030030;
+  background-color: rgba(3, 0, 48, 0.39);
   height: 100%;
 }
 
@@ -40,4 +40,9 @@
   -ms-flex: 0 0 90%;
   flex: 0 0 90%;
   max-width: 90%;
+}
+
+#page-content-wrapper{
+  padding-top: 15px;
+  padding-right: 5px;
 }

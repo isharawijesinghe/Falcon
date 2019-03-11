@@ -1,43 +1,45 @@
-<div class="container-fluid">
+<div class="container-fluid" >
 
   <!--dashboard detail display-->
   <div class="row">
-    <div class="panel wd-panel">
-      <div class="stat-container">
-        <div class="col-md-2">
-          <div class="stat">
-            <h1>{{sysMetricObject['disconnects']}}</h1>
-            <h4>Disconnections</h4>
+    <div class="col-md-12">
+      <div class="panel wd-panel">
+        <div class="stat-container">
+          <div class="col-md-2">
+            <div class="stat">
+              <h1>{{sysMetricObject['disconnects']}}</h1>
+              <h4>Disconnections</h4>
+            </div>
           </div>
-        </div>
-        <div class="col-md-2">
-          <div class="stat">
-            <h1>{{sysMetricObject['failed']}}</h1>
-            <h4>Lost Messages</h4>
+          <div class="col-md-2">
+            <div class="stat">
+              <h1>{{sysMetricObject['failed']}}</h1>
+              <h4>Lost Messages</h4>
+            </div>
           </div>
-        </div>
-        <div class="col-md-2">
-          <div class="stat">
-            <h1>{{sysMetricObject['tps'] | number : fractionSize}}</h1>
-            <h4>Transactions /s</h4>
+          <div class="col-md-2">
+            <div class="stat">
+              <h1>{{sysMetricObject['tps'] | number : fractionSize}}</h1>
+              <h4>Transactions /s</h4>
+            </div>
           </div>
-        </div>
-        <div class="col-md-2">
-          <div class="stat">
-            <h1>{{sysMetricObject['rtt']}}</h1>
-            <h4>Round Trip Time</h4>
+          <div class="col-md-2">
+            <div class="stat">
+              <h1>{{sysMetricObject['rtt']}}</h1>
+              <h4>Round Trip Time</h4>
+            </div>
           </div>
-        </div>
-        <div class="col-md-2">
-          <div class="stat">
-            <h1>{{sysMetricObject['requests'] | number : fractionSize}}</h1>
-            <h4>Total Requests</h4>
+          <div class="col-md-2">
+            <div class="stat">
+              <h1>{{sysMetricObject['requests'] | number : fractionSize}}</h1>
+              <h4>Total Requests</h4>
+            </div>
           </div>
-        </div>
-        <div class="col-md-2">
-          <div class="stat">
-            <h1>{{sysMetricObject['clients']}}</h1>
-            <h4>Connected Clients</h4>
+          <div class="col-md-2">
+            <div class="stat">
+              <h1>{{sysMetricObject['clients']}}</h1>
+              <h4>Connected Clients</h4>
+            </div>
           </div>
         </div>
       </div>
@@ -45,7 +47,7 @@
   </div>
 
 <!--dashboard table and block view display-->
-  <div class="row">
+  <div class="row" id="table-and-block">
     <div class="col-md-7">
       <div ng-show="true" class="panel wd-panel">
         <table class="wd-table">
@@ -61,10 +63,10 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let node of websocketConnectionService.view?.nodes">
+          <tr *ngFor="let node of websocketConnectionService.view?.nodes" id="#{{node['state']}}">
             <td>{{node['nodeName']}}</td>
             <td>{{node['ip']}}</td>
-            <td>{{node['state']}}</td>
+            <td class="{{node['state']}}">{{node['state']}}</td>
             <td>{{node['metric']?.usedMemory}}/ {{node['metric']?.maxMemory}}</td>
             <td>{{node['metric']?.threadCount}}</td>
             <td>{{node['metric']?.systemCpuUsage}}</td>

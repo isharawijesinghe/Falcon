@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import {RestConnectionService} from '../../Services/rest-connection.service';
 import * as d3 from 'd3';
