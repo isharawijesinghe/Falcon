@@ -18,6 +18,7 @@ import { LoginComponent } from './Components/login/login.component';
 import { LayoutComponent } from './Components/CommonComponents/layout/layout.component';
 import {RestConnectionService} from './services/rest-connection.service';
 import {WebSocketConnectionService} from './services/web-socket-connection.service';
+import { FormsModule } from '@angular/forms';
 import {
   MatAutocompleteModule,
   MatBadgeModule,
@@ -121,6 +122,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     MatTooltipModule,
     MatTreeModule,
     BrowserAnimationsModule,
+    FormsModule
   ],
   providers: [RestConnectionService, WebSocketConnectionService],
   bootstrap: [AppComponent]
