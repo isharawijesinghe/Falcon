@@ -16,22 +16,26 @@ export class DashboardComponent implements OnInit {
 
   constructor(private websocketConnectionService: WebSocketConnectionService) {
 
-      this.websocketConnectionService.nodeBlockUpdated.subscribe((value) => {
-        this.blockData = value;
-        if (this.blockData != null) {
-          this.drawBlocks();
-        }
-
+    this.websocketConnectionService.nodeBlockUpdated.subscribe((value) => {
+      this.blockData = value;
+      if (this.blockData != null) {
+        this.drawBlocks();
+      }
     });
+
 
 
     this.websocketConnectionService.sysMetricUpdated.subscribe((value) => {
       this.sysMetricObject = value;
     });
+
   }
 
   ngOnInit() {
-
+    if(this.websocketConnectionService.nodeBlock != null){
+      this.blockData = this.websocketConnectionService.nodeBlock;
+      this.drawBlocks();
+    }
   }
 
 
@@ -50,7 +54,8 @@ export class DashboardComponent implements OnInit {
     };
     let svg = d3.select('#dashboard-blocks svg');
     const margin = {top: 0, right: 0, bottom: 0, left: 0};
-    const width = parseInt(svg.style('width'), 10 ) - margin.right - margin.left; // parseint in angular js
+    console.log(parseInt(svg.style('width'), 10 ));
+    const width = 476 - margin.right - margin.left; // parseint in angular js
     const height = width * 0.7;
     const zoomFactor = width * 0.0035;
 
@@ -100,15 +105,6 @@ export class DashboardComponent implements OnInit {
     calculateLinks(dataOms, dataDfix, shOms, shDfix);
     calculateLinks(dataGateway, dataAura, shGateway, null);
     calculateLinks(dataDfix, dataExchange, shDfix, shExchange);
-
-    console.log('widath '+ (width - noOfSerialComponents * rw)/ noOfGaps);
-    console.log('row widath '+ width/noOfGaps);
-    console.log("padding space " + (width - noOfSerialComponents * rw)/ noOfGaps);
-    console.log("genuine space " + ((width - noOfSerialComponents * rw)/ noOfGaps + (width / noOfGaps) * 0));
-    console.log("genuine space " + ((width - noOfSerialComponents * rw)/ noOfGaps+(width / noOfGaps) * 1));
-    console.log("genuine space " + ((width - noOfSerialComponents * rw)/ noOfGaps+(width / noOfGaps) * 2));
-    console.log("genuine space " + ((width - noOfSerialComponents * rw)/ noOfGaps+(width / noOfGaps) * 3));
-
 
     // draw components
     const gGateway = svg.selectAll('.gatewayModule')
