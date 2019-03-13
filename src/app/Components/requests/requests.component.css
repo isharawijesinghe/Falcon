@@ -1,15 +1,70 @@
-  /*form {*/
-    /*position: relative;*/
-  /*}*/
+/*form {*/
+  /*position: relative;*/
+/*}*/
 
-  /*input {*/
-    /*width: 100%;*/
-    /*padding-right: 40px;*/
-  /*}*/
+/*input {*/
+  /*width: 100%;*/
+  /*padding-right: 40px;*/
+/*}*/
 
-  /*button {*/
-    /*width: 40px;*/
-    /*position: absolute;*/
-    /*top: 0;*/
-    /*right: 0;*/
-  /*}*/
+/*button {*/
+  /*width: 40px;*/
+  /*position: absolute;*/
+  /*top: 0;*/
+  /*right: 0;*/
+/*}*/
+
+.wd-panel .wd-panel-heading {
+  color: #fff;
+  font-size: 17px;
+  padding: 20px 15px 10px;
+  text-align: left;
+  background-color: #24272f;
+}
+
+.wd-panel {
+  background-color: #292a34;
+  /* border: none; */
+  height: 200px;
+  margin-bottom: 15px;
+  text-align: center;
+  color: #fff;
+  overflow: hidden;
+  box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.1), 0 0px 5px rgba(0, 0, 0, 0.05);
+  border: 1px solid #7f8590;
+}
+
+#main-request{
+  height: 175px;
+}
+#main-request-history{
+  height: 175px;
+}
+#bulk-container{
+  height: 575px;
+}
+
+.form-inline {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  padding: 30px;
+  font-size: medium;
+}
+.form-inline > * {
+  margin:0px 10px;
+}
+
+#request-results-history{
+  width: 98%;
+  align-items: center;
+  padding-left: 2%;
+}
+
+#form-history{
+  height: 50px;
+}
+
+.form-wrapper{
+  padding-bottom: 0px;
+}

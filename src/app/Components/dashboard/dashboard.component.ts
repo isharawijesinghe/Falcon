@@ -73,7 +73,7 @@ export class DashboardComponent implements OnInit {
     //   rw = width * 0.2;
 
     const noOfSerialComponents = 4;
-    const noOfGaps = 1.8 * noOfSerialComponents;
+    const noOfGaps = 1.6 * noOfSerialComponents;
 
     const shGateway = (height - dataGateway.length * rh) / (dataGateway.length + 1);
     const shOms = (height - dataAura.length * rh - dataOms.length * rh) / ((dataOms.length + dataAura.length) + 1);
@@ -94,7 +94,7 @@ export class DashboardComponent implements OnInit {
             targetY = target[j].y * shTarget + (target[j].y - 1 ) * rh + rh / 2;
           } else {
             targetX = (((width - noOfSerialComponents * rw) / noOfGaps) + (width / noOfGaps) * (target[j].x - 1));
-            targetY = (height - 2.5 * rh);
+            targetY = (height - 1.8 * rh);
           }
           links.push([[sourceX, sourceY], [targetX, targetY]]);
           linkClasses.push(linkStateToClasses[nodeLinks[source[i].text][target[j].text]]);
@@ -199,7 +199,7 @@ export class DashboardComponent implements OnInit {
       .attr('transform', function (d: any) {
         return 'translate(' +
           (((width - noOfSerialComponents * rw) / noOfGaps) + (width / noOfGaps) * (d.x - 1)) + ',' +
-          (height - 3*rh) + ')';
+          (height - 2.5*rh) + ')';
       });
     gAura.append('rect')
       .attr('rx', 2 * zoomFactor)

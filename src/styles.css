@@ -100,7 +100,7 @@ html{
   color: #fff;
   overflow: hidden;
   box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.1), 0 0px 5px rgba(0, 0, 0, 0.05);
-  border: 1px solid #464952;
+  border: 1px solid #7f8590;
 }
 .wd-panel.dark-panel {
   background: #23262e;
@@ -556,4 +556,4 @@ svg {
 
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/*body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }*/

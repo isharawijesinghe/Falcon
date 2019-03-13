@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-sm-6">
-    <div class="panel wd-panel">
+    <div class="panel wd-panel" id="bulk-container">
       <div class="panel-heading wd-panel-heading">
         <a data-toggle="collapse" data-parent="#accordion" href="#">Client Routes</a> Filter: <input
         class="form-control display-inline" type="text" ng-model="search.client">
@@ -9,22 +9,44 @@
         <a data-toggle="collapse" data-parent="#accordion" href="#">Client Routes</a> Filter: OMS-<input
         class="form-control display-inline" type="text" ng-model="nodeFilter.nextNode">
       </div>
-      <div class="panel-collapse collapse in">
-        <table class="wd-table">
-          <thead>
-          <tr>
-            <th>Client</th>
-            <th>Next Node</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr
-            ng-repeat="record in clientRoutesAll | filter:search | filter: nodeFilter | orderBy : 'client' | orderBy: 'nextNode'">
-            <td></td>
-            <td></td>
-          </tr>
-          </tbody>
-        </table>
+
+      <div ng-hide="routesHistory == null" id="request-results-history" class="get-routes">
+
+        <div class="mat-elevation-z8">
+          <mat-table [dataSource]="dataSource" matSort>
+            <ng-container matColumnDef="client">
+              <mat-header-cell *matHeaderCellDef mat-sort-header >Client</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.client}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="nextnode">
+              <mat-header-cell *matHeaderCellDef>Next Node</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.nextNode}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDesf="updatetime">
+              <mat-header-cell *matHeaderCellDef>Update Time</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.updateTime}} </mat-cell>
+            </ng-container>
+          </mat-table>
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </div>
+
+        <!--<table class="wd-table">-->
+          <!--<thead>-->
+          <!--<tr>-->
+            <!--<th>Client</th>-->
+            <!--<th>Next Node</th>-->
+            <!--<th>Update Time</th>-->
+          <!--</tr>-->
+          <!--</thead>-->
+          <!--<tbody>-->
+          <!--<tr *ngFor="let route of routes">-->
+            <!--<td>{{route["client"]}}</td>-->
+            <!--<td>OMS-{{route["nextNode"]}}</td>-->
+            <!--<td>{{route["updateTime"]}}</td>-->
+          <!--</tr>-->
+          <!--</tbody>-->
+        <!--</table>-->
       </div>
     </div>
   </div>
@@ -33,7 +55,7 @@
     <div class="row">
       <div class="col-md-12">
         <div id="main-request" class="panel wd-panel">
-          <form class="col-md-12 form-inline">
+          <form class="col-md-12 form-inline" >
             Client ID: <input class="form-control display-inline" type="text"  name="routeClientID" [(ngModel)]="routeClientID">
             <input type="submit" value="GET ROUTES" class="btn btn-primary"  (click)="getRoutes()">
           </form>
@@ -54,25 +76,25 @@
     <div class="row">
       <div class="col-md-12">
         <div id="main-request-history" class="panel wd-panel input-group">
-          <form ng-submit="getRoutesHistory()" class="col-md-12 form-inline">
-            Client ID: <input class="form-control display-inline" type="text" >
-            <input type="submit" value="GET HISTORY" class="btn btn-primary" style="float: right" >
-          </form>
-
-          <div ng-hide="routesHistory == null" id="request-results-history" class="get-routes">
+          <div class="form-wrapper">
+            <form ng-submit="getRoutesHistory()" class="col-md-12 form-inline" id="form-history">
+              Client ID: <input class="form-control display-inline" type="text" >
+              <input type="submit" value="GET HISTORY" class="btn btn-primary" style="float: right" >
+            </form>
+          </div>
+          <div class="panel-collapse collapse in">
             <table class="wd-table">
               <thead>
               <tr>
                 <th>Client</th>
                 <th>Next Node</th>
-                <th>Update Time</th>
               </tr>
               </thead>
               <tbody>
-              <tr ng-repeat="record in routesHistory | orderBy : '-updateTime' | limitTo : 10">
-                <!--<td>{{record["client"]}}</td>-->
-                <!--<td>OMS-{{record["nextNode"]}}</td>-->
-                <!--<td>{{record["updateTime"]}}</td>-->
+              <tr
+                ng-repeat="record in clientRoutesAll | filter:search | filter: nodeFilter | orderBy : 'client' | orderBy: 'nextNode'">
+                <td></td>
+                <td></td>
               </tr>
               </tbody>
             </table>

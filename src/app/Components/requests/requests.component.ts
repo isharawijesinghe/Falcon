@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {RestConnectionService} from '../../Services/rest-connection.service';
+import {MatTableDataSource} from '@angular/material';
+
 
 @Component({
   selector: 'app-requests',
@@ -12,10 +14,20 @@ export class RequestsComponent implements OnInit {
   routes:any;
   routesDetailHide: boolean = true;
   routeHistoryClientID: any;
+  displayedColumns = ['Client', 'Next Node', 'Update Time'];
+  
 
   constructor(private restConnectionService: RestConnectionService) { }
 
   ngOnInit() {
+
+    this.restConnectionService.getAllRoutes().subscribe(data =>{
+      this.routes = data;
+      // console.log()
+      // dataSource: MatTableDataSource<this.routes>;
+      this.routesDetailHide = false;
+      console.log(this.routes);
+    });
   }
 
   getRoutes(){
@@ -25,5 +37,9 @@ export class RequestsComponent implements OnInit {
       console.log(this.routes);
     });
   }
+
+
+
+
 
 }

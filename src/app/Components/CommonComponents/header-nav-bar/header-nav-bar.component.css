@@ -1,5 +1,6 @@
 #fixed-position{
   position: fixed;
   font-size: small;
+  height: 40px;
 }
 

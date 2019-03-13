@@ -1,42 +1,42 @@
-<div class="container-fluid" >
+<div class="container-fluid" id="bulk-container">
 
   <!--dashboard detail display-->
   <div class="row">
     <div class="col-md-12">
-      <div class="panel wd-panel">
+      <div class="panel wd-panel" id="banner">
         <div class="stat-container">
           <div class="col-md-2">
-            <div class="stat">
+            <div class="stat" style="display: inline">
               <h1>{{sysMetricObject['disconnects']}}</h1>
               <h4>Disconnections</h4>
             </div>
           </div>
           <div class="col-md-2">
-            <div class="stat">
+            <div class="stat" style="display: inline">
               <h1>{{sysMetricObject['failed']}}</h1>
               <h4>Lost Messages</h4>
             </div>
           </div>
           <div class="col-md-2">
-            <div class="stat">
+            <div class="stat" style="display: inline">
               <h1>{{sysMetricObject['tps'] | number : fractionSize}}</h1>
               <h4>Transactions /s</h4>
             </div>
           </div>
           <div class="col-md-2">
-            <div class="stat">
+            <div class="stat" style="display: inline">
               <h1>{{sysMetricObject['rtt']}}</h1>
               <h4>Round Trip Time</h4>
             </div>
           </div>
           <div class="col-md-2">
-            <div class="stat">
+            <div class="stat" style="display: inline">
               <h1>{{sysMetricObject['requests'] | number : fractionSize}}</h1>
               <h4>Total Requests</h4>
             </div>
           </div>
           <div class="col-md-2">
-            <div class="stat">
+            <div class="stat" style="display: inline-block">
               <h1>{{sysMetricObject['clients']}}</h1>
               <h4>Connected Clients</h4>
             </div>
@@ -47,9 +47,9 @@
   </div>
 
 <!--dashboard table and block view display-->
-  <div class="row" id="table-and-block">
+  <div class="row">
     <div class="col-md-7">
-      <div ng-show="true" class="panel wd-panel">
+      <div ng-show="true" class="panel wd-panel" id="value-table">
         <table class="wd-table">
           <thead>
           <tr>
@@ -63,14 +63,14 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let node of websocketConnectionService.view?.nodes" id="{{node['state']}}">
-            <td class="{{node['state']}}">{{node['nodeName']}}</td>
-            <td class="{{node['state']}}">{{node['ip']}}</td>
+          <tr *ngFor="let node of websocketConnectionService.view?.nodes" id="{{node['state']}}" >
+            <td >{{node['nodeName']}}</td>
+            <td >{{node['ip']}}</td>
             <td class="{{node['state']}}">{{node['state']}}</td>
-            <td class="{{node['state']}}">{{node['metric']?.usedMemory}}/ {{node['metric']?.maxMemory}}</td>
-            <td class="{{node['state']}}">{{node['metric']?.threadCount}}</td>
-            <td class="{{node['state']}}">{{node['metric']?.systemCpuUsage}}</td>
-            <td class="{{node['state']}}">{{node['metric']?.lastUpdateTime}}</td>
+            <td >{{node['metric']?.usedMemory}}/ {{node['metric']?.maxMemory}}</td>
+            <td >{{node['metric']?.threadCount}}</td>
+            <td >{{node['metric']?.systemCpuUsage}}</td>
+            <td >{{node['metric']?.lastUpdateTime}}</td>
           </tr>
           </tbody>
         </table>

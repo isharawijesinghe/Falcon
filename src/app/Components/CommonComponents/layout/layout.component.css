@@ -10,7 +10,7 @@
 }
 
 #navbar-row{
-  background-color: #373737;
+  background-color: rgba(35, 35, 35, 0.84);
 }
 
 .core{
@@ -18,7 +18,7 @@
 }
 
 #data-content{
-  background-color: rgba(66, 65, 67, 0.8);
+  background-color: rgba(51, 50, 52, 0.96);
   height: 100%;
 }
 
@@ -27,7 +27,7 @@
 /*}*/
 
 #nav-space{
-  height: 51px;
+  height: 40px;
 }
 
 .col-side-custom{

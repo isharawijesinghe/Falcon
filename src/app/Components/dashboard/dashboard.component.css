@@ -2,19 +2,32 @@
   width: 100%;
   height: 100%;
 }
-.stat{
-  display: inline;
+
+#banner{
+  height: 80px;
 }
+
+#bulk-container{
+  padding-right: 0px;
+  padding-left: 0px;
+}
+/*.stat{*/
+  /*!*display: inline;*!*/
+/*}*/
 
 #dashboard-blocks{
   height: 100%;
 }
 
-#table-and-block{
-  padding-top: 15px;
+#value-table{
+  max-height: 405px;
 }
 
 #CLOSED{
-  background-color: rgba(212, 0, 6, 0.59);
+  background-color: #b33939;
+}
+
+td.CONNECTED{
+  color: rgba(30, 255, 17, 0.73) !important;
 }
 
