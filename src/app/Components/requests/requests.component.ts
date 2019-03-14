@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {RestConnectionService} from '../../Services/rest-connection.service';
-import {MatTableDataSource} from '@angular/material';
+import { ViewChild} from '@angular/core';
+import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 
 
 @Component({
@@ -14,20 +15,37 @@ export class RequestsComponent implements OnInit {
   routes:any;
   routesDetailHide: boolean = true;
   routeHistoryClientID: any;
-  displayedColumns = ['Client', 'Next Node', 'Update Time'];
-  
+  displayedColumns :['client','nextnode']
+  dataSource: MatTableDataSource<routes>;
 
-  constructor(private restConnectionService: RestConnectionService) { }
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
-  ngOnInit() {
+  constructor(private restConnectionService: RestConnectionService) {
 
     this.restConnectionService.getAllRoutes().subscribe(data =>{
       this.routes = data;
-      // console.log()
-      // dataSource: MatTableDataSource<this.routes>;
+      const routeData: routes[] = [];
+      //this.dataSource = this.routes;
       this.routesDetailHide = false;
       console.log(this.routes);
+      for(let routedata of this.routes){
+        routeData.push(createNewroutedata(routedata));
+      }
+      this.dataSource = new MatTableDataSource(routeData);
     });
+  }
+
+  ngOnInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
   }
 
   getRoutes(){
@@ -37,9 +55,15 @@ export class RequestsComponent implements OnInit {
       console.log(this.routes);
     });
   }
+}
 
+export interface routes{
+  client : String;
+  nextnode: String;
+}
 
-
-
-
+function createNewroutedata (routedata : any): routes{
+  return{
+    client : routedata['client'],nextnode:routedata['nextnode']
+  };
 }
