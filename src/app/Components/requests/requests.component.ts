@@ -23,8 +23,6 @@ export class RequestsComponent implements OnInit {
 
   constructor(private restConnectionService: RestConnectionService) {
 
-
-
   }
 
   ngOnInit() {
@@ -39,10 +37,10 @@ export class RequestsComponent implements OnInit {
         routeData.push(createNewroutedata(routedata));
       }
       this.dataSource = new MatTableDataSource(routeData);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     });
 
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
   }
 
 
