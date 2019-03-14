@@ -15,18 +15,16 @@ export class RequestsComponent implements OnInit {
   routes:any;
   routesDetailHide: boolean = true;
   routeHistoryClientID: any;
-  displayedColumns :['client','nextnode']
+  displayedColumns :String[]=['client','nextNode'];
   dataSource: MatTableDataSource<routes>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private restConnectionService: RestConnectionService) {
-
   }
 
   ngOnInit() {
-
     this.restConnectionService.getAllRoutes().subscribe(data =>{
       this.routes = data;
       const routeData: routes[] = [];
@@ -41,6 +39,22 @@ export class RequestsComponent implements OnInit {
       this.dataSource.sort = this.sort;
     });
 
+    // this.dataSource.filterPredicate = (data: routes, filter: string) => {
+    //     return data.nextNode == filter;
+    // };
+
+    this.dataSource.filterPredicate =
+      (data: routes, filtersJson: string) => {
+        const matchFilter = [];
+        const filters = JSON.parse(filtersJson);
+
+        filters.forEach(filter => {
+          const val = data[filter.id] === null ? '' : data[filter.id];
+          matchFilter.push(val.toLowerCase().includes(filter.value.toLowerCase()));
+        });
+        return matchFilter.every(Boolean);
+      };
+
   }
 
 
@@ -48,6 +62,20 @@ export class RequestsComponent implements OnInit {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
+  }
+
+  // applyNodeFilter(filterValue: string) {
+  //   filterValue = filterValue.trim(); // Remove whitespace
+  //   filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+  //   this.dataSource.filter = filterValue;
+  // }
+
+  applyNodeFilter(filterValue: string) {
+    const tableFilters = [];
+    tableFilters.push({
+      id: 'nextNode',
+      value: filterValue
+    });
   }
 
   getRoutes(){
@@ -61,11 +89,12 @@ export class RequestsComponent implements OnInit {
 
 export interface routes{
   client : String;
-  nextnode: String;
+  nextNode: String;
 }
 
 function createNewroutedata (routedata : any): routes{
   return{
-    client : routedata['client'],nextnode:routedata['nextnode']
+    client : routedata['client'],
+    nextNode:routedata['nextNode']
   };
 }
