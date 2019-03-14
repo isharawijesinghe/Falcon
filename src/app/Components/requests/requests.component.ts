@@ -23,6 +23,12 @@ export class RequestsComponent implements OnInit {
 
   constructor(private restConnectionService: RestConnectionService) {
 
+
+
+  }
+
+  ngOnInit() {
+
     this.restConnectionService.getAllRoutes().subscribe(data =>{
       this.routes = data;
       const routeData: routes[] = [];
@@ -34,9 +40,7 @@ export class RequestsComponent implements OnInit {
       }
       this.dataSource = new MatTableDataSource(routeData);
     });
-  }
 
-  ngOnInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
