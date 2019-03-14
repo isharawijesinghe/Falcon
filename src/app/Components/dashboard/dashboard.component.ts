@@ -16,6 +16,8 @@ export class DashboardComponent implements OnInit {
 
   constructor(private websocketConnectionService: WebSocketConnectionService) {
 
+    this.tpsHeight = this.drawTps();
+
     this.websocketConnectionService.nodeBlockUpdated.subscribe((value) => {
       this.blockData = value;
       if (this.blockData != null) {
@@ -23,7 +25,12 @@ export class DashboardComponent implements OnInit {
       }
     });
 
-
+    this.websocketConnectionService.cpuHistoryUpdated.subscribe( (value => {
+      this.cpuHistory = value;
+      if (this.cpuHistory != null) {
+        this.drawSystemLoadAverage(this.tpsHeight);
+      }
+    }));
 
     this.websocketConnectionService.sysMetricUpdated.subscribe((value) => {
       this.sysMetricObject = value;
@@ -35,6 +42,10 @@ export class DashboardComponent implements OnInit {
     if(this.websocketConnectionService.nodeBlock != null){
       this.blockData = this.websocketConnectionService.nodeBlock;
       this.drawBlocks();
+    }
+
+    if(this.websocketConnectionService.cpuHistory != null && this.tpsHeight!= null ){
+      this.drawSystemLoadAverage(this.tpsHeight);
     }
   }
 
@@ -265,6 +276,121 @@ export class DashboardComponent implements OnInit {
         .attr('fill', 'none')
         .classed(linkClasses[i], true);
     }
+  }
+
+  drawTps() {
+    let svg = d3.select('#dashboard-tps svg');
+    const margin = {top: 10, right: 10, bottom: 10, left: 10};
+    // const width = parseInt(svg.style('width'), 10 ) - margin.right - margin.left;
+    const width = 1201 - margin.right - margin.left;
+    const height = width * 0.5 - margin.top - margin.bottom;
+    svg = d3.select('#dashboard-load').append('svg')
+      .attr('width', width + margin.left + margin.right)
+      .attr('height', height + margin.top + margin.bottom)
+      .append('g')
+      .attr('transform',
+        'translate(' + margin.left + ',' + margin.top + ')');
+    return height + margin.top + margin.bottom;
+  }
+
+
+  drawSystemLoadAverage(tpsHeight) {
+    let svg = d3.select('#dashboard-load svg');
+    const margin = {top: 10, right: 20, bottom: 20, left: 40};
+    const width = parseInt(svg.style('width'), 10 ) - margin.right - margin.left;
+    // const height = tpsHeight - margin.top - margin.bottom;
+    const height = 320;
+
+    // set the ranges
+    const x = d3.scaleLinear().range([0, width]);
+    const y = d3.scaleLinear().range([height, 0]);
+    const z = d3.scaleOrdinal(d3.schemeCategory10);
+
+    const valueline = d3.line()
+      .curve(d3.curveBasis)
+      .x(function (d: any) {
+        return x(parseInt(d.tick, 10));
+      })
+      .y(function (d: any) {
+        return y(d.cpu);
+      });
+
+    d3.select('#dashboard-load').select('svg').remove();
+    svg = d3.select('#dashboard-load').append('svg')
+      .attr('width', width + margin.left + margin.right)
+      .attr('height', height + margin.top + margin.bottom)
+      .append('g')
+      .attr('transform',
+        'translate(' + margin.left + ',' + margin.top + ')');
+
+    const data = [];
+    let maxX = 1;
+    const reference = this.websocketConnectionService.cpuHistory; // reference to access cpuhistry variable inside inner function
+    for (const node in this.websocketConnectionService.cpuHistory) {
+      if (this.websocketConnectionService.cpuHistory.hasOwnProperty(node)) {
+        const tempNode = {};
+        const nodeData = [];
+        this.websocketConnectionService.cpuHistory[node].forEach(function (d: any, i: any) {
+          maxX = node.length > maxX ? reference[node].length : maxX;
+          const dataPoint = {};
+          dataPoint['tick'] = i;
+          dataPoint['cpu'] = d;
+          nodeData.push(dataPoint);
+        });
+        tempNode['id'] = node;
+        tempNode['values'] = nodeData;
+        data.push(tempNode);
+      }
+    }
+    x.domain([0, maxX - 1]);
+    y.domain([0, 100]);
+    z.domain(data.map(function (c) {
+      return c.id;
+    }));
+
+    const lineGroup = svg.selectAll('.lineGroup')
+      .data(data)
+      .enter().append('g')
+      .attr('class', 'lineGroup');
+
+    lineGroup.append('path')
+      .attr('class', 'line')
+      .attr('d', function (d: any) {
+        return valueline(d.values);
+      })
+      .attr('fill', 'none')
+      // .attr("stroke", "steelblue")
+      .attr('stroke-width', '1.5px')
+      .style('stroke', function (d: any) {
+        return z(d.id);
+      });
+    lineGroup.append('text')
+      .datum(function (d: any) {
+        return {id: d.id, value: d.values[d.values.length - 1]};
+      })
+      .attr('transform', function (d: any) {
+        console.log('translate(' + x(d.value.tick) + ',' + y(d.value.cpu) + ')');
+        return 'translate(' + x(d.value.tick) + ',' + y(d.value.cpu) + ')';
+      })
+      .attr('x', -20)
+      .attr('dy', '0.35em')
+      .style('font', '8px sans-serif')
+      .text(function (d: any) {
+        return d.id;
+      });
+
+    svg.append('g')
+      .attr('transform', 'translate(0,' + height + ')')
+      .call(d3.axisBottom(x));
+
+    svg.append('g')
+      .call(d3.axisLeft(y))
+      .append('text')
+      .attr('transform', 'rotate(-90)')
+      .attr('y', 6)
+      .attr('dy', '0.71em')
+      .attr('fill', '#000')
+      .text('cpu %');
   }
 
 }
