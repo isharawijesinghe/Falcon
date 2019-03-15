@@ -12,36 +12,52 @@ import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 export class SessionsComponent implements OnInit {
 
   Sessiondata: any;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-
   displayedColumns = ['clientChannel', 'clientIp', 'startTime', 'loginId', 'upTime', 'sessionId', 'status'];
   dataSource: MatTableDataSource<SessionData>;
 
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
+
   constructor(private restConnectionService : RestConnectionService) {
 
-    const sessiondata: SessionData[] = [];
-
-    this.restConnectionService.getSessions().subscribe(data => {
-      this.Sessiondata = data;
-      for(let sessionData of this.Sessiondata){
-        console.log(sessionData);
-        sessiondata.push(createNewSessionData(sessionData));
-      }
-      this.dataSource = new MatTableDataSource(sessiondata);
-      console.log(this.dataSource);
-    });
+    // const sessiondata: SessionData[] = [];
+    //
+    // this.restConnectionService.getSessions().subscribe(data => {
+    //   this.Sessiondata = data;
+    //   for(let sessionData of this.Sessiondata){
+    //     console.log(sessionData);
+    //     sessiondata.push(createNewSessionData(sessionData));
+    //   }
+    //   this.dataSource = new MatTableDataSource(sessiondata);
+    //   console.log(this.dataSource);
+    // });
 
   }
 
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
+
+
+    this.restConnectionService.getSessions().subscribe(data => {
+      this.Sessiondata = data;
+
+      const sessiondata: SessionData[] = [];
+      console.log(this.Sessiondata);
+      for(let sessionData of this.Sessiondata){
+        sessiondata.push(createNewSessionData(sessionData));
+      }
+      this.dataSource = new MatTableDataSource(sessiondata);
+      // console.log(this.dataSource);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
+
   }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
+  // ngAfterViewInit() {
+  //   this.dataSource.paginator = this.paginator;
+  //   this.dataSource.sort = this.sort;
+  // }
 
   applyFilter(filterValue: string) {
 

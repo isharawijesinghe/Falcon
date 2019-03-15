@@ -23,6 +23,11 @@
   max-height: 405px;
 }
 
+#load-panel{
+  padding-top: 15px;
+  padding-bottom: 50px;
+}
+
 #CLOSED{
   background-color: #b33939;
 }
