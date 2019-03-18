@@ -35,10 +35,9 @@ export class AppComponent {
     // }
     /////////
 
-
-
     websocketService.initializeWebsocket();
     this.websocketService.cpuHistory = {};
+
     websocketService.messages.subscribe(message => {
       console.log(message);
       this.websocketService.websocketStatus = JSON.stringify(message);
@@ -49,8 +48,11 @@ export class AppComponent {
       }
 
       if (message.messageType === 'view') {
-        this.websocketService.view = message;
+        this.websocketService.setviewData(message);
+        sessionStorage.setItem('view_key',JSON.stringify(message));
       }
+
+
       if (message.messageType === 'metric') {
         const metric = message;
         const view = this.websocketService.view;

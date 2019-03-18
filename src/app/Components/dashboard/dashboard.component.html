@@ -63,7 +63,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let node of websocketConnectionService.view?.nodes" id="{{node['state']}}" >
+          <tr *ngFor="let node of viewDataDummy?.nodes" id="{{node['state']}}" >
             <td >{{node['nodeName']}}</td>
             <td >{{node['ip']}}</td>
             <td class="{{node['state']}}">{{node['state']}}</td>
