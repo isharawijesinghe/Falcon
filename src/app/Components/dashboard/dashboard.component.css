@@ -23,13 +23,17 @@
   max-height: 405px;
 }
 
-#load-panel{
+.load-panel{
   padding-top: 15px;
-  padding-bottom: 50px;
+  padding-bottom: 15px;
 }
 
 #CLOSED{
   background-color: #b33939;
+}
+
+#bottom-row{
+  padding-bottom: 50px;
 }
 
 td.CONNECTED{

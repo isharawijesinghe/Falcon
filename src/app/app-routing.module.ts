@@ -25,8 +25,9 @@ const routes: Routes = [
       { path: 'sessions', component: SessionsComponent },
       { path: 'slamesssages', component: SlaMessagsComponent },
       { path: 'clientcount', component: ClientCountGraphComponent },
+
     ]},
-   { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent }
 ];
 
 @NgModule({
