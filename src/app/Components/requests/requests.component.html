@@ -1,66 +1,39 @@
 <div class="row">
   <div class="col-sm-6">
     <div class="panel wd-panel" id="bulk-container">
-      <div class="panel-filter">
-        <form class="form-inline">
-          <a data-toggle="collapse" data-parent="#accordion" href="#">Client Routes</a> Filter:
-          <!--<input class="form-control display-inline" type="text" ng-model="search.client">-->
-          <div class="example-header">
-              <input class="form-control display-inline" type="text" (keyup)="applyFilter($event.target.value)">
-          </div>
-        </form>
-      </div>
-      <div class="panel-filter">
-        <form class="form-inline">
-        <a data-toggle="collapse" data-parent="#accordion" href="#">Client Routes</a> Filter: OMS-
-        <!--<input class="form-control display-inline" type="text" ng-model="nodeFilter.nextNode">-->
-        <div class="example-header">
-          <input class="form-control display-inline" id="" type="text" (keyup)="applyNodeFilter($event.target.value)">
-        </div>
-        </form>
-      </div>
 
       <div ng-hide="routesHistory == null" id="request-results-history" class="get-routes">
 
-        <!--<div class="example-header">-->
-          <!--<mat-form-field>-->
-            <!--<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">-->
-          <!--</mat-form-field>-->
-        <!--</div>-->
-
         <div class="mat-elevation-z8">
+
           <mat-table [dataSource]="dataSource" matSort>
             <ng-container matColumnDef="client">
-              <mat-header-cell *matHeaderCellDef mat-sort-header >Client</mat-header-cell>
+
+              <mat-header-cell *matHeaderCellDef>
+                Client
+                <mat-form-field>
+                  <input matInput  (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('client')" placeholder="Filter Client" >
+                </mat-form-field>
+              </mat-header-cell>
               <mat-cell *matCellDef="let row"> {{row.client}} </mat-cell>
             </ng-container>
+
             <ng-container matColumnDef="nextNode">
-              <mat-header-cell *matHeaderCellDef>Next Node</mat-header-cell>
+              <mat-header-cell *matHeaderCellDef>
+                Current Node
+                <mat-form-field>
+                  <input matInput  (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('nextNode')" placeholder="Filter Node" >
+                </mat-form-field>
+              </mat-header-cell>
               <mat-cell *matCellDef="let row"> {{row.nextNode}} </mat-cell>
             </ng-container>
 
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
           </mat-table>
-          <mat-paginator [pageSizeOptions]="[5,8,10,15]"></mat-paginator>
+          <mat-paginator [pageSizeOptions]="[8,15,50,100]"></mat-paginator>
         </div>
 
-        <!--<table class="wd-table">-->
-          <!--<thead>-->
-          <!--<tr>-->
-            <!--<th>Client</th>-->
-            <!--<th>Next Node</th>-->
-            <!--<th>Update Time</th>-->
-          <!--</tr>-->
-          <!--</thead>-->
-          <!--<tbody>-->
-          <!--<tr *ngFor="let route of routes">-->
-            <!--<td>{{route["client"]}}</td>-->
-            <!--<td>OMS-{{route["nextNode"]}}</td>-->
-            <!--<td>{{route["updateTime"]}}</td>-->
-          <!--</tr>-->
-          <!--</tbody>-->
-        <!--</table>-->
       </div>
     </div>
   </div>
