@@ -1,26 +1,26 @@
-#overlay {
-  position: fixed; /* Sit on top of the page content */
-  display: block; /* Hidden by default */
-  width: 100%; /* Full width (cover the whole page) */
-  height: 100%; /* Full height (cover the whole page) */
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0,0,0,0.5); /* Black background with opacity */
-  z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
-  cursor: pointer; /* Add a pointer on hover */
-}
+/*#overlay {*/
+  /*position: fixed; !* Sit on top of the page content *!*/
+  /*display: block; !* Hidden by default *!*/
+  /*width: 100%; !* Full width (cover the whole page) *!*/
+  /*height: 100%; !* Full height (cover the whole page) *!*/
+  /*top: 0;*/
+  /*left: 0;*/
+  /*right: 0;*/
+  /*bottom: 0;*/
+  /*background-color: rgba(0,0,0,0.5); !* Black background with opacity *!*/
+  /*z-index: 2; !* Specify a stack order in case you're using a different order for other elements *!*/
+  /*cursor: pointer; !* Add a pointer on hover *!*/
+/*}*/
 
-#text{
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  font-size: 50px;
-  color: white;
-  transform: translate(-50%,-50%);
-  -ms-transform: translate(-50%,-50%);
-}
+/*#text{*/
+  /*position: absolute;*/
+  /*top: 50%;*/
+  /*left: 50%;*/
+  /*font-size: 50px;*/
+  /*color: white;*/
+  /*transform: translate(-50%,-50%);*/
+  /*-ms-transform: translate(-50%,-50%);*/
+/*}*/
 
 /* Full-width input fields */
 input[type=text], input[type=password] {
@@ -33,49 +33,49 @@ input[type=text], input[type=password] {
 }
 
 /* Set a style for all buttons */
-button {
-  /*background-color: #07103a;*/
-  /*color: white;*/
+/*button {*/
+  /*!*background-color: #07103a;*!*/
+  /*!*color: white;*!*/
+  /*!*padding: 14px 20px;*!*/
+  /*!*margin: 8px 0;*!*/
+  /*!*border: none;*!*/
+  /*!*cursor: pointer;*!*/
+  /*!*width: 100%;*!*/
+
+
+  /*color: #000300;*/
+  /*background-color: #091760;*/
   /*padding: 14px 20px;*/
+  /*position: relative;*/
   /*margin: 8px 0;*/
-  /*border: none;*/
-  /*cursor: pointer;*/
-  /*width: 100%;*/
+  /*text-align: center;*/
+  /*font-size: 18px;*/
+  /*font-weight: bold;*/
 
+  /*box-shadow:*/
+    /*1px 1px 0 0 #0b154d,*/
+    /*2px 2px 0 0 #0b154d,*/
+    /*3px 3px 0 0 #0b154d,*/
+    /*4px 4px 0 0 #0b154d,*/
+    /*5px 5px 5px 0 #000000;*/
 
-  color: #000300;
-  background-color: #091760;
-  padding: 14px 20px;
-  position: relative;
-  margin: 8px 0;
-  text-align: center;
-  font-size: 18px;
-  font-weight: bold;
+  /*border-radius: 10px;*/
+  /*-webkit-border-radius: 10px;*/
+  /*-moz-border-radius: 10px;*/
+  /*-webkit-transition: background-color 0.2s linear;*/
+  /*transition: background-color 0.2s linear;*/
 
-  box-shadow:
-    1px 1px 0 0 #0b154d,
-    2px 2px 0 0 #0b154d,
-    3px 3px 0 0 #0b154d,
-    4px 4px 0 0 #0b154d,
-    5px 5px 5px 0 #000000;
+/*}*/
 
-  border-radius: 10px;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  -webkit-transition: background-color 0.2s linear;
-  transition: background-color 0.2s linear;
+/*button:active {*/
+  /*box-shadow: 1px 1px 5px 0 #000000;*/
+  /*-webkit-box-shadow: 1px 1px 5px 0 #000000;*/
+  /*-moz-box-shadow: 1px 1px 5px 0 #000000;*/
+  /*top: 4px;*/
+  /*left: 4px;*/
+/*}*/
 
-}
-
-button:active {
-  box-shadow: 1px 1px 5px 0 #000000;
-  -webkit-box-shadow: 1px 1px 5px 0 #000000;
-  -moz-box-shadow: 1px 1px 5px 0 #000000;
-  top: 4px;
-  left: 4px;
-}
-
-button:hover { background-color: #3541b0; }
+/*button:hover { background-color: #3541b0; }*/
 
 /* Extra styles for the cancel button */
 .cancelbtn {
