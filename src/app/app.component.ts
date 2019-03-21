@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {WebSocketConnectionService} from './services/web-socket-connection.service';
 import {NavigationStart, Router} from "@angular/router";
 
+
 // import { Runtime, Inspector } from "@observablehq/notebook-runtime";
 
 @Component({
@@ -12,8 +13,6 @@ import {NavigationStart, Router} from "@angular/router";
 })
 export class AppComponent {
   title = 'Falcon';
-
-
 
   constructor(private websocketService: WebSocketConnectionService,private router :Router) {
 

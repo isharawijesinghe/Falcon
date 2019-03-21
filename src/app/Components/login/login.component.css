@@ -87,6 +87,7 @@ input[type=text], input[type=password] {
 
 .container {
   padding: 16px;
+  background-color: rgba(51, 50, 52, 0.96);
 }
 
 span.psw {

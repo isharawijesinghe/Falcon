@@ -2,7 +2,7 @@
   <div class="col-sm-6">
     <div class="panel wd-panel" id="bulk-container">
 
-      <div ng-hide="routesHistory == null" id="request-results-history" class="get-routes">
+      <div id="request-results-history" class="get-routes">
 
         <div class="mat-elevation-z8">
 
@@ -11,9 +11,6 @@
 
               <mat-header-cell *matHeaderCellDef>
                 Client
-                <mat-form-field>
-                  <input matInput  (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('client')" placeholder="Filter Client" >
-                </mat-form-field>
               </mat-header-cell>
               <mat-cell *matCellDef="let row"> {{row.client}} </mat-cell>
             </ng-container>
@@ -21,13 +18,27 @@
             <ng-container matColumnDef="nextNode">
               <mat-header-cell *matHeaderCellDef>
                 Current Node
-                <mat-form-field>
-                  <input matInput  (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('nextNode')" placeholder="Filter Node" >
-                </mat-form-field>
               </mat-header-cell>
               <mat-cell *matCellDef="let row"> {{row.nextNode}} </mat-cell>
             </ng-container>
+            <ng-container matColumnDef="header-row-first-group">
+              <th mat-header-cell *matHeaderCellDef
+                  [attr.colspan]="2">
+                <mat-form-field >
+                  <input matInput  (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('client')" placeholder="Filter Client" >
+                </mat-form-field>
+              </th>
+            </ng-container>
+            <ng-container matColumnDef="header-row-second-group">
+              <th mat-header-cell *matHeaderCellDef
+                  [attr.colspan]="2">
+                <mat-form-field>
+                  <input matInput  (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('nextNode')" placeholder="Filter Node" >
+                </mat-form-field>
+              </th>
+            </ng-container>
 
+            <tr mat-header-row *matHeaderRowDef="['header-row-first-group','header-row-second-group']"></tr>
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
           </mat-table>
@@ -64,27 +75,55 @@
       <div class="col-md-12">
         <div id="main-request-history" class="panel wd-panel input-group">
           <div class="form-wrapper">
-            <form ng-submit="getRoutesHistory()" class="col-md-12 form-inline" id="form-history">
-              Client ID: <input class="form-control display-inline" type="text" >
-              <input type="submit" value="GET HISTORY" class="btn btn-primary" style="float: right" >
+            <form class="col-md-12 form-inline" id="form-history">
+              Client ID: <input class="form-control display-inline" type="text"  name="routeHistoryClientID" [(ngModel)]="routeHistoryClientID">
+              <input type="submit" value="GET HISTORY" class="btn btn-primary" (click)= "getRoutesHistory()">
             </form>
           </div>
-          <div class="panel-collapse collapse in">
-            <table class="wd-table">
-              <thead>
-              <tr>
-                <th>Client</th>
-                <th>Next Node</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr
-                ng-repeat="record in clientRoutesAll | filter:search | filter: nodeFilter | orderBy : 'client' | orderBy: 'nextNode'">
-                <td></td>
-                <td></td>
-              </tr>
-              </tbody>
-            </table>
+          <div class="get-routes" id="history-table" *ngIf="!routesHistoryDetailHide">
+
+            <div class="mat-elevation-z8">
+
+              <mat-table [dataSource]="dataSourceHistory" matSort>
+                <ng-container matColumnDef="historyClient">
+
+                  <mat-header-cell *matHeaderCellDef>
+                    Client
+                    <!--<mat-form-field>-->
+                      <!--<input matInput  (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('client')" placeholder="Filter Client" >-->
+                    <!--</mat-form-field>-->
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{row.historyClient}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="historyNextNode">
+                  <mat-header-cell *matHeaderCellDef>
+                    Node
+                    <!--<mat-form-field>-->
+                      <!--<input matInput  (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('nextNode')" placeholder="Filter Node" >-->
+                    <!--</mat-form-field>-->
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{row.historyNextNode}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="updateTime">
+                  <mat-header-cell *matHeaderCellDef>
+                    Update Time
+                    <!--<mat-form-field>-->
+                    <!--<input matInput  (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('nextNode')" placeholder="Filter Node" >-->
+                    <!--</mat-form-field>-->
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{row.updateTime}} </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumnsHistory"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumnsHistory;"></mat-row>
+              </mat-table>
+              <mat-paginator [pageSizeOptions]="[8,15,25]"></mat-paginator>
+            </div>
+            <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+              <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
+            </mat-card>
           </div>
       </div>
     </div>

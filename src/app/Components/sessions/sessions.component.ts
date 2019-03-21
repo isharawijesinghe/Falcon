@@ -12,6 +12,7 @@ import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 export class SessionsComponent implements OnInit {
 
   Sessiondata: any;
+  isLoading: any;
   displayedColumns = ['clientChannel', 'clientIp', 'startTime', 'loginId', 'upTime', 'sessionId', 'status'];
   dataSource: MatTableDataSource<SessionData>;
 
@@ -21,23 +22,11 @@ export class SessionsComponent implements OnInit {
 
   constructor(private restConnectionService : RestConnectionService) {
 
-    // const sessiondata: SessionData[] = [];
-    //
-    // this.restConnectionService.getSessions().subscribe(data => {
-    //   this.Sessiondata = data;
-    //   for(let sessionData of this.Sessiondata){
-    //     console.log(sessionData);
-    //     sessiondata.push(createNewSessionData(sessionData));
-    //   }
-    //   this.dataSource = new MatTableDataSource(sessiondata);
-    //   console.log(this.dataSource);
-    // });
-
   }
 
   ngOnInit() {
 
-
+    this.isLoading=true;
     this.restConnectionService.getSessions().subscribe(data => {
       this.Sessiondata = data;
 
@@ -46,11 +35,14 @@ export class SessionsComponent implements OnInit {
       for(let sessionData of this.Sessiondata){
         sessiondata.push(createNewSessionData(sessionData));
       }
+      this.isLoading = false;
       this.dataSource = new MatTableDataSource(sessiondata);
       // console.log(this.dataSource);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-    });
+    },
+    error => this.isLoading = false
+    );
 
   }
 

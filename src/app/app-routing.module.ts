@@ -12,11 +12,12 @@ import {ClientCountGraphComponent} from './Components/client-count-graph/client-
 import {LoginComponent} from './Components/login/login.component';
 import {LayoutComponent} from './Components/CommonComponents/layout/layout.component';
 import {AuthGuard} from "./auth.guard";
+import { AlertLoginComponent } from './Components/alert-login/alert-login.component';
 
 export const routes: Routes = [
   { path: '', component: LayoutComponent,
     children : [
-      { path: '', redirectTo: 'home', pathMatch: 'full',canActivate: [AuthGuard]},
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full'},
       { path: 'home', component: HomeComponent,canActivate: [AuthGuard] },
       { path: 'dashboard', component: DashboardComponent},
       { path: 'view', component: ViewComponent,canActivate: [AuthGuard] },
@@ -28,7 +29,8 @@ export const routes: Routes = [
       { path: 'clientcount', component: ClientCountGraphComponent ,canActivate: [AuthGuard]},
 
     ]},
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
+  { path: 'alertlogin', component:AlertLoginComponent}
 ];
 
 @NgModule({

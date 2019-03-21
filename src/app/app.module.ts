@@ -55,6 +55,7 @@ import {
 } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {DataSource} from '@angular/cdk/table';
+import { AlertLoginComponent } from './Components/alert-login/alert-login.component';
 // import {CdkStepperModule} from '@angular/cdk/stepper';
 // import {CdkTableModule} from '@angular/cdk/table';
 // import {CdkTreeModule} from '@angular/cdk/tree';
@@ -77,6 +78,7 @@ import {DataSource} from '@angular/cdk/table';
     ClientCountGraphComponent,
     LoginComponent,
     LayoutComponent,
+    AlertLoginComponent,
     // CdkStepperModule,
     // CdkTableModule,
     // CdkTreeModule,
@@ -129,6 +131,8 @@ import {DataSource} from '@angular/cdk/table';
     ReactiveFormsModule,
     RouterModule.forRoot(routes)
   ],
+  entryComponents:
+    [ AlertLoginComponent ],
   providers: [RestConnectionService, WebSocketConnectionService,AuthGuard],
   bootstrap: [AppComponent]
 })

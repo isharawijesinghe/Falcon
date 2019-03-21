@@ -13,18 +13,25 @@ export class RequestsComponent implements OnInit {
 
   routeClientID: any;
   routes:any;
+  routesHistory: any;
   routesDetailHide: boolean = true;
+  routesHistoryDetailHide: boolean = true;
   routeHistoryClientID: any;
+  isLoading: any;
   displayedColumns :String[]=['client','nextNode'];
+  displayedColumnsHistory : String[]=['historyClient','historyNextNode','updateTime']
   dataSource: MatTableDataSource<routes>;
+  dataSourceHistory: MatTableDataSource<routesHistory>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+
 
   constructor(private restConnectionService: RestConnectionService) {
   }
 
   ngOnInit() {
+    this.isLoading = true;
     this.restConnectionService.getAllRoutes().subscribe(data =>{
       this.routes = data;
       const routeData: routes[] = [];
@@ -34,25 +41,14 @@ export class RequestsComponent implements OnInit {
       for(let routedata of this.routes){
         routeData.push(createNewroutedata(routedata));
       }
+      this.isLoading = false;
       this.dataSource = new MatTableDataSource(routeData);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-    });
+    },
+      error => this.isLoading = false);
 
-    // this.dataSource.filterPredicate = (data: routes, filter: string) => {
-    //     return data.nextNode == filter;
-    // };
 
-    // this.dataSource.filterPredicate = (data: routes, filtersJson: string) => {
-    //     const matchFilter = [];
-    //     const filters = JSON.parse(filtersJson);
-    //
-    //     filters.forEach(filter => {
-    //       const val = data[filter.id] === null ? '' : data[filter.id];
-    //       matchFilter.push(val.toLowerCase().includes(filter.value.toLowerCase()));
-    //     });
-    //     return matchFilter.every(Boolean);
-    //   };
 
   }
 
@@ -67,32 +63,29 @@ export class RequestsComponent implements OnInit {
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-  //
-  // applyFilter(filterValue: string) {
-  //   filterValue = filterValue.trim(); // Remove whitespace
-  //   filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
-  //   this.dataSource.filter = filterValue;
-  // }
-  //
-  // applyNodeFilter(filterValue: string) {
-  //   filterValue = filterValue.trim(); // Remove whitespace
-  //   filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-  //   this.dataSource.filter = filterValue;
-  // }
 
-  // applyNodeFilter(filterValue: string) {
-  //   const tableFilters = [];
-  //   tableFilters.push({
-  //     id: 'nextNode',
-  //     value: filterValue
-  //   });
-  // }
 
   getRoutes(){
     this.restConnectionService.getRoutesDetails(this.routeClientID).subscribe(data =>{
       this.routes = data;
       this.routesDetailHide = false;
       console.log(this.routes);
+    });
+  }
+
+  getRoutesHistory(){
+    this.restConnectionService.getRoutesHistoryDetails(this.routeHistoryClientID).subscribe(data =>{
+      this.routesHistory = data;
+      const routeHistorydata: routesHistory[] = [];
+      //this.dataSource = this.routes;
+      this.routesHistoryDetailHide = false;
+      for(let routeDataHistory of this.routesHistory){
+        routeHistorydata.push(createNewHistoryroutedata(routeDataHistory));
+      }
+      this.dataSourceHistory = new MatTableDataSource(routeHistorydata);
+      this.dataSourceHistory.paginator = this.paginator;
+      // this.dataSourceHistory.sort = this.sort;
+      console.log(this.routesHistory);
     });
   }
 }
@@ -102,9 +95,23 @@ export interface routes{
   nextNode: String;
 }
 
+export interface routesHistory{
+  historyClient : String;
+  historyNextNode: String;
+  updateTime: String;
+}
+
 function createNewroutedata (routedata : any): routes{
   return{
     client : routedata['client'],
     nextNode:routedata['nextNode']
+  };
+
+}
+function createNewHistoryroutedata (routeHistorydata : any): routesHistory {
+  return {
+    historyClient: routeHistorydata['client'],
+    historyNextNode: routeHistorydata['nextNode'],
+    updateTime: routeHistorydata['updateTime']
   };
 }

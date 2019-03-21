@@ -5,3 +5,6 @@
 #table-slamessage{
   padding-bottom: 50px;
 }
+.mat-progress-spinner circle, .mat-spinner circle {
+  stroke: #3e82c2;
+}

@@ -18,6 +18,7 @@ export class DashboardComponent implements OnInit {
   private viewDataDummy: any;
 
 
+
   constructor(private websocketConnectionService: WebSocketConnectionService) {
 
 

@@ -7,62 +7,65 @@
   </div>
 </div>
 
-    <div class="example-header">
-      <mat-form-field>
-        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-      </mat-form-field>
-    </div>
+<div class="example-header">
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+  </mat-form-field>
+</div>
 
-    <div class="mat-elevation-z8" id="table-sessions">
+<div class="mat-elevation-z8" id="table-sessions">
 
-      <mat-table [dataSource]="dataSource" matSort>
+  <mat-table [dataSource]="dataSource" matSort>
 
-        <!-- Client Channel Column -->
-        <ng-container matColumnDef="clientChannel">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Client Channel </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.clientChannel}} </mat-cell>
-        </ng-container>
+    <!-- Client Channel Column -->
+    <ng-container matColumnDef="clientChannel">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Client Channel </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.clientChannel}} </mat-cell>
+    </ng-container>
 
-        <!-- Client IP Column -->
-        <ng-container matColumnDef="clientIp">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Client IP </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.clientIp}} </mat-cell>
-        </ng-container>
+    <!-- Client IP Column -->
+    <ng-container matColumnDef="clientIp">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Client IP </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.clientIp}} </mat-cell>
+    </ng-container>
 
-        <!-- Start Time Column -->
-        <ng-container matColumnDef="startTime">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Start Time </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.startTime}} </mat-cell>
-        </ng-container>
+    <!-- Start Time Column -->
+    <ng-container matColumnDef="startTime">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Start Time </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.startTime}} </mat-cell>
+    </ng-container>
 
-        <!-- Login ID Column -->
-        <ng-container matColumnDef="loginId">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Login ID </mat-header-cell>
-          <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.loginId}} </mat-cell>
-        </ng-container>
+    <!-- Login ID Column -->
+    <ng-container matColumnDef="loginId">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Login ID </mat-header-cell>
+      <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.loginId}} </mat-cell>
+    </ng-container>
 
-        <!-- Up Time ID Column -->
-        <ng-container matColumnDef="upTime">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Up Time </mat-header-cell>
-          <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.upTime}} </mat-cell>
-        </ng-container>
+    <!-- Up Time ID Column -->
+    <ng-container matColumnDef="upTime">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Up Time </mat-header-cell>
+      <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.upTime}} </mat-cell>
+    </ng-container>
 
-        <!-- Session ID Column -->
-        <ng-container matColumnDef="sessionId">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Session ID </mat-header-cell>
-          <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.sessionId}} </mat-cell>
-        </ng-container>
+    <!-- Session ID Column -->
+    <ng-container matColumnDef="sessionId">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Session ID </mat-header-cell>
+      <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.sessionId}} </mat-cell>
+    </ng-container>
 
-        <!-- Session ID Column -->
-        <ng-container matColumnDef="status">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
-          <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.status}} </mat-cell>
-        </ng-container>
+    <!-- Session ID Column -->
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+      <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.status}} </mat-cell>
+    </ng-container>
 
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-      </mat-table>
-      <mat-paginator [pageSizeOptions]="[5, 8, 10]" [length]="100"
-                     [pageSize]="10" showFirstLastButtons></mat-paginator>
-    </div>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <mat-paginator [pageSizeOptions]="[10,50,100]" [length]="100"
+                 [pageSize]="10" showFirstLastButtons></mat-paginator>
+</div>
 
+<mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+  <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
+</mat-card>

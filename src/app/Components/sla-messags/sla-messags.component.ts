@@ -12,6 +12,7 @@ import {routes} from "../requests/requests.component";
 export class SlaMessagsComponent implements OnInit {
 
   SLAMessage: any;
+  isLoading: any;
   displayedColumns = ['unique_request_id', 'channel', 'client_ip', 'comm_ver', 'responseTime', 'date', 'login_id', 'message', 'message_type', 'session_id', 'tenantCode'];
   dataSource: MatTableDataSource<SLAMessage>;
 
@@ -33,6 +34,8 @@ export class SlaMessagsComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.isLoading = true;
     this.restConnectionService.getSLAMessage().subscribe(data =>{
       this.SLAMessage = data;
 
@@ -41,10 +44,12 @@ export class SlaMessagsComponent implements OnInit {
       for(let sessionData of this.SLAMessage){
         sessiondata.push(createNewSlaMessage(sessionData));
       }
+      this.isLoading = false;
       this.dataSource = new MatTableDataSource(sessiondata);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-    });
+    },
+      error => this.isLoading = false);
 
   }
 
