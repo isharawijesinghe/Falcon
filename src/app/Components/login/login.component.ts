@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, Validators, FormControl} from "@angular/forms";
 import {Login} from "../../login";
 import {Router} from "@angular/router";
 import {AuthService} from "../../auth.service";
-
+import {PopupService} from '../../Services/popup-service.service';
 
 @Component({
   selector: 'app-login',
@@ -15,11 +15,12 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   message: string;
   returnUrl: string;
+  isLogged: boolean;
 
-
-  constructor(private formBuilder: FormBuilder,private router: Router, public authService: AuthService) {}
+  constructor(private formBuilder: FormBuilder,private router: Router, public authService: AuthService, private popup:PopupService) {}
 
   ngOnInit() {
+    this.isLogged = false;
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
@@ -44,12 +45,13 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('isLoggedIn', "true");
         localStorage.setItem('token', this.f.username.value);
         this.router.navigate([this.returnUrl]);
+        this.popup.close();
+        window.location.reload();
       }
       else{
         this.message = "Please check your Username and password";
       }
     }
   }
-
 
 }

@@ -25,7 +25,7 @@
               <li>
                 <ng-container *ngIf="isLogged"><a class="nav-link" href="javascript:void(0);" (click)="logout()">Logout</a>
                 </ng-container>
-                <ng-container *ngIf="!isLogged"><a class="nav-link" href="javascript:void(0);" (click)="this.router.navigate(['/login'])">Login</a>
+                <ng-container *ngIf="!isLogged"><a class="nav-link" href="javascript:void(0);" (click)="login()">Login</a>
                 </ng-container>
               </li>
 

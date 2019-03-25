@@ -23,17 +23,22 @@
   box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.1), 0 0px 5px rgba(0, 0, 0, 0.05);
   border: 1px solid #7f8590;
 }
-
+#table01{
+  max-height: 480px;
+  overflow-y: auto;
+}
+#table02{
+  max-height: 210px;
+  overflow-y: auto;
+}
 #main-request{
   height: 175px;
 }
 #main-request-history {
   height: 385px;
-  overflow-y: auto;
 }
 #bulk-container{
   height: 575px;
-  overflow-y: auto;
 }
 
 .form-inline {
@@ -63,28 +68,28 @@
 }
 
 .mat-form-field{
-  margin-left: 20px;
   width: 120px;
   font-size: xx-small;
 }
 
 #history-table{
   width: 98%;
-  padding-top: 20px;
   padding-left: 12px;
 }
 
-th.mat-header-cell:first-of-type {
+th.mat-header-cell:first-of-type,th.mat-header-cell:last-of-type  {
   width: 280px;
-  padding-top: 10px;
-  background-color: #31708f;
+  /*padding-top: 10px;*/
 }
-th.mat-header-cell:last-of-type {
-  width: 280px;
-  padding-top: 10px;
-  background-color: #31708f;
+mat-header-row {
+  min-height: 40px;
+  border-bottom-width: 0px;
+}
+#filter-row{
+  height: 20px;
 }
 
 mat-row {
-  min-height: 40px;
+  min-height: 39px;
 }
+

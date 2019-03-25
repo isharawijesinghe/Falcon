@@ -12,7 +12,6 @@ import {ClientCountGraphComponent} from './Components/client-count-graph/client-
 import {LoginComponent} from './Components/login/login.component';
 import {LayoutComponent} from './Components/CommonComponents/layout/layout.component';
 import {AuthGuard} from "./auth.guard";
-import { AlertLoginComponent } from './Components/alert-login/alert-login.component';
 
 export const routes: Routes = [
   { path: '', component: LayoutComponent,
@@ -29,8 +28,7 @@ export const routes: Routes = [
       { path: 'clientcount', component: ClientCountGraphComponent ,canActivate: [AuthGuard]},
 
     ]},
-  { path: 'login', component: LoginComponent },
-  { path: 'alertlogin', component:AlertLoginComponent}
+  { path: 'login', component: LoginComponent }
 ];
 
 @NgModule({

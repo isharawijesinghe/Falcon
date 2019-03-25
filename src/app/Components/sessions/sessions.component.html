@@ -7,13 +7,13 @@
   </div>
 </div>
 
-<div class="example-header">
+<div class="example-header" *ngIf="!isLoading">
   <mat-form-field>
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
   </mat-form-field>
 </div>
 
-<div class="mat-elevation-z8" id="table-sessions">
+<div class="mat-elevation-z8" id="table-sessions" *ngIf="!isLoading">
 
   <mat-table [dataSource]="dataSource" matSort>
 
