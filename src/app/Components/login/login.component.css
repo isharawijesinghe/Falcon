@@ -38,12 +38,24 @@ input[type=text], input[type=password] {
 }
 
 #login-box{
-  padding-top: 150px;
+  /*padding-top: 150px;*/
+  /*padding-bottom: 150px;*/
+  position: relative;
+  top: 30%;
+  left: 0%;
+  height: 250px;
+  background-color: darkgrey;
+}
+h3{
+  padding-top: 20px;
+}
 
+#form-block{
+  padding-top: 15px;
 }
 
 #login-popup{
-
+  height: 100%;
 }
 
 .scale-up-center {
