@@ -45,12 +45,12 @@ export class AppComponent {
 
       if (message.messageType === 'sys_metric') {
         this.websocketService.setsysMetrics(message);
-        sessionStorage.setItem('sys_metric_key',JSON.stringify(message));
+        // sessionStorage.setItem('sys_metric_key',JSON.stringify(message));
       }
 
       if (message.messageType === 'view') {
         this.websocketService.setviewData(message);
-        sessionStorage.setItem('view_key',JSON.stringify(message));
+        // sessionStorage.setItem('view_key',JSON.stringify(message));
       }
 
 
