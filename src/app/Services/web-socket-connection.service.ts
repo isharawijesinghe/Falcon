@@ -45,6 +45,9 @@ export class WebSocketConnectionService {
         this.ws.onmessage = obs.next.bind(obs);
         this.ws.onerror = obs.error.bind(obs);
         this.ws.onclose = obs.complete.bind(obs);
+        this.ws.onopen = ()=>{
+          this.messages.next(JSON.stringify({ op: 'Connected To WebSocket' }));
+        };
         return this.ws.close.bind(this.ws);
       }
     );
@@ -67,6 +70,7 @@ export class WebSocketConnectionService {
           return data;
         }
       ));
+    //
   }
   setnodeBlock(nodeBlock) {
     this.nodeBlock = nodeBlock;

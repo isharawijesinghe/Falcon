@@ -36,9 +36,11 @@ export class AppComponent {
 
     websocketService.initializeWebsocket();
     this.websocketService.cpuHistory = {};
+    // this.websocketService.messages.o
 
     websocketService.messages.subscribe(message => {
       console.log(message);
+
       this.websocketService.websocketStatus = JSON.stringify(message);
 
       if (message.messageType === 'sys_metric') {
