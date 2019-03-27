@@ -47,6 +47,7 @@ input[type=text], input[type=password] {
   background-color: darkgrey;
   padding-right: 0px;
   padding-left: 0px;
+  border-radius: 25px;
 }
 
 .form-box{
@@ -59,7 +60,8 @@ h3{
 }
 
 #form-block{
-  padding-top: 15px;
+  padding-top: 12px;
+  margin-right: 35px;
 }
 
 #login-popup{
@@ -71,6 +73,13 @@ h3{
   background: url("../../../assets/img/close_black.png");
   height: 22px;
   width: 22px;
+  margin-top: 17px;
+
+}
+.shadow {
+  -moz-box-shadow:    3px 3px 5px 6px #ccc;
+  -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+  box-shadow:         3px 3px 5px 6px #ccc;
 }
 
 .scale-up-center {
@@ -96,4 +105,10 @@ h3{
     -webkit-transform: scale(1);
     transform: scale(1);
   }
+}
+
+#username,#password{
+  font-size: small;
+  margin-top: 10px;
+  padding-left: 35px;
 }

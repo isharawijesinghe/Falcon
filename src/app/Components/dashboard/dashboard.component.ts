@@ -56,13 +56,18 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    if(this.websocketConnectionService.cpuHistory != null && this.tpsHeight!= null ){
+      this.drawSystemLoadAverage(this.tpsHeight);
+    }
+
     if(this.websocketConnectionService.nodeBlock != null){
       this.blockData = this.websocketConnectionService.nodeBlock;
       this.drawBlocks();
     }
 
-    if(this.websocketConnectionService.cpuHistory != null && this.tpsHeight!= null ){
-      this.drawSystemLoadAverage(this.tpsHeight);
+    if(this.websocketConnectionService.viewData != null){
+      this.viewData = this.websocketConnectionService.viewData;
     }
 
   }
