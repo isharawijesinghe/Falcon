@@ -17,15 +17,15 @@
           </div>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class=" nav navbar-nav navbar-right ml-auto mt-2 mt-lg-0">
-              <li class="nav-item active" id="greeting-link"><a class="nav-link"><ng-container *ngIf="isLogged">Welcome,  {{id}} !</ng-container>
-                <ng-container *ngIf="!isLogged">Welcome,  Guest !</ng-container></a></li>
+              <li class="nav-item active" id="greeting-link"><a class="nav-link"><ng-container *ngIf="getLogStatus()">Welcome,  {{id}} !</ng-container>
+                <ng-container *ngIf="!getLogStatus()">Welcome,  Guest !</ng-container></a></li>
               <li class="nav-item active">
                 <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
               </li>
               <li>
-                <ng-container *ngIf="isLogged"><a class="nav-link" href="javascript:void(0);" (click)="logout()">Logout</a>
+                <ng-container *ngIf="getLogStatus()"><a class="nav-link" href="javascript:void(0);" (click)="logout()">Logout</a>
                 </ng-container>
-                <ng-container *ngIf="!isLogged"><a class="nav-link" href="javascript:void(0);" (click)="login()">Login</a>
+                <ng-container *ngIf="!getLogStatus()"><a class="nav-link" href="javascript:void(0);" (click)="login()">Login</a>
                 </ng-container>
               </li>
 

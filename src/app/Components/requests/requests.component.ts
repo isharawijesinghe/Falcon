@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {RestConnectionService} from '../../Services/rest-connection.service';
 import { ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
@@ -24,6 +24,9 @@ export class RequestsComponent implements OnInit {
   dataSourceHistory: MatTableDataSource<routesHistory>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  // @ViewChild(MatPaginator) paginator2: MatPaginator;
+  // @ViewChildren(MatPaginator) paginators: QueryList<MatPaginator>;
+  // @ViewChildren(MatSort) sorts: QueryList<MatSort>;
   @ViewChild(MatSort) sort: MatSort;
 
 
@@ -83,8 +86,8 @@ export class RequestsComponent implements OnInit {
         routeHistorydata.push(createNewHistoryroutedata(routeDataHistory));
       }
       this.dataSourceHistory = new MatTableDataSource(routeHistorydata);
-      this.dataSourceHistory.paginator = this.paginator;
-      // this.dataSourceHistory.sort = this.sort;
+      // this.dataSourceHistory.paginator = this.paginators.toArray()[1];
+      // this.dataSourceHistory.sort = this.sorts.toArray()[1];
       console.log(this.routesHistory);
     });
   }

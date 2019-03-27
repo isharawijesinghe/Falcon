@@ -21,7 +21,6 @@ export class SessionsComponent implements OnInit {
 
 
   constructor(private restConnectionService : RestConnectionService) {
-
   }
 
   ngOnInit() {
@@ -38,18 +37,18 @@ export class SessionsComponent implements OnInit {
       this.isLoading = false;
       this.dataSource = new MatTableDataSource(sessiondata);
       // console.log(this.dataSource);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+        setTimeout(() => this.dataSource.paginator = this.paginator);
+        setTimeout(() => this.dataSource.sort = this.sort);
+      // this.dataSource.paginator = this.paginator;
+      // this.dataSource.sort = this.sort;
     },
     error => this.isLoading = false
     );
 
   }
 
-  // ngAfterViewInit() {
-  //   this.dataSource.paginator = this.paginator;
-  //   this.dataSource.sort = this.sort;
-  // }
+
+
 
   applyFilter(filterValue: string) {
 

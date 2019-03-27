@@ -9,6 +9,8 @@ export class PopupService {
 
   constructor(private overlay: Overlay) { }
   overlayRef:any;
+  currentlyLoaded:boolean;
+
   modal() {
 
     const positionStrategy = this.overlay.position()
@@ -28,10 +30,12 @@ export class PopupService {
     this.overlayRef = this.overlay.create(overlayConfig);
     const loginPortal = new ComponentPortal(LoginComponent);
     this.overlayRef.attach(loginPortal);
+    this.currentlyLoaded =true;
   }
 
   close(){
     this.overlayRef.dispose();
+    this.currentlyLoaded = false;
   }
 
 

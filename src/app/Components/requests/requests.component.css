@@ -28,7 +28,7 @@
   overflow-y: auto;
 }
 #table02{
-  max-height: 210px;
+  max-height: 290px;
   overflow-y: auto;
 }
 #main-request{
@@ -65,6 +65,7 @@
 
 .form-wrapper{
   padding-bottom: 0px;
+  height: 45px;
 }
 
 .mat-form-field{

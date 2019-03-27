@@ -46,8 +46,10 @@ export class SlaMessagsComponent implements OnInit {
       }
       this.isLoading = false;
       this.dataSource = new MatTableDataSource(sessiondata);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+      // this.dataSource.paginator = this.paginator;
+      // this.dataSource.sort = this.sort;
+        setTimeout(() => this.dataSource.paginator = this.paginator);
+        setTimeout(() => this.dataSource.sort = this.sort);
     },
       error => this.isLoading = false);
 

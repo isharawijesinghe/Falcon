@@ -15,7 +15,7 @@
 
 <div class="mat-elevation-z8" id="table-sessions" *ngIf="!isLoading">
 
-  <mat-table [dataSource]="dataSource" matSort>
+  <mat-table [dataSource]="dataSource" matSort id="session-content">
 
     <!-- Client Channel Column -->
     <ng-container matColumnDef="clientChannel">
@@ -59,11 +59,10 @@
       <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.status}} </mat-cell>
     </ng-container>
 
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-header-row *matHeaderRowDef="displayedColumns;sticky:true"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
-  <mat-paginator [pageSizeOptions]="[10,50,100]" [length]="100"
-                 [pageSize]="10" showFirstLastButtons></mat-paginator>
+  <mat-paginator [pageSizeOptions]="[8,20,30]"[pageSize]="8" showFirstLastButtons></mat-paginator>
 </div>
 
 <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">

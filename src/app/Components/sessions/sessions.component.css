@@ -9,3 +9,7 @@
 .mat-progress-spinner circle, .mat-spinner circle {
   stroke: #3e82c2;
 }
+.mat-table{
+  max-height: 445px;
+  overflow-y: auto;
+}

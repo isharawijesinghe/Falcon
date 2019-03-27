@@ -14,28 +14,40 @@ import {PopupService} from '../../../Services/popup-service.service';
 export class HeaderNavBarComponent implements OnInit {
   id: String;
 
-  @Input() isLogged: boolean;
+  isLogged: boolean;
 
   constructor(private router: Router,public authService: AuthService, private popup: PopupService) {
     this.id = localStorage.getItem('token');
 
-    if(localStorage.getItem('isLoggedIn')==="true"){
-      this.isLogged = true;
-    }
+    // if(localStorage.getItem('isLoggedIn')==="true"){
+    //   this.isLogged = true;
+    // }
   }
 
   ngOnInit() {
   }
 
+  getLogStatus():boolean{
+    if(localStorage.getItem('isLoggedIn')==="true"){
+      this.isLogged = true;
+    }else{
+      this.isLogged = false;
+    }
+    return this.isLogged;
+  }
+
   logout(): void {
     console.log("Logout");
     this.authService.logout();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/dashboard']);
+    // window.location.reload();
     // this.popup.modal();
   }
   login(): void {
     console.log("Login");
     // this.router.navigate(['/login']);
-    this.popup.modal();
+    if(!this.popup.currentlyLoaded){
+      this.popup.modal();
+    }
   }
 }

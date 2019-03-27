@@ -45,7 +45,15 @@ input[type=text], input[type=password] {
   left: 0%;
   height: 250px;
   background-color: darkgrey;
+  padding-right: 0px;
+  padding-left: 0px;
 }
+
+.form-box{
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 h3{
   padding-top: 20px;
 }
@@ -56,6 +64,13 @@ h3{
 
 #login-popup{
   height: 100%;
+}
+
+#close-button{
+  float: right;
+  background: url("../../../assets/img/close_black.png");
+  height: 22px;
+  width: 22px;
 }
 
 .scale-up-center {
