@@ -34,7 +34,7 @@
 .col-side-custom{
   -ms-flex: 0 0 10%;
   flex: 0 0 10%;
-  max-width: 10%;
+  max-width: 120px;
 }
 
 .col-content-custom {
