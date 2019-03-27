@@ -26,6 +26,7 @@
 .load-panel{
   padding-top: 15px;
   padding-bottom: 15px;
+  height: 480px;
 }
 
 #CLOSED{
@@ -40,6 +41,9 @@ td.CONNECTED{
   color: rgba(30, 255, 17, 0.73) !important;
 }
 
+#first-kibana-row{
+  height: 487px;
+}
 .mat-progress-spinner circle, .mat-spinner circle {
   stroke: #3e82c2;
 }
