@@ -32,18 +32,25 @@
 }
 
 .col-side-custom{
-  -ms-flex: 0 0 10%;
-  flex: 0 0 10%;
-  max-width: 120px;
+  /*-ms-flex: 0 0 10%;*/
+  /*flex: 0 0 10%;*/
+  width:10%;
+  max-width: 10%;
 }
 
 .col-content-custom {
-  -ms-flex: 0 0 90%;
-  flex: 0 0 90%;
-  max-width: 90%;
+  /*-ms-flex: 0 0 90%;*/
+  /*flex: 0 0 90%;*/
+  width: 90%;
+  margin-left: 10%;
 }
 
 #page-content-wrapper{
   padding-top: 15px;
   padding-right: 5px;
+}
+
+.sidebar {
+  width: 10% !important;
+  max-width: 10% !important;
 }
