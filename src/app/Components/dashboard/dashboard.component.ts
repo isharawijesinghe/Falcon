@@ -14,23 +14,23 @@ export class DashboardComponent implements OnInit {
   private cpuHistory; any;
   private tpsHeight: any;
   private viewData: any;
-  private sysMetricObjectDummy: any;
-  private viewDataDummy: any;
+  // private sysMetricObjectDummy: any;
+  // private viewDataDummy: any;
 
 
 
   constructor(private websocketConnectionService: WebSocketConnectionService) {
 
 
-    this.sysMetricObjectDummy = JSON.parse(sessionStorage.getItem('sys_metric_key'));
-    this.viewDataDummy = JSON.parse(sessionStorage.getItem('view_key'));
+    // this.sysMetricObjectDummy = JSON.parse(sessionStorage.getItem('sys_metric_key'));
+    // this.viewDataDummy = JSON.parse(sessionStorage.getItem('view_key'));
 
 
     this.tpsHeight = this.drawTps();
 
     this.websocketConnectionService.viewDataUpdated.subscribe((value) => {
       this.viewData = value;
-      this.viewDataDummy = this.viewData;
+      // this.viewDataDummy = this.viewData;
     });
 
 
@@ -50,7 +50,7 @@ export class DashboardComponent implements OnInit {
 
     this.websocketConnectionService.sysMetricUpdated.subscribe((value) => {
       this.sysMetricObject = value;
-      this.sysMetricObjectDummy = this.sysMetricObject;
+      // this.sysMetricObjectDummy = this.sysMetricObject;
     });
 
   }
