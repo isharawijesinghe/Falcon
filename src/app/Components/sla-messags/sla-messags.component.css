@@ -1,0 +1,14 @@
+.mat-cell, .mat-footer-cell {
+  font-size: 11px;
+}
+
+#table-slamessage{
+  padding-bottom: 50px;
+}
+.mat-progress-spinner circle, .mat-spinner circle {
+  stroke: #3e82c2;
+}
+.mat-table {
+  max-height: 445px;
+  overflow-y: auto;
+}

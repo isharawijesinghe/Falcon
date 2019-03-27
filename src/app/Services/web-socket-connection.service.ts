@@ -8,6 +8,8 @@ import {Subject, Observer, Observable} from 'rxjs';
 })
 export class WebSocketConnectionService {
 
+
+
   constructor(private  http: HttpClient) { }
   private subject: Subject<MessageEvent>;
   private ws: any;
@@ -17,6 +19,7 @@ export class WebSocketConnectionService {
   view: any;
   cpuHistory: any;
   sysMetric: any;
+  viewData: any;
   nodeTree: any;
   nodeBlock: any;
   tpsCount: any;
@@ -25,6 +28,7 @@ export class WebSocketConnectionService {
   nodeBlockUpdated: Subject<string> = new Subject<string>();
   cpuHistoryUpdated: Subject<{}> = new Subject<{}>();
   sysMetricUpdated: Subject<{}> = new Subject<{}>();
+  viewDataUpdated: Subject<{}> = new Subject<{}>();
 
   public connect(url): Subject<MessageEvent> {
     if (!this.subject) {
@@ -75,5 +79,9 @@ export class WebSocketConnectionService {
   setsysMetrics(sysMetric) {
     this.sysMetric = sysMetric;
     this.sysMetricUpdated.next(this.sysMetric);
+  }
+  setviewData(viewData) {
+    this.viewData = viewData;
+    this.viewDataUpdated.next(this.viewData);
   }
 }

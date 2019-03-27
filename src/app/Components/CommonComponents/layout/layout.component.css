@@ -20,7 +20,7 @@
 #data-content{
   background-color: rgba(51, 50, 52, 0.96);
   height: 100%;
-  overflow: scroll;
+  overflow-y: auto;
 }
 
 /*#page-content-wrapper{*/

@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {RestConnectionService} from '../../Services/rest-connection.service';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {SessionData} from '../sessions/sessions.component';
+import {routes} from "../requests/requests.component";
 
 @Component({
   selector: 'app-sla-messags',
@@ -11,26 +12,47 @@ import {SessionData} from '../sessions/sessions.component';
 export class SlaMessagsComponent implements OnInit {
 
   SLAMessage: any;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-
+  isLoading: any;
   displayedColumns = ['unique_request_id', 'channel', 'client_ip', 'comm_ver', 'responseTime', 'date', 'login_id', 'message', 'message_type', 'session_id', 'tenantCode'];
   dataSource: MatTableDataSource<SLAMessage>;
 
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
+
+
   constructor(private restConnectionService : RestConnectionService) {
-    const sessiondata: SLAMessage[] = [];
-    this.restConnectionService.getSLAMessage().subscribe(data => {
+    // const sessiondata: SLAMessage[] = [];
+    // this.restConnectionService.getSLAMessage().subscribe(data => {
+    //   this.SLAMessage = data;
+    //   console.log( this.SLAMessage);
+    //   for(let sessionData of this.SLAMessage){
+    //     sessiondata.push(createNewSlaMessage(sessionData));
+    //   }
+    //   this.dataSource = new MatTableDataSource(sessiondata);
+    // });
+  }
+
+  ngOnInit() {
+
+    this.isLoading = true;
+    this.restConnectionService.getSLAMessage().subscribe(data =>{
       this.SLAMessage = data;
+
+      const sessiondata: SLAMessage[] = [];
       console.log( this.SLAMessage);
       for(let sessionData of this.SLAMessage){
         sessiondata.push(createNewSlaMessage(sessionData));
       }
+      this.isLoading = false;
       this.dataSource = new MatTableDataSource(sessiondata);
-    });
-  }
+      // this.dataSource.paginator = this.paginator;
+      // this.dataSource.sort = this.sort;
+        setTimeout(() => this.dataSource.paginator = this.paginator);
+        setTimeout(() => this.dataSource.sort = this.sort);
+    },
+      error => this.isLoading = false);
 
-  ngOnInit() {
-    this.dataSource.paginator = this.paginator;
   }
 
 }

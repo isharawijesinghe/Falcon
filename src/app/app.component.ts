@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {WebSocketConnectionService} from './services/web-socket-connection.service';
+import {NavigationStart, Router} from "@angular/router";
+
+
 // import { Runtime, Inspector } from "@observablehq/notebook-runtime";
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -9,18 +13,45 @@ import {WebSocketConnectionService} from './services/web-socket-connection.servi
 })
 export class AppComponent {
   title = 'Falcon';
-  constructor(private websocketService: WebSocketConnectionService) {
+
+  constructor(private websocketService: WebSocketConnectionService,private router :Router) {
+
+    //track whether the browser is refreshed
+    // let browserRefresh = true;
+    // this.subscription = router.events.subscribe((event) => {
+    //   if (event instanceof NavigationStart) {
+    //     browserRefresh = !router.navigated;
+    //   }
+    // });
+    // if(browserRefresh){
+    //
+    //   // console.log(JSON.parse(sessionStorage.getItem('sys_metric_key')).disconnects);
+    //   // this.websocketService.setsysMetrics(message);
+    //   console.log('browser refreshed..!')
+    // }else{
+    //   this.websocketService.setsysMetrics(JSON.parse(sessionStorage.getItem('sys_metric_key')));
+    //   console.log('browser not refreshed..!')
+    // }
+    /////////
+
     websocketService.initializeWebsocket();
     this.websocketService.cpuHistory = {};
+
     websocketService.messages.subscribe(message => {
       console.log(message);
       this.websocketService.websocketStatus = JSON.stringify(message);
+
       if (message.messageType === 'sys_metric') {
         this.websocketService.setsysMetrics(message);
+        sessionStorage.setItem('sys_metric_key',JSON.stringify(message));
       }
+
       if (message.messageType === 'view') {
-        this.websocketService.view = message;
+        this.websocketService.setviewData(message);
+        sessionStorage.setItem('view_key',JSON.stringify(message));
       }
+
+
       if (message.messageType === 'metric') {
         const metric = message;
         const view = this.websocketService.view;

@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
-import { AppRoutingModule } from './app-routing.module';
+import {AppRoutingModule, routes} from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderNavBarComponent } from './Components/CommonComponents/header-nav-bar/header-nav-bar.component';
 import { SideNavBarComponent } from './Components/CommonComponents/side-nav-bar/side-nav-bar.component';
@@ -18,7 +18,11 @@ import { LoginComponent } from './Components/login/login.component';
 import { LayoutComponent } from './Components/CommonComponents/layout/layout.component';
 import {RestConnectionService} from './services/rest-connection.service';
 import {WebSocketConnectionService} from './services/web-socket-connection.service';
-import { FormsModule } from '@angular/forms';
+import { AuthGuard } from './auth.guard';
+import { RouterModule, Routes } from '@angular/router';
+import {OverlayModule} from '@angular/cdk/overlay';
+import {PortalModule} from '@angular/cdk/portal';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   MatAutocompleteModule,
   MatBadgeModule,
@@ -53,6 +57,7 @@ import {
 } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {DataSource} from '@angular/cdk/table';
+
 // import {CdkStepperModule} from '@angular/cdk/stepper';
 // import {CdkTableModule} from '@angular/cdk/table';
 // import {CdkTreeModule} from '@angular/cdk/tree';
@@ -123,9 +128,11 @@ import {DataSource} from '@angular/cdk/table';
     MatTooltipModule,
     MatTreeModule,
     BrowserAnimationsModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule.forRoot(routes)
   ],
-  providers: [RestConnectionService, WebSocketConnectionService],
+  providers: [RestConnectionService, WebSocketConnectionService,AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

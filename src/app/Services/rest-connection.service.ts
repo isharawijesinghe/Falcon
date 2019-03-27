@@ -61,7 +61,7 @@ export class RestConnectionService {
     return this.http.get('http://localhost:8060/watchdogclient/route/' + clientID);
   }
 
-  getRoutesHistory(clientIdHistory){
+  getRoutesHistoryDetails(clientIdHistory){
     return this.http.get('http://localhost:8060/watchdogclient/route/history/' + clientIdHistory);
   }
 

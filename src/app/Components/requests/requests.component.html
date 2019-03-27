@@ -1,56 +1,51 @@
 <div class="row">
   <div class="col-sm-6">
     <div class="panel wd-panel" id="bulk-container">
-      <div class="panel-heading wd-panel-heading">
-        <a data-toggle="collapse" data-parent="#accordion" href="#">Client Routes</a> Filter: <input
-        class="form-control display-inline" type="text" ng-model="search.client">
-      </div>
-      <div class="panel-heading wd-panel-heading">
-        <a data-toggle="collapse" data-parent="#accordion" href="#">Client Routes</a> Filter: OMS-<input
-        class="form-control display-inline" type="text" ng-model="nodeFilter.nextNode">
-      </div>
 
-      <div ng-hide="routesHistory == null" id="request-results-history" class="get-routes">
-
-        <div class="example-header">
-          <mat-form-field>
-            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-          </mat-form-field>
-        </div>
+      <div id="request-results-history" class="get-routes">
 
         <div class="mat-elevation-z8">
-          <table mat-table [dataSource]="dataSource" matSort>
+
+          <mat-table [dataSource]="dataSource" matSort id="table01">
             <ng-container matColumnDef="client">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header >Client</th>
-              <td mat-cell *matCellDef="let row"> {{row.client}} </td>
-            </ng-container>
-            <ng-container matColumnDef="nextnode">
-              <th mat-header-cell *matHeaderCellDef>Next Node</th>
-              <td mat-cell *matCellDef="let row"> {{row.nextnode}} </td>
+
+              <mat-header-cell *matHeaderCellDef>
+                Client
+              </mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.client}} </mat-cell>
             </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef=displayedColumns></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-          </table>
-          <mat-paginator [pageSizeOptions]="[5]"></mat-paginator>
+            <ng-container matColumnDef="nextNode">
+              <mat-header-cell *matHeaderCellDef>
+                Current Node
+              </mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.nextNode}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="header-row-first-group">
+              <th mat-header-cell *matHeaderCellDef
+                  [attr.colspan]="2">
+                <mat-form-field >
+                  <input matInput  (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('client')" placeholder="Filter Client" >
+                </mat-form-field>
+              </th>
+            </ng-container>
+            <ng-container matColumnDef="header-row-second-group">
+              <th mat-header-cell *matHeaderCellDef
+                  [attr.colspan]="2">
+                <mat-form-field>
+                  <input matInput  (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('nextNode')" placeholder="Filter Node" >
+                </mat-form-field>
+              </th>
+            </ng-container>
+
+
+            <mat-header-row *matHeaderRowDef="displayedColumns;sticky:true"></mat-header-row>
+            <mat-header-row *matHeaderRowDef="['header-row-first-group','header-row-second-group'];sticky:true" id="filter-row"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+          <mat-paginator [pageSizeOptions]="[10,15,50,100]"></mat-paginator>
         </div>
 
-        <!--<table class="wd-table">-->
-          <!--<thead>-->
-          <!--<tr>-->
-            <!--<th>Client</th>-->
-            <!--<th>Next Node</th>-->
-            <!--<th>Update Time</th>-->
-          <!--</tr>-->
-          <!--</thead>-->
-          <!--<tbody>-->
-          <!--<tr *ngFor="let route of routes">-->
-            <!--<td>{{route["client"]}}</td>-->
-            <!--<td>OMS-{{route["nextNode"]}}</td>-->
-            <!--<td>{{route["updateTime"]}}</td>-->
-          <!--</tr>-->
-          <!--</tbody>-->
-        <!--</table>-->
       </div>
     </div>
   </div>
@@ -64,7 +59,7 @@
             <input type="submit" value="GET ROUTES" class="btn btn-primary"  (click)="getRoutes()">
           </form>
           <div *ngIf="!routesDetailHide" id="request-results" class="get-routes">
-            <div>Client ID: {{routes.clientId}}</div>
+            <div>Client ID: {{routes.client}}</div>
             <div>Endpoints: {{routes.endPoints}}</div>
             <ul>
               <li *ngFor="let route of routes.routes | keyvalue">{{route.key}} => {{route.value}}</li>
@@ -81,27 +76,55 @@
       <div class="col-md-12">
         <div id="main-request-history" class="panel wd-panel input-group">
           <div class="form-wrapper">
-            <form ng-submit="getRoutesHistory()" class="col-md-12 form-inline" id="form-history">
-              Client ID: <input class="form-control display-inline" type="text" >
-              <input type="submit" value="GET HISTORY" class="btn btn-primary" style="float: right" >
+            <form class="col-md-12 form-inline" id="form-history">
+              Client ID: <input class="form-control display-inline" type="text"  name="routeHistoryClientID" [(ngModel)]="routeHistoryClientID">
+              <input type="submit" value="GET HISTORY" class="btn btn-primary" (click)= "getRoutesHistory()">
             </form>
           </div>
-          <div class="panel-collapse collapse in">
-            <table class="wd-table">
-              <thead>
-              <tr>
-                <th>Client</th>
-                <th>Next Node</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr
-                ng-repeat="record in clientRoutesAll | filter:search | filter: nodeFilter | orderBy : 'client' | orderBy: 'nextNode'">
-                <td></td>
-                <td></td>
-              </tr>
-              </tbody>
-            </table>
+          <div class="get-routes" id="history-table" *ngIf="!routesHistoryDetailHide">
+
+            <div class="mat-elevation-z8">
+
+              <mat-table [dataSource]="dataSourceHistory" matSort id="table02">
+                <ng-container matColumnDef="historyClient">
+
+                  <mat-header-cell *matHeaderCellDef>
+                    Client
+                    <!--<mat-form-field>-->
+                      <!--<input matInput  (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('client')" placeholder="Filter Client" >-->
+                    <!--</mat-form-field>-->
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{row.historyClient}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="historyNextNode">
+                  <mat-header-cell *matHeaderCellDef>
+                    Node
+                    <!--<mat-form-field>-->
+                      <!--<input matInput  (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('nextNode')" placeholder="Filter Node" >-->
+                    <!--</mat-form-field>-->
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{row.historyNextNode}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="updateTime">
+                  <mat-header-cell *matHeaderCellDef>
+                    Update Time
+                    <!--<mat-form-field>-->
+                    <!--<input matInput  (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('nextNode')" placeholder="Filter Node" >-->
+                    <!--</mat-form-field>-->
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{row.updateTime}} </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumnsHistory;sticky:true"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumnsHistory;"></mat-row>
+              </mat-table>
+              <!--<mat-paginator  [pageSizeOptions]="[8,15,25]"></mat-paginator>-->
+            </div>
+            <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+              <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
+            </mat-card>
           </div>
       </div>
     </div>

@@ -11,22 +11,24 @@ import {SlaMessagsComponent} from './Components/sla-messags/sla-messags.componen
 import {ClientCountGraphComponent} from './Components/client-count-graph/client-count-graph.component';
 import {LoginComponent} from './Components/login/login.component';
 import {LayoutComponent} from './Components/CommonComponents/layout/layout.component';
+import {AuthGuard} from "./auth.guard";
 
-const routes: Routes = [
+export const routes: Routes = [
   { path: '', component: LayoutComponent,
     children : [
-      { path: '', redirectTo: 'home', pathMatch: 'full'},
-      { path: 'home', component: HomeComponent },
-      { path: 'dashboard', component: DashboardComponent },
-      { path: 'view', component: ViewComponent },
-      { path: 'requests', component: RequestsComponent },
-      { path: 'manage', component: ManageComponent },
-      { path: 'recouncile', component: ReconcileComponent  },
-      { path: 'sessions', component: SessionsComponent },
-      { path: 'slamesssages', component: SlaMessagsComponent },
-      { path: 'clientcount', component: ClientCountGraphComponent },
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full'},
+      { path: 'home', component: HomeComponent,canActivate: [AuthGuard] },
+      { path: 'dashboard', component: DashboardComponent},
+      { path: 'view', component: ViewComponent,canActivate: [AuthGuard] },
+      { path: 'requests', component: RequestsComponent ,canActivate: [AuthGuard]},
+      { path: 'manage', component: ManageComponent,canActivate: [AuthGuard] },
+      { path: 'recouncile', component: ReconcileComponent,canActivate: [AuthGuard]  },
+      { path: 'sessions', component: SessionsComponent,canActivate: [AuthGuard] },
+      { path: 'slamesssages', component: SlaMessagsComponent ,canActivate: [AuthGuard]},
+      { path: 'clientcount', component: ClientCountGraphComponent ,canActivate: [AuthGuard]},
+
     ]},
-   { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent }
 ];
 
 @NgModule({

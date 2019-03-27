@@ -13,10 +13,26 @@ export class DashboardComponent implements OnInit {
   private blockData: any;
   private cpuHistory; any;
   private tpsHeight: any;
+  private viewData: any;
+  private sysMetricObjectDummy: any;
+  private viewDataDummy: any;
+
+
 
   constructor(private websocketConnectionService: WebSocketConnectionService) {
 
+
+    this.sysMetricObjectDummy = JSON.parse(sessionStorage.getItem('sys_metric_key'));
+    this.viewDataDummy = JSON.parse(sessionStorage.getItem('view_key'));
+
+
     this.tpsHeight = this.drawTps();
+
+    this.websocketConnectionService.viewDataUpdated.subscribe((value) => {
+      this.viewData = value;
+      this.viewDataDummy = this.viewData;
+    });
+
 
     this.websocketConnectionService.nodeBlockUpdated.subscribe((value) => {
       this.blockData = value;
@@ -34,6 +50,7 @@ export class DashboardComponent implements OnInit {
 
     this.websocketConnectionService.sysMetricUpdated.subscribe((value) => {
       this.sysMetricObject = value;
+      this.sysMetricObjectDummy = this.sysMetricObject;
     });
 
   }
@@ -47,6 +64,7 @@ export class DashboardComponent implements OnInit {
     if(this.websocketConnectionService.cpuHistory != null && this.tpsHeight!= null ){
       this.drawSystemLoadAverage(this.tpsHeight);
     }
+
   }
 
 
