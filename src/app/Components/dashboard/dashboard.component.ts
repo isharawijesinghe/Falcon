@@ -33,6 +33,10 @@ export class DashboardComponent implements OnInit {
       // this.viewDataDummy = this.viewData;
     });
 
+    this.websocketConnectionService.sysMetricUpdated.subscribe((value) => {
+      this.sysMetricObject = value;
+      // this.sysMetricObjectDummy = this.sysMetricObject;
+    });
 
     this.websocketConnectionService.nodeBlockUpdated.subscribe((value) => {
       this.blockData = value;
@@ -48,10 +52,6 @@ export class DashboardComponent implements OnInit {
       }
     }));
 
-    this.websocketConnectionService.sysMetricUpdated.subscribe((value) => {
-      this.sysMetricObject = value;
-      // this.sysMetricObjectDummy = this.sysMetricObject;
-    });
 
   }
 
