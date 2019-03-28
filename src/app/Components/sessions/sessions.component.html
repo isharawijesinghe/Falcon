@@ -19,43 +19,44 @@
 
     <!-- Client Channel Column -->
     <ng-container matColumnDef="clientChannel">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Client Channel </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.clientChannel}} </mat-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Client Channel</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.clientChannel}}
+        <a fxFlexFill (click) ="getSessionDetails(row.sessionId)"   class="mat-row-link"></a></mat-cell>
     </ng-container>
 
     <!-- Client IP Column -->
     <ng-container matColumnDef="clientIp">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Client IP </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Client IP</mat-header-cell>
       <mat-cell *matCellDef="let row"> {{row.clientIp}} </mat-cell>
     </ng-container>
 
     <!-- Start Time Column -->
     <ng-container matColumnDef="startTime">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Start Time </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Start Time</mat-header-cell>
       <mat-cell *matCellDef="let row"> {{row.startTime}} </mat-cell>
     </ng-container>
 
     <!-- Login ID Column -->
     <ng-container matColumnDef="loginId">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Login ID </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Login ID</mat-header-cell>
       <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.loginId}} </mat-cell>
     </ng-container>
 
     <!-- Up Time ID Column -->
     <ng-container matColumnDef="upTime">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Up Time </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Up Time</mat-header-cell>
       <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.upTime}} </mat-cell>
     </ng-container>
 
     <!-- Session ID Column -->
     <ng-container matColumnDef="sessionId">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Session ID </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Session ID</mat-header-cell>
       <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.sessionId}} </mat-cell>
     </ng-container>
 
     <!-- Session ID Column -->
     <ng-container matColumnDef="status">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
       <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.status}} </mat-cell>
     </ng-container>
 

@@ -33,6 +33,10 @@ export class DashboardComponent implements OnInit {
       // this.viewDataDummy = this.viewData;
     });
 
+    this.websocketConnectionService.sysMetricUpdated.subscribe((value) => {
+      this.sysMetricObject = value;
+      // this.sysMetricObjectDummy = this.sysMetricObject;
+    });
 
     this.websocketConnectionService.nodeBlockUpdated.subscribe((value) => {
       this.blockData = value;
@@ -48,21 +52,22 @@ export class DashboardComponent implements OnInit {
       }
     }));
 
-    this.websocketConnectionService.sysMetricUpdated.subscribe((value) => {
-      this.sysMetricObject = value;
-      // this.sysMetricObjectDummy = this.sysMetricObject;
-    });
 
   }
 
   ngOnInit() {
+
+    if(this.websocketConnectionService.cpuHistory != null && this.tpsHeight!= null ){
+      this.drawSystemLoadAverage(this.tpsHeight);
+    }
+
     if(this.websocketConnectionService.nodeBlock != null){
       this.blockData = this.websocketConnectionService.nodeBlock;
       this.drawBlocks();
     }
 
-    if(this.websocketConnectionService.cpuHistory != null && this.tpsHeight!= null ){
-      this.drawSystemLoadAverage(this.tpsHeight);
+    if(this.websocketConnectionService.viewData != null){
+      this.viewData = this.websocketConnectionService.viewData;
     }
 
   }

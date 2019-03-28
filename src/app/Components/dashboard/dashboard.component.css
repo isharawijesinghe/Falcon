@@ -26,7 +26,7 @@
 .load-panel{
   padding-top: 15px;
   padding-bottom: 15px;
-  height: 480px;
+  height: 520px;
 }
 
 #CLOSED{
@@ -44,3 +44,4 @@ td.CONNECTED{
 .mat-progress-spinner circle, .mat-spinner circle {
   stroke: #3e82c2;
 }
+

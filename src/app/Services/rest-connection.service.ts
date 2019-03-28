@@ -69,6 +69,10 @@ export class RestConnectionService {
     return this.http.get('http://localhost:8060/watchdogclient/route/all/');
   }
 
+  getCurrentSessionDetalis(sessionId){
+    return this.http.get('http://localhost:8060/watchdogclient/messages/graph?sessionId='+ sessionId);
+  }
+
   // service for specific message
 
   fetchSpecificMessages() {
