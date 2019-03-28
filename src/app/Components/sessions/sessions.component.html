@@ -21,7 +21,7 @@
     <ng-container matColumnDef="clientChannel">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Client Channel</mat-header-cell>
       <mat-cell *matCellDef="let row"> {{row.clientChannel}}
-        <a fxFlexFill (click) ="getSessionDetails(row.sessionId)"   class="mat-row-link"></a></mat-cell>
+        <a fxFlexFill (click) ="getSessionDetails(row)"   class="mat-row-link"></a></mat-cell>
     </ng-container>
 
     <!-- Client IP Column -->
@@ -60,7 +60,7 @@
       <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.status}} </mat-cell>
     </ng-container>
 
-    <mat-header-row *matHeaderRowDef="displayedColumns;sticky:true"></mat-header-row>
+    <mat-header-row *matHeaderRowDef="displayedColumns;sticky:true;" id="header-row" ></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
   <mat-paginator [pageSizeOptions]="[8,20,30]"[pageSize]="8" showFirstLastButtons></mat-paginator>
@@ -69,3 +69,21 @@
 <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
   <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
 </mat-card>
+
+
+<div class="popup overlay" *ngIf="isPoppingup" >
+    <div class="col-sm-4 popup-box slide-bottom shadow"  >
+      <form class="session-detalis">
+        <p><strong>Client Channel: </strong>{{this.clientChannel}} </p>
+        <p><strong>Client IP: </strong>{{this.clientIP}} </p>
+        <p><strong>Login ID: </strong>{{this.loginID}}</p>
+        <p><strong>Up Time: </strong> {{this.upTime}}</p>
+        <p><strong>Session ID: </strong>{{this.sessionID }}</p>
+        <p><strong>Start Time: </strong>{{this.startTime}}</p>
+      </form>
+      <button mat-raised-button id="popup-close-button" (click)="sessionDetailClose()" >Close</button>
+
+    </div>
+</div>
+
+

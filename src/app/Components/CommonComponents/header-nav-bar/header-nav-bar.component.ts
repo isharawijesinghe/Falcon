@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {AuthService} from "../../../auth.service";
+import {AuthService} from "../../../Services/auth.service";
 import {Router} from "@angular/router";
-import {PopupService} from '../../../Services/popup-service.service';
+import {PopupService} from '../../../Services/login-popup-service.service';
 
 
 

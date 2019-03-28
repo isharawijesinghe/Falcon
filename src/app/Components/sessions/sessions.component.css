@@ -69,3 +69,71 @@
 a:hover{
   background-color: rgba(35, 157, 238, 0.24);
 }
+
+.overlay{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  background-color: rgba(0,0,0,0.5); /*dim the background*/
+}
+
+.popup-box{
+  background-color: darkgray;
+  position: absolute;
+  left: 35%;
+  color: #000000;
+  height: 350px;
+  width:35%;
+  border-radius: 10px;
+}
+
+#popup-close-button{
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+}
+
+#header-row{
+  z-index: 10!important;
+}
+
+.session-detalis{
+  padding: 20px;
+  width: 50%;
+}
+
+
+.shadow {
+  -moz-box-shadow:    3px 3px 5px 6px #ccc;
+  -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+  box-shadow:         3px 3px 5px 6px #ccc;
+}
+
+.slide-bottom {
+  -webkit-animation: slide-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  animation: slide-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+@-webkit-keyframes slide-bottom {
+  0% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  100% {
+    -webkit-transform: translateY(100px);
+    transform: translateY(100px);
+  }
+}
+@keyframes slide-bottom {
+  0% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  100% {
+    -webkit-transform: translateY(100px);
+    transform: translateY(100px);
+  }
+}

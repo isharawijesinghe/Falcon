@@ -12,9 +12,17 @@ import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 export class SessionsComponent implements OnInit {
 
   Sessiondata: any;
+  currentSessionData:any;
   isLoading: any;
   displayedColumns = ['clientChannel', 'clientIp', 'startTime', 'loginId', 'upTime', 'sessionId', 'status'];
   dataSource: MatTableDataSource<SessionData>;
+  isPoppingup: boolean;
+  clientChannel:any;
+  clientIP:any;
+  loginID:any;
+  upTime:any;
+  sessionID:any;
+  startTime:any;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -24,7 +32,7 @@ export class SessionsComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.isPoppingup = false;
     this.isLoading=true;
     this.restConnectionService.getSessions().subscribe(data => {
       this.Sessiondata = data;
@@ -55,9 +63,22 @@ export class SessionsComponent implements OnInit {
 
   }
 
-  getSessionDetails(sessionId: String){
-    console.log(sessionId);
-    // this.restConnectionService.getCurrentSessionDetalis(sessionId);
+  getSessionDetails(row:any){
+    console.log(row.sessionId);
+    this.isPoppingup = true;
+    this.clientChannel = row.clientChannel;
+    this.clientIP = row.clientIp;
+    this.loginID = row.loginId;
+    this.upTime = row.upTime;
+    this.sessionID = row.sessionId;
+    this.startTime = row.startTime;
+    // return this.isPoppingup;
+    // this.currentSessionData = this.restConnectionService.getCurrentSessionDetalis(sessionId);
+    // console.log(JSON.stringify(this.currentSessionData));
+  }
+
+  sessionDetailClose(){
+    this.isPoppingup = false;
   }
 
 }

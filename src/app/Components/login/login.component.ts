@@ -2,8 +2,8 @@ import {Component, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators, FormControl} from "@angular/forms";
 import {Login} from "../../login";
 import {Router} from "@angular/router";
-import {AuthService} from "../../auth.service";
-import {PopupService} from '../../Services/popup-service.service';
+import {AuthService} from "../../Services/auth.service";
+import {PopupService} from '../../Services/login-popup-service.service';
 
 @Component({
   selector: 'app-login',

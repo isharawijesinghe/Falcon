@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, CanActivateChild, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import {PopupService} from './Services/popup-service.service';
+import {PopupService} from './Services/login-popup-service.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {

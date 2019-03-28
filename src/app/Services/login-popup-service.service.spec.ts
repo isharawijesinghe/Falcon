@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { PopupServiceService } from './popup-service.service';
+import { PopupServiceService } from './login-popup-service.service';
 
 describe('PopupServiceService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
