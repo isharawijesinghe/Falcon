@@ -1,5 +1,18 @@
-.mat-cell, .mat-footer-cell {
+.mat-cell, .mat-footer-cell, .mat-row {
   font-size: 11px;
+  background-color: white;
+  color: #000;
+  border-bottom-width: 1px;
+  border-bottom-color: #2a2a2a;
+}
+
+.mat-header-cell, .mat-header-row{
+  background-color: #d4d8e1;
+  color: #000;
+  border-bottom-width: 1px;
+  border-bottom-color: #2a2a2a;
+  /*border-top-width: 1px;*/
+  /*border-top-color: #2a2a2a;*/
 }
 
 #table-sessions{
