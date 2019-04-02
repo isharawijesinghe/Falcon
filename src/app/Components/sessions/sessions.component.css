@@ -96,11 +96,19 @@ a:hover{
 .popup-box{
   background-color: #ddddddf7;
   position: absolute;
-  left: 35%;
+  left: 27%;
   color: #000000;
-  height: 350px;
-  width:35%;
+  height: 470px;
+  width:600px;
   border-radius: 10px;
+}
+
+#chart-container{
+  position: relative;
+  float: right;
+  width: 65%;
+  height: 90%;
+  padding: 20px;
 }
 
 #popup-close-button{
@@ -109,15 +117,24 @@ a:hover{
   right: 5%;
 }
 
+#view-all-button{
+  position: absolute;
+  bottom: 5%;
+  left: 5%;
+}
+
 #header-row{
   z-index: 10!important;
 }
 
 .session-detalis{
-  padding: 20px;
-  width: 50%;
+  padding-top: 80px;
+  padding-left: 40px;
+  width: 30%;
+  position: relative;
+  float: left;
+  font-size: small;
 }
-
 
 .shadow {
   -moz-box-shadow:    3px 3px 5px 6px #ccc;

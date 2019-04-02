@@ -72,7 +72,8 @@
 
 
 <div class="popup overlay" *ngIf="isPoppingup" >
-    <div class="col-sm-4 popup-box slide-bottom shadow"  >
+  <div class="row">
+    <div class="popup-box slide-bottom shadow">
       <form class="session-detalis">
         <p><strong>Client Channel: </strong>{{this.clientChannel}} </p>
         <p><strong>Client IP: </strong>{{this.clientIP}} </p>
@@ -82,7 +83,14 @@
         <p><strong>Start Time: </strong>{{this.startTime}}</p>
         <!--<p *ngIf="dataArrived">arrived data:{{this.currentSessionData}}</p>-->
       </form>
-      <button mat-raised-button id="popup-close-button" (click)="sessionDetailClose()" >Close</button>
+      <div *ngIf="chart" id="chart-container">
+        <canvas id="canvas">{{chart}}</canvas>
+        
+      </div>
+      <button mat-raised-button class="btn btn-success" id="view-all-button"  >View all messages</button>
+      <button mat-raised-button class="btn btn-danger" id="popup-close-button" (click)="sessionDetailClose()" >Close</button>
+    </div>
+
 
     </div>
 </div>

@@ -130,7 +130,8 @@ import {DataSource} from '@angular/cdk/table';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+
   ],
   providers: [RestConnectionService, WebSocketConnectionService,AuthGuard],
   bootstrap: [AppComponent]

@@ -3,7 +3,7 @@ import {RestConnectionService} from '../../Services/rest-connection.service';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {ShareSessionDataService} from "../../Services/share-session-data.service";
 import {HttpClient} from "@angular/common/http";
-
+import { Chart } from 'chart.js';
 
 
 @Component({
@@ -27,6 +27,8 @@ export class SessionsComponent implements OnInit {
   startTime:any;
   serviceData:any;
   serviceDataList:any;
+  graphDataCurrent = [];
+  chart = [];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -71,8 +73,7 @@ export class SessionsComponent implements OnInit {
     this.upTime = row.upTime;
     this.sessionID = row.sessionId;
     this.startTime = row.startTime;
-
-    let graphDataCurrent = {};
+    this.graphDataCurrent = [];
 
     // this.restConnectionService.getCurrentSessionDetalis(row.sessionId);
     // this.currentSessionData = this.restConnectionService.getCurrentSessionDetalis(row.sessionId);
@@ -83,19 +84,58 @@ export class SessionsComponent implements OnInit {
       console.log(this.currentSessionData);
 
       this.serviceData = this.sharedData.getServiceData();
-      // console.log(this.serviceData);
+      console.log(this.serviceData);
 
       if(this.currentSessionData!=''){
         Object.keys(this.currentSessionData).forEach((key)=>{
           let serviceName = this.findService(key);
           if(serviceName != ''){
-            graphDataCurrent[serviceName.toString()] = this.currentSessionData[key];
-            console.log(serviceName+' '+this.currentSessionData[key]);
+            this.graphDataCurrent[serviceName.toString()] = this.currentSessionData[key];
           }
         });
       }else{
         console.log('No session data available');
       }
+      // console.log(Object.keys(this.graphDataCurrent));
+      // console.log(Object.values(this.graphDataCurrent));
+
+      let defaultColors = ['#3366CC','#DC3912','#FF9900','#109618','#990099','#3B3EAC','#0099C6','#DD4477','#66AA00','#B82E2E','#316395','#994499','#22AA99','#AAAA11','#6633CC','#E67300','#8B0707','#329262','#5574A6','#3B3EAC'];
+      this.chart = new Chart('canvas', {
+        type: 'doughnut',
+        data: {
+          labels: Object.keys(this.graphDataCurrent),
+          datasets: [
+            {
+              data: Object.values(this.graphDataCurrent),
+              borderColor: 'transparent',
+              backgroundColor: defaultColors,
+              fill: false
+            }
+          ]
+        },
+        options: {
+          title: {
+            display: true,
+            fontSize: 10,
+            position: 'top',
+            text: 'Message Distribution w.r.t. Services.'
+          },
+          legend: {
+            position: 'top',
+            display: true,
+            fontSize: 8
+          },
+          tooltips: {
+            enabled : true
+          },
+          hover: {
+            mode: null
+          },
+          responsive: true,
+          maintainAspectRatio: false
+        }
+      });
+
       // this.serviceData.forEach(function (element) {
       //   this.serviceDataList.push(element);
       //   console.log(element);
@@ -104,12 +144,6 @@ export class SessionsComponent implements OnInit {
     });
 
     // console.log(this.currentSessionData+'*****');
-
-
-
-
-
-
 
 
   }
