@@ -28,7 +28,7 @@
   overflow-y: auto;
 }
 #table02{
-  max-height: 290px;
+  max-height: 280px;
   overflow-y: auto;
 }
 #main-request{
@@ -91,6 +91,10 @@ mat-header-row {
 }
 
 mat-row {
-  min-height: 39px;
+  min-height: 38px;
+}
+
+#no-data-banner{
+  margin-bottom: 150px;
 }
 

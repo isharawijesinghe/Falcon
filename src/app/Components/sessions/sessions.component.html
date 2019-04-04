@@ -84,8 +84,8 @@
         <!--<p *ngIf="dataArrived">arrived data:{{this.currentSessionData}}</p>-->
       </form>
       <div *ngIf="chart" id="chart-container">
-        <canvas id="canvas">{{chart}}</canvas>
-        
+        <canvas *ngIf="!isGraphDataNull" id="canvas">{{chart}}</canvas>
+        <div *ngIf="isGraphDataNull" class="slide-bottom" id="no-data-alert"><p><strong>No Data Available</strong></p></div>
       </div>
       <button mat-raised-button class="btn btn-success" id="view-all-button"  >View all messages</button>
       <button mat-raised-button class="btn btn-danger" id="popup-close-button" (click)="sessionDetailClose()" >Close</button>

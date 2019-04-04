@@ -45,3 +45,6 @@ td.CONNECTED{
   stroke: #3e82c2;
 }
 
+#sys-load-avg{
+  margin-bottom: 50px;
+}

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import {ShareSessionDataService} from "./share-session-data.service";
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +12,7 @@ export class RestConnectionService {
   message: any;
 
 
-  constructor(private  http: HttpClient, private sharedData:ShareSessionDataService) {  }
+  constructor(private  http: HttpClient) {  }
 
   authenticate = true;
 
@@ -72,17 +71,15 @@ export class RestConnectionService {
   }
 
   getCurrentSessionDetalis(sessionId){
-    this.http.get('http://localhost:8060/watchdogclient/messages/graph?sessionId='+ sessionId).subscribe((data) => {
-       // this.sharedData.setSessionData(data);
-      this.sessionData = data;
-    });
-    return this.sessionData;
+    return this.http.get('http://localhost:8060/watchdogclient/messages/graph?sessionId='+ sessionId);
   }
 
   getServices(){
-    this.http.get('http://localhost:8060/watchdogclient/services').subscribe((data) => {
-      this.sharedData.setServiceData(data);
-    });
+    return this.http.get('http://localhost:8060/watchdogclient/services');
+  }
+
+  getclientCountMap(){
+    return this.http.get('http://localhost:8060/watchdogclient/clientCountMap');
   }
 
   // service for specific message

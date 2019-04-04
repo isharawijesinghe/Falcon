@@ -1,7 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {RestConnectionService} from '../../Services/rest-connection.service';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {ShareSessionDataService} from "../../Services/share-session-data.service";
 import {HttpClient} from "@angular/common/http";
 import { Chart } from 'chart.js';
 
@@ -27,6 +26,7 @@ export class SessionsComponent implements OnInit {
   startTime:any;
   serviceData:any;
   serviceDataList:any;
+  isGraphDataNull:any;
   graphDataCurrent = [];
   chart = [];
 
@@ -34,7 +34,7 @@ export class SessionsComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
 
-  constructor(private restConnectionService : RestConnectionService, public sharedData:ShareSessionDataService, private  http: HttpClient) {
+  constructor(private restConnectionService : RestConnectionService, private  http: HttpClient) {
   }
 
   ngOnInit() {
@@ -58,7 +58,9 @@ export class SessionsComponent implements OnInit {
     },
     error => this.isLoading = false
     );
-    this.restConnectionService.getServices();
+    this.restConnectionService.getServices().subscribe((data)=>{
+      this.serviceData = data['services'];
+    });
 
   }
 
@@ -73,29 +75,33 @@ export class SessionsComponent implements OnInit {
     this.upTime = row.upTime;
     this.sessionID = row.sessionId;
     this.startTime = row.startTime;
+    this.isGraphDataNull = false;
     this.graphDataCurrent = [];
 
     // this.restConnectionService.getCurrentSessionDetalis(row.sessionId);
     // this.currentSessionData = this.restConnectionService.getCurrentSessionDetalis(row.sessionId);
 
-    this.http.get('http://localhost:8060/watchdogclient/messages/graph?sessionId='+ row.sessionId).subscribe((data) => {
+    this.restConnectionService.getCurrentSessionDetalis(this.sessionID).subscribe((data) => {
       // this.sharedData.setSessionData(data);
       this.currentSessionData = data;
       console.log(this.currentSessionData);
 
-      this.serviceData = this.sharedData.getServiceData();
-      console.log(this.serviceData);
+      // this.serviceData = this.sharedData.getServiceData();
+      // console.log(this.serviceData);
 
-      if(this.currentSessionData!=''){
-        Object.keys(this.currentSessionData).forEach((key)=>{
-          let serviceName = this.findService(key);
-          if(serviceName != ''){
-            this.graphDataCurrent[serviceName.toString()] = this.currentSessionData[key];
-          }
-        });
+      Object.keys(this.currentSessionData).forEach((key)=>{
+        let serviceName = this.findService(key);
+        if(serviceName != null){
+          this.graphDataCurrent[serviceName.toString()] = this.currentSessionData[key];
+        }
+      });
+
+      if(Object.values(this.graphDataCurrent).length==0){
+        this.isGraphDataNull = true;
       }else{
-        console.log('No session data available');
+        this.isGraphDataNull = false;
       }
+      // console.log(this.isGraphDataNull);
       // console.log(Object.keys(this.graphDataCurrent));
       // console.log(Object.values(this.graphDataCurrent));
 
@@ -142,9 +148,6 @@ export class SessionsComponent implements OnInit {
       // });
 
     });
-
-    // console.log(this.currentSessionData+'*****');
-
 
   }
 

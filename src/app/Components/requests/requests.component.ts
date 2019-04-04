@@ -23,6 +23,7 @@ export class RequestsComponent implements OnInit {
   dataSource: MatTableDataSource<routes>;
   dataSourceHistory: MatTableDataSource<routesHistory>;
   firstDataRowClient: any;
+  isDataAvailable:boolean =true;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   // @ViewChild(MatPaginator) paginator2: MatPaginator;
@@ -51,8 +52,10 @@ export class RequestsComponent implements OnInit {
       }
       this.routeMainHide = false;
       this.dataSource = new MatTableDataSource(routeData);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+      // this.dataSource.paginator = this.paginator;
+      // this.dataSource.sort = this.sort;
+        setTimeout(() => this.dataSource.paginator = this.paginator);
+        setTimeout(() => this.dataSource.sort = this.sort);
     },
       error => this.routeMainHide = false);
 
@@ -87,6 +90,7 @@ export class RequestsComponent implements OnInit {
 
   getRoutesHistory(){
     this.routesHistoryDetailHide = true;
+    this.isDataAvailable = true;
       this.restConnectionService.getRoutesHistoryDetails(this.routeHistoryClientID).subscribe(data =>{
       this.routesHistory = data;
       const routeHistorydata: routesHistory[] = [];
@@ -99,7 +103,11 @@ export class RequestsComponent implements OnInit {
       // this.dataSourceHistory.paginator = this.paginators.toArray()[1];
       // this.dataSourceHistory.sort = this.sorts.toArray()[1];
       console.log(this.routesHistory);
+      if(this.routesHistory.length==0 && this.routesHistory!= null){
+        this.isDataAvailable = false;
+      }
     });
+
   }
 
   getRoutesHistoryDefault(firstData:any){

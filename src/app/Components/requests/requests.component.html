@@ -124,9 +124,12 @@
               </mat-table>
               <!--<mat-paginator  [pageSizeOptions]="[8,15,25]"></mat-paginator>-->
             </div>
-            <mat-card *ngIf="routesHistoryDetailHide" style="display: flex; justify-content: center; align-items: center">
+            <mat-card *ngIf="routesHistoryDetailHide"  style="display: flex; justify-content: center; align-items: center">
               <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
             </mat-card>
+            <div *ngIf="!isDataAvailable">
+              <h3 id="no-data-banner" class="slide-bottom">No Data Available</h3>
+            </div>
           </div>
       </div>
     </div>
