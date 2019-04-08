@@ -1,0 +1,11 @@
+#main-view{
+  position: relative;
+  float: left;
+  width: 70%;
+}
+
+#view-legend{
+  position: relative;
+  float: right;
+  width: 30%;
+}

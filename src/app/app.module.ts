@@ -57,6 +57,7 @@ import {
 } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {DataSource} from '@angular/cdk/table';
+import { SlaConfigurationComponent } from './Components/sla-configuration/sla-configuration.component';
 
 // import {CdkStepperModule} from '@angular/cdk/stepper';
 // import {CdkTableModule} from '@angular/cdk/table';
@@ -80,6 +81,7 @@ import {DataSource} from '@angular/cdk/table';
     ClientCountGraphComponent,
     LoginComponent,
     LayoutComponent,
+    SlaConfigurationComponent,
     // CdkStepperModule,
     // CdkTableModule,
     // CdkTreeModule,

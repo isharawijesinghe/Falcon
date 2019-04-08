@@ -141,3 +141,37 @@ a:hover{
   float: left;
   font-size: small;
 }
+
+.box{
+  position: relative;
+  top: 40%;
+  width: 50%;
+  left: 27%;
+  height: 175px;
+  background-color: darkgray;
+  border-radius: 20px;
+}
+
+.box-header{
+  padding-top: 25px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.box-body{
+  width: 100%;
+  padding: 20px;
+}
+
+.box-footer{
+  float: right;
+  padding-right: 45%;
+}
+
+#error-heading{
+  text-align: center;
+}
+
+#error-message{
+  text-align: center;
+}

@@ -14,15 +14,15 @@ export class ViewComponent implements OnInit {
   root:any;
 
   constructor(private restConnectionService : RestConnectionService) {
-    this.restConnectionService.getViewInfo().subscribe(data => {
-      this.treeData = data[0];
-      console.log('tree data '+this.treeData );
-      this.drawTree();
-
-    });
   }
 
   ngOnInit() {
+    this.drawLegend();
+    this.restConnectionService.getViewInfo().subscribe(data => {
+      this.treeData = data[0];
+      // console.log('tree data '+  d3.hierarchy(this.treeData).descendants() );
+      this.drawTree();
+    });
   }
 
   drawTree(){
@@ -91,13 +91,70 @@ export class ViewComponent implements OnInit {
 
     // adds the text to the node
     node.append("text")
-      .attr("dy", ".35em")
+      .attr("dy", ".35em").attr("fill","grey")
       .attr("x", function(d) { return d.children ?
         (d.data.value + 4) * -1 : d.data.value + 4 })
       .style("text-anchor", function(d) {
         return d.children ? "end" : "start"; })
       .text(function(d) { return d.data.name; });
 
+  }
+
+  drawLegend(){
+
+    let circleX = 21;
+    let circleY = 15;
+    let circleY2 = 21;
+    let circleR = 15;
+    let circleS = 4;
+    let textX = 45;
+    let textY = 20;
+
+    let svgWidth = 150;
+    let svgHeight = 50;
+
+    let tempSvg =  d3.select("#view-legend").append("svg").attr("width", 200).attr("height", svgHeight);
+    tempSvg.append("text").attr("x", 0).attr("y", 30).attr("font-size", "15px")
+      .attr("fill", "grey").text("COMPONENT STATES");
+
+    tempSvg =  d3.select("#view-legend").append("svg").attr("width", svgWidth).attr("height", svgHeight);
+    tempSvg.append("circle").attr("cx", circleX).attr("cy", circleY).attr("r", circleR)
+      .style("fill", "red");
+    tempSvg.append("text").attr("x", textX).attr("y", textY).attr("fill", "grey").text("CLOSED");
+
+    tempSvg =  d3.select("#view-legend").append("svg").attr("width", svgWidth).attr("height", svgHeight);
+    tempSvg.append("circle").attr("cx", circleX).attr("cy", circleY).attr("r", circleR)
+      .style("fill", "orange");
+    tempSvg.append("text").attr("x", textX).attr("y", textY).attr("fill", "grey").text("SUSPENDED");
+
+    tempSvg =  d3.select("#view-legend").append("svg").attr("width", svgWidth).attr("height", svgHeight);
+    tempSvg.append("circle").attr("cx", circleX).attr("cy", circleY).attr("r", circleR)
+      .style("fill", "yellow");
+    tempSvg.append("text").attr("x", textX).attr("y", textY).attr("fill", "grey").text("INITIALIZING");
+
+    tempSvg =  d3.select("#view-legend").append("svg").attr("width", svgWidth).attr("height", svgHeight);
+    tempSvg.append("circle").attr("cx", circleX).attr("cy", circleY).attr("r", circleR)
+      .style("fill", "blue").style("float", "left");
+    tempSvg.append("text").attr("x", textX).attr("y", textY).attr("fill", "grey").text("CONNECTING");
+
+    tempSvg =  d3.select("#view-legend").append("svg").attr("width", svgWidth).attr("height", svgHeight);
+    tempSvg.append("circle").attr("cx", circleX).attr("cy", circleY).attr("r", circleR)
+      .style("fill", "green").style("float", "left");
+    tempSvg.append("text").attr("x", textX).attr("y", textY).attr("fill", "grey").text("CONNECTED");
+
+    tempSvg =  d3.select("#view-legend").append("svg").attr("width", 200).attr("height", svgHeight);
+    tempSvg.append("text").attr("x", 0).attr("y", 30).attr("font-size", "15px")
+      .attr("fill", "grey").text("PREVIOUS STATES");
+
+    tempSvg =  d3.select("#view-legend").append("svg").attr("width", svgWidth).attr("height", svgHeight);
+    tempSvg.append("circle").attr("cx", circleX).attr("cy", circleY2).attr("r", circleR)
+      .style("fill", "#2a2a2a").style("stroke", "yellow").style("stroke-width", circleS);
+    tempSvg.append("text").attr("x", textX).attr("y", textY).attr("fill", "grey").text("CLOSED");
+
+    tempSvg =  d3.select("#view-legend").append("svg").attr("width", svgWidth).attr("height", svgHeight);
+    tempSvg.append("circle").attr("cx", circleX).attr("cy", circleY2).attr("r", circleR)
+      .style("fill", "#2a2a2a").style("stroke", "darkgreen").style("stroke-width", circleS);
+    tempSvg.append("text").attr("x", textX).attr("y", textY).attr("fill", "grey").text("CONNECTED");
   }
 
 }

@@ -27,6 +27,9 @@ export class SessionsComponent implements OnInit {
   serviceData:any;
   serviceDataList:any;
   isGraphDataNull:any;
+  showAllMessagesWaiting:any;
+  hideViewAllButton:any;
+  showAllMessagesError:any;
   graphDataCurrent = [];
   chart = [];
 
@@ -40,6 +43,9 @@ export class SessionsComponent implements OnInit {
   ngOnInit() {
     this.isPoppingup = false;
     this.isLoading=true;
+    this.showAllMessagesWaiting = false;
+    this.hideViewAllButton = false;
+    this.showAllMessagesError = false;
     this.restConnectionService.getSessions().subscribe(data => {
       this.Sessiondata = data;
 
@@ -67,7 +73,6 @@ export class SessionsComponent implements OnInit {
 
   getSessionDetails(row:any){
     console.log(row.sessionId);
-
     this.isPoppingup = true;
     this.clientChannel = row.clientChannel;
     this.clientIP = row.clientIp;
@@ -85,6 +90,10 @@ export class SessionsComponent implements OnInit {
       // this.sharedData.setSessionData(data);
       this.currentSessionData = data;
       console.log(this.currentSessionData);
+
+      if(Object.keys(this.currentSessionData).length!=0){
+        this.hideViewAllButton = true;
+      }
 
       // this.serviceData = this.sharedData.getServiceData();
       // console.log(this.serviceData);
@@ -153,6 +162,7 @@ export class SessionsComponent implements OnInit {
 
   sessionDetailClose(){
     this.isPoppingup = false;
+    this.hideViewAllButton = false;
   }
 
   applyFilter(filterValue: string) {
@@ -169,6 +179,27 @@ export class SessionsComponent implements OnInit {
       }
     });
     return result;
+  }
+
+  viewAllMessages(){
+    if(Object.keys(this.currentSessionData).length != 0) {
+      this.isPoppingup = false;
+      this.showAllMessagesWaiting = true;
+      this.restConnectionService.getSpecificMessages(this.sessionID).subscribe((data)=>{
+        console.log(data);
+        // window.location("#/specific-messages");
+
+      },(err:any)=>{
+        this.showAllMessagesWaiting = false;
+        this.showAllMessagesError = true;
+      },()=>{
+        this.showAllMessagesWaiting = false;
+      });
+    }
+  }
+
+  errorMessageClose(){
+    this.showAllMessagesError = false;
   }
 
 }

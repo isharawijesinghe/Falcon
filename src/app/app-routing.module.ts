@@ -11,6 +11,7 @@ import {SlaMessagsComponent} from './Components/sla-messags/sla-messags.componen
 import {ClientCountGraphComponent} from './Components/client-count-graph/client-count-graph.component';
 import {LoginComponent} from './Components/login/login.component';
 import {LayoutComponent} from './Components/CommonComponents/layout/layout.component';
+import {SlaConfigurationComponent} from "./Components/sla-configuration/sla-configuration.component";
 import {AuthGuard} from "./auth.guard";
 
 export const routes: Routes = [
@@ -25,8 +26,8 @@ export const routes: Routes = [
       { path: 'recouncile', component: ReconcileComponent,canActivate: [AuthGuard]  },
       { path: 'sessions', component: SessionsComponent,canActivate: [AuthGuard] },
       { path: 'slamesssages', component: SlaMessagsComponent ,canActivate: [AuthGuard]},
+      { path: 'slaconfiguration', component: SlaConfigurationComponent ,canActivate: [AuthGuard]},
       { path: 'clientcount', component: ClientCountGraphComponent ,canActivate: [AuthGuard]},
-
     ]},
   { path: 'login', component: LoginComponent }
 ];

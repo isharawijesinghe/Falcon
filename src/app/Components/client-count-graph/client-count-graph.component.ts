@@ -19,20 +19,18 @@ export class ClientCountGraphComponent implements OnInit {
   ngOnInit() {
     this.restConnectionService.getclientCountMap().subscribe((data)=>{
 
-
-      this.clientCount = data;
-      console.log(this.clientCount);
+      console.log(data);
+      // this.clientCount = data;
+      this.clientCount = sortResults('date',true,data);
 
       this.clientCount.forEach((record)=>{
         this.xValues.push(record['date']);
         this.yValues.push(record['value']);
 
-        // console.log(this.xValues);
-        // console.log(this.yValues);
       });
 
-      console.log(this.xValues);
-      console.log(this.yValues);
+      // console.log(this.xValues);
+      // console.log(this.yValues);
 
 
       if(this.chart){
@@ -69,6 +67,8 @@ export class ClientCountGraphComponent implements OnInit {
             ]
           },
           options: {
+            responsive: true,
+            maintainAspectRatio: false,
             legend: {
               display: true,
               position: 'right',
@@ -102,4 +102,16 @@ export class ClientCountGraphComponent implements OnInit {
     });
   }
 
+}
+
+function sortResults(prop, asc, data) {
+  data = data.sort(function(a, b) {
+    if (asc) {
+      return (a[prop] > b[prop]) ? 1 : ((a[prop] < b[prop]) ? -1 : 0);
+    } else {
+      return (b[prop] > a[prop]) ? 1 : ((b[prop] < a[prop]) ? -1 : 0);
+    }
+  });
+
+  return data;
 }
