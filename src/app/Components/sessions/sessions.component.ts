@@ -3,6 +3,7 @@ import {RestConnectionService} from '../../Services/rest-connection.service';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {HttpClient} from "@angular/common/http";
 import { Chart } from 'chart.js';
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -30,6 +31,8 @@ export class SessionsComponent implements OnInit {
   showAllMessagesWaiting:any;
   hideViewAllButton:any;
   showAllMessagesError:any;
+  channel:any;
+  messages:any;
   graphDataCurrent = [];
   chart = [];
 
@@ -37,7 +40,7 @@ export class SessionsComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
 
-  constructor(private restConnectionService : RestConnectionService, private  http: HttpClient) {
+  constructor(private restConnectionService : RestConnectionService, private  http: HttpClient, private router:Router) {
   }
 
   ngOnInit() {
@@ -56,11 +59,8 @@ export class SessionsComponent implements OnInit {
       }
       this.isLoading = false;
       this.dataSource = new MatTableDataSource(sessiondata);
-      // console.log(this.dataSource);
         setTimeout(() => this.dataSource.paginator = this.paginator);
         setTimeout(() => this.dataSource.sort = this.sort);
-      // this.dataSource.paginator = this.paginator;
-      // this.dataSource.sort = this.sort;
     },
     error => this.isLoading = false
     );
@@ -83,20 +83,13 @@ export class SessionsComponent implements OnInit {
     this.isGraphDataNull = false;
     this.graphDataCurrent = [];
 
-    // this.restConnectionService.getCurrentSessionDetalis(row.sessionId);
-    // this.currentSessionData = this.restConnectionService.getCurrentSessionDetalis(row.sessionId);
-
     this.restConnectionService.getCurrentSessionDetalis(this.sessionID).subscribe((data) => {
-      // this.sharedData.setSessionData(data);
       this.currentSessionData = data;
       console.log(this.currentSessionData);
 
       if(Object.keys(this.currentSessionData).length!=0){
         this.hideViewAllButton = true;
       }
-
-      // this.serviceData = this.sharedData.getServiceData();
-      // console.log(this.serviceData);
 
       Object.keys(this.currentSessionData).forEach((key)=>{
         let serviceName = this.findService(key);
@@ -110,9 +103,6 @@ export class SessionsComponent implements OnInit {
       }else{
         this.isGraphDataNull = false;
       }
-      // console.log(this.isGraphDataNull);
-      // console.log(Object.keys(this.graphDataCurrent));
-      // console.log(Object.values(this.graphDataCurrent));
 
       let defaultColors = ['#3366CC','#DC3912','#FF9900','#109618','#990099','#3B3EAC','#0099C6','#DD4477','#66AA00','#B82E2E','#316395','#994499','#22AA99','#AAAA11','#6633CC','#E67300','#8B0707','#329262','#5574A6','#3B3EAC'];
       this.chart = new Chart('canvas', {
@@ -151,10 +141,6 @@ export class SessionsComponent implements OnInit {
         }
       });
 
-      // this.serviceData.forEach(function (element) {
-      //   this.serviceDataList.push(element);
-      //   console.log(element);
-      // });
 
     });
 
@@ -185,9 +171,19 @@ export class SessionsComponent implements OnInit {
     if(Object.keys(this.currentSessionData).length != 0) {
       this.isPoppingup = false;
       this.showAllMessagesWaiting = true;
-      this.restConnectionService.getSpecificMessages(this.sessionID).subscribe((data)=>{
-        console.log(data);
-        // window.location("#/specific-messages");
+
+      this.restConnectionService.getSpecificMessages(this.sessionID).subscribe((messages)=>{
+        console.log(messages);
+
+
+        if(Object.keys(messages).length!=0){
+          this.channel = messages[0]['channel'];
+        }
+        Object.values(messages).forEach((message)=>{
+          message['date'] = parseDates(message['date']);
+          this.messages.push(message);
+          //stopped here
+        });
 
       },(err:any)=>{
         this.showAllMessagesWaiting = false;
@@ -224,5 +220,11 @@ function createNewSessionData(sessionData: any):SessionData {
     sessionId: sessionData['sessionId'],
     status: sessionData['status']
   };
+}
+
+function parseDates(date) {
+  var parsedDate = new Date(date);
+  return parsedDate.getDate() + "-" + (parsedDate.getMonth() + 1) + "-" + parsedDate. getFullYear()
+    + " " + parsedDate.getHours() + ":" + parsedDate.getMinutes() + ":" + parsedDate.getSeconds();
 }
 
