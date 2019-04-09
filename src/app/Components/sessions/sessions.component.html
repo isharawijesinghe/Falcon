@@ -1,135 +1,141 @@
-<!--title-->
-<div class="row" id="title">
-  <div class="col-md-12">
-    <div class="panel wd-panel dark-panel">
-      <h2>Session Details</h2>
+<div id="session-component" *ngIf="!showSpecificMessages">
+  <!--title-->
+  <div class="row" id="title">
+    <div class="col-md-12">
+      <div class="panel wd-panel dark-panel">
+        <h2>Session Details</h2>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="example-header" *ngIf="!isLoading">
-  <mat-form-field>
-    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-  </mat-form-field>
-</div>
+  <div class="example-header" *ngIf="!isLoading">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+  </div>
 
-<div class="mat-elevation-z8" id="table-sessions" *ngIf="!isLoading">
+  <div class="mat-elevation-z8" id="table-sessions" *ngIf="!isLoading">
 
-  <mat-table [dataSource]="dataSource" matSort id="session-content">
+    <mat-table [dataSource]="dataSource" matSort id="session-content">
 
-    <!-- Client Channel Column -->
-    <ng-container matColumnDef="clientChannel">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Client Channel</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.clientChannel}}
-        <a fxFlexFill (click) ="getSessionDetails(row)"   class="mat-row-link"></a></mat-cell>
-    </ng-container>
+      <!-- Client Channel Column -->
+      <ng-container matColumnDef="clientChannel">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Client Channel</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.clientChannel}}
+          <a fxFlexFill (click) ="getSessionDetails(row)"   class="mat-row-link"></a></mat-cell>
+      </ng-container>
 
-    <!-- Client IP Column -->
-    <ng-container matColumnDef="clientIp">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Client IP</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.clientIp}} </mat-cell>
-    </ng-container>
+      <!-- Client IP Column -->
+      <ng-container matColumnDef="clientIp">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Client IP</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.clientIp}} </mat-cell>
+      </ng-container>
 
-    <!-- Start Time Column -->
-    <ng-container matColumnDef="startTime">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Start Time</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.startTime}} </mat-cell>
-    </ng-container>
+      <!-- Start Time Column -->
+      <ng-container matColumnDef="startTime">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Start Time</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.startTime}} </mat-cell>
+      </ng-container>
 
-    <!-- Login ID Column -->
-    <ng-container matColumnDef="loginId">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Login ID</mat-header-cell>
-      <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.loginId}} </mat-cell>
-    </ng-container>
+      <!-- Login ID Column -->
+      <ng-container matColumnDef="loginId">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Login ID</mat-header-cell>
+        <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.loginId}} </mat-cell>
+      </ng-container>
 
-    <!-- Up Time ID Column -->
-    <ng-container matColumnDef="upTime">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Up Time</mat-header-cell>
-      <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.upTime}} </mat-cell>
-    </ng-container>
+      <!-- Up Time ID Column -->
+      <ng-container matColumnDef="upTime">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Up Time</mat-header-cell>
+        <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.upTime}} </mat-cell>
+      </ng-container>
 
-    <!-- Session ID Column -->
-    <ng-container matColumnDef="sessionId">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Session ID</mat-header-cell>
-      <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.sessionId}} </mat-cell>
-    </ng-container>
+      <!-- Session ID Column -->
+      <ng-container matColumnDef="sessionId">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Session ID</mat-header-cell>
+        <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.sessionId}} </mat-cell>
+      </ng-container>
 
-    <!-- Session ID Column -->
-    <ng-container matColumnDef="status">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
-      <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.status}} </mat-cell>
-    </ng-container>
+      <!-- Session ID Column -->
+      <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+        <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.status}} </mat-cell>
+      </ng-container>
 
-    <mat-header-row *matHeaderRowDef="displayedColumns;sticky:true;" id="header-row" ></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-  </mat-table>
-  <mat-paginator [pageSizeOptions]="[8,20,30]"[pageSize]="8" showFirstLastButtons></mat-paginator>
-</div>
+      <mat-header-row *matHeaderRowDef="displayedColumns;sticky:true;" id="header-row" ></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator [pageSizeOptions]="[8,20,30]"[pageSize]="8" showFirstLastButtons></mat-paginator>
+  </div>
 
-<mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
-  <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
-</mat-card>
+  <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+    <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
+  </mat-card>
 
 
-<div class="popup overlay" *ngIf="isPoppingup" >
-  <div class="row">
-    <div class="popup-box slide-bottom shadow">
-      <form class="session-detalis">
-        <p><strong>Client Channel: </strong>{{this.clientChannel}} </p>
-        <p><strong>Client IP: </strong>{{this.clientIP}} </p>
-        <p><strong>Login ID: </strong>{{this.loginID}}</p>
-        <p><strong>Up Time: </strong> {{this.upTime}}</p>
-        <p><strong>Session ID: </strong>{{this.sessionID }}</p>
-        <p><strong>Start Time: </strong>{{this.startTime}}</p>
-        <!--<p *ngIf="dataArrived">arrived data:{{this.currentSessionData}}</p>-->
-      </form>
-      <div *ngIf="chart" id="chart-container">
-        <canvas *ngIf="!isGraphDataNull" id="canvas">{{chart}}</canvas>
-        <div *ngIf="isGraphDataNull" class="slide-bottom" id="no-data-alert"><p><strong>No Data Available</strong></p></div>
+  <div class="popup overlay" *ngIf="isPoppingup" >
+    <div class="row">
+      <div class="popup-box slide-bottom shadow">
+        <form class="session-detalis">
+          <p><strong>Client Channel: </strong>{{clientChannel}} </p>
+          <p><strong>Client IP: </strong>{{clientIP}} </p>
+          <p><strong>Login ID: </strong>{{loginID}}</p>
+          <p><strong>Up Time: </strong> {{upTime}}</p>
+          <p><strong>Session ID: </strong>{{sessionID }}</p>
+          <p><strong>Start Time: </strong>{{startTime}}</p>
+          <!--<p *ngIf="dataArrived">arrived data:{{this.currentSessionData}}</p>-->
+        </form>
+        <div *ngIf="chart" id="chart-container">
+          <canvas *ngIf="!isGraphDataNull" id="canvas">{{chart}}</canvas>
+          <div *ngIf="isGraphDataNull" class="slide-bottom" id="no-data-alert"><p><strong>No Data Available</strong></p></div>
+        </div>
+        <div class="button-container" *ngIf="hideViewAllButton">
+          <button mat-raised-button class="btn btn-success" id="view-all-button" (click)="viewAllMessages()" >View all messages</button>
+        </div>
+        <button mat-raised-button class="btn btn-danger" id="popup-close-button" (click)="sessionDetailClose()" >Close</button>
       </div>
-      <div class="button-container" *ngIf="hideViewAllButton">
-        <button mat-raised-button class="btn btn-success" id="view-all-button" (click)="viewAllMessages()" >View all messages</button>
+    </div>
+  </div>
+
+
+  <!-- Please Wait Modal -->
+  <div class="overlay" id="pleaseWaitDialog" role="dialog" *ngIf="showAllMessagesWaiting">
+    <div class="box scale-up-center shadow">
+      <div class="box-header">
+        <h1>Processing...</h1>
       </div>
-      <button mat-raised-button class="btn btn-danger" id="popup-close-button" (click)="sessionDetailClose()" >Close</button>
-    </div>
-
-
-    </div>
-</div>
-
-
-<!-- Please Wait Modal -->
-<div class="overlay" id="pleaseWaitDialog" role="dialog" *ngIf="showAllMessagesWaiting">
-  <div class="box scale-up-center shadow">
-    <div class="box-header">
-      <h1>Processing...</h1>
-    </div>
-    <div class="box-body">
-      <div class="progress">
-        <div class="progress-bar progress-bar-success progress-bar-striped progress-bar-animated" role="progressbar"  style="width: 100%">
-          <span class="sr-only">Please Wait..</span>
+      <div class="box-body">
+        <div class="progress">
+          <div class="progress-bar progress-bar-success progress-bar-striped progress-bar-animated" role="progressbar"  style="width: 100%">
+            <span class="sr-only">Please Wait..</span>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
 
-<!-- Error Modal -->
+  <!-- Error Modal -->
 
-<div class="overlay" id="errorModalSessions" role="dialog" *ngIf="showAllMessagesError">
-  <div class="box scale-up-center shadow">
-    <div class="box-header">
-      <h1 id="error-heading">Error!</h1>
-    </div>
-    <div class="box-body">
-      <div class="error">
-          <h4 id="error-message">Unfortunately, an error has occurred. Please try with correct configuration.</h4>
+  <div class="overlay" id="errorModalSessions" role="dialog" *ngIf="showAllMessagesError">
+    <div class="box scale-up-center shadow">
+      <div class="box-header">
+        <h1 id="error-heading">Error!</h1>
+      </div>
+      <div class="box-body">
+        <div class="error">
+            <h4 id="error-message">Unfortunately, an error has occurred. Please try with correct configuration.</h4>
+        </div>
+      </div>
+      <div class="box-footer">
+        <button mat-raised-button class="btn btn-danger" id="error-close-button" (click)="errorMessageClose()">Close</button>
       </div>
     </div>
-    <div class="box-footer">
-      <button mat-raised-button class="btn btn-danger" id="error-close-button" (click)="errorMessageClose()">Close</button>
-    </div>
   </div>
+</div>
+
+<!--specific-messages-nested-component-->
+<div id="specific-messages" *ngIf="showSpecificMessages">
+  <app-specific-messages [messages] = "messages" [showSpecificMessages] ="showSpecificMessages" [sessionID] = "sessionID"
+                         [clientIP] = "clientIP" [loginID] = "loginID" [channel] = "channel" [tenantCode] = "tenantCode" (direct)="backToSession($event)"></app-specific-messages>
 </div>
 

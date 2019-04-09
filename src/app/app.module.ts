@@ -58,6 +58,7 @@ import {
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {DataSource} from '@angular/cdk/table';
 import { SlaConfigurationComponent } from './Components/sla-configuration/sla-configuration.component';
+import { SpecificMessagesComponent } from './Components/specific-messages/specific-messages.component';
 
 // import {CdkStepperModule} from '@angular/cdk/stepper';
 // import {CdkTableModule} from '@angular/cdk/table';
@@ -82,6 +83,7 @@ import { SlaConfigurationComponent } from './Components/sla-configuration/sla-co
     LoginComponent,
     LayoutComponent,
     SlaConfigurationComponent,
+    SpecificMessagesComponent,
     // CdkStepperModule,
     // CdkTableModule,
     // CdkTreeModule,

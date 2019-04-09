@@ -1,0 +1,61 @@
+#back-button{
+  margin-bottom: 10px;
+}
+
+.mat-cell, .mat-footer-cell, .mat-row {
+  font-size: 11px;
+}
+
+.mat-column-messageType {
+  flex: 0 0 5% ;
+  min-width: 120px ;
+  justify-content: space-evenly;
+}
+
+.mat-column-uniqueReqID {
+  flex: 0 0 5% ;
+  min-width: 280px ;
+  justify-content: space-evenly;
+}
+
+.mat-column-timeStamp {
+  flex: 0 0 5% ;
+  min-width: 120px ;
+  justify-content: space-evenly;
+}
+
+.mat-column-responseTime {
+  flex: 0 0 5% ;
+  min-width: 120px ;
+  justify-content: space-evenly;
+}
+
+.mat-row{
+  position: relative;
+}
+
+.mat-row-link{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+
+a:hover{
+  background-color: rgba(35, 157, 238, 0.24);
+}
+
+.panel-heading {
+  color: #333333;
+  background-color: #c4c5c6;
+  border-color: #646464;
+}
+
+.panel-body{
+  background-color: #818181!important;
+}
+
+#specific-messages-table{
+  max-height: 600px;
+}

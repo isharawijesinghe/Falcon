@@ -6,6 +6,7 @@ import { Chart } from 'chart.js';
 import {Router} from "@angular/router";
 
 
+
 @Component({
   selector: 'app-sessions',
   templateUrl: './sessions.component.html',
@@ -31,8 +32,10 @@ export class SessionsComponent implements OnInit {
   showAllMessagesWaiting:any;
   hideViewAllButton:any;
   showAllMessagesError:any;
+  showSpecificMessages:any;
   channel:any;
-  messages:any;
+  messages = [];
+  tenantCode:any;
   graphDataCurrent = [];
   chart = [];
 
@@ -49,6 +52,8 @@ export class SessionsComponent implements OnInit {
     this.showAllMessagesWaiting = false;
     this.hideViewAllButton = false;
     this.showAllMessagesError = false;
+    this.showSpecificMessages = false;
+
     this.restConnectionService.getSessions().subscribe(data => {
       this.Sessiondata = data;
 
@@ -140,8 +145,6 @@ export class SessionsComponent implements OnInit {
           maintainAspectRatio: false
         }
       });
-
-
     });
 
   }
@@ -175,14 +178,13 @@ export class SessionsComponent implements OnInit {
       this.restConnectionService.getSpecificMessages(this.sessionID).subscribe((messages)=>{
         console.log(messages);
 
-
         if(Object.keys(messages).length!=0){
           this.channel = messages[0]['channel'];
+          this.tenantCode = messages[0]['tenantCode'];
         }
         Object.values(messages).forEach((message)=>{
           message['date'] = parseDates(message['date']);
           this.messages.push(message);
-          //stopped here
         });
 
       },(err:any)=>{
@@ -190,12 +192,19 @@ export class SessionsComponent implements OnInit {
         this.showAllMessagesError = true;
       },()=>{
         this.showAllMessagesWaiting = false;
+        this.showSpecificMessages = true;
       });
     }
   }
 
   errorMessageClose(){
     this.showAllMessagesError = false;
+  }
+
+  backToSession(){
+    this.showSpecificMessages = false;
+    this.hideViewAllButton = false;
+    this.messages = [];
   }
 
 }
