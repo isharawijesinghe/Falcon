@@ -18,9 +18,10 @@
 }
 
 #data-content{
-  background-color: rgba(51, 50, 52, 0.96);
+  background-color: #5b5b5b;
   height: 100%;
   overflow-y: auto;
+  margin-top: 40px;
 }
 
 /*#page-content-wrapper{*/

@@ -1,5 +1,5 @@
 
-<div class="container" id="login-popup">
+<div class="container shadow" id="login-popup">
 
   <div class="col-md-6 col-md-offset-3 scale-up-center shadow" id="login-box">
       <div class="form-box">
@@ -11,7 +11,7 @@
           <div class="form-group clearfix" [ngClass]="{ 'has-error': submitted && f.username.errors }">
             <label id="username" class="col-md-3 col-sm-5 col-xs-12">Username</label>
             <div class="col-md-9 col-sm-7 col-xs-12">
-              <input type="text" class="form-control" formControlName="username" />
+              <input type="text" class="form-control" formControlName="username" autofocus>
               <div *ngIf="submitted && f.username.errors" class="help-block">
                 <div *ngIf="f.username.errors.required">Username is required</div>
               </div>

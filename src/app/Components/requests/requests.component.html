@@ -4,7 +4,7 @@
 
       <div id="request-results-history" class="get-routes">
 
-        <div class="mat-elevation-z8">
+        <div class="mat-elevation-z8" *ngIf="!routeMainHide">
 
           <mat-table [dataSource]="dataSource" matSort id="table01">
             <ng-container matColumnDef="client">
@@ -39,13 +39,15 @@
             </ng-container>
 
 
-            <mat-header-row *matHeaderRowDef="displayedColumns;sticky:true"></mat-header-row>
+            <mat-header-row *matHeaderRowDef="displayedColumns;sticky:true" id="headings"></mat-header-row>
             <mat-header-row *matHeaderRowDef="['header-row-first-group','header-row-second-group'];sticky:true" id="filter-row"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
           </mat-table>
           <mat-paginator [pageSizeOptions]="[10,15,50,100]"></mat-paginator>
         </div>
-
+        <mat-card *ngIf="routeMainHide" style="display: flex; justify-content: center; align-items: center">
+          <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
+        </mat-card>
       </div>
     </div>
   </div>
@@ -77,13 +79,13 @@
         <div id="main-request-history" class="panel wd-panel input-group">
           <div class="form-wrapper">
             <form class="col-md-12 form-inline" id="form-history">
-              Client ID: <input class="form-control display-inline" type="text"  name="routeHistoryClientID" [(ngModel)]="routeHistoryClientID">
+              Client ID: <input class="form-control display-inline" type="text"  name="routeHistoryClientID"  [(ngModel)]="routeHistoryClientID">
               <input type="submit" value="GET HISTORY" class="btn btn-primary" (click)= "getRoutesHistory()">
             </form>
           </div>
-          <div class="get-routes" id="history-table" *ngIf="!routesHistoryDetailHide">
+          <div class="get-routes" id="history-table" >
 
-            <div class="mat-elevation-z8">
+            <div class="mat-elevation-z8" *ngIf="!routesHistoryDetailHide">
 
               <mat-table [dataSource]="dataSourceHistory" matSort id="table02">
                 <ng-container matColumnDef="historyClient">
@@ -122,9 +124,12 @@
               </mat-table>
               <!--<mat-paginator  [pageSizeOptions]="[8,15,25]"></mat-paginator>-->
             </div>
-            <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+            <mat-card *ngIf="routesHistoryDetailHide"  style="display: flex; justify-content: center; align-items: center">
               <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
             </mat-card>
+            <div *ngIf="!isDataAvailable">
+              <h3 id="no-data-banner" class="slide-bottom">No Data Available</h3>
+            </div>
           </div>
       </div>
     </div>

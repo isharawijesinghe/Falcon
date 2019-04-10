@@ -6,12 +6,13 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class RestConnectionService {
-  currentSession: any;
+  sessionData:any;
   urlForSession: any;
   urlParameter: any;
   message: any;
 
-  constructor(private  http: HttpClient) { }
+
+  constructor(private  http: HttpClient) {  }
 
   authenticate = true;
 
@@ -73,15 +74,27 @@ export class RestConnectionService {
     return this.http.get('http://localhost:8060/watchdogclient/messages/graph?sessionId='+ sessionId);
   }
 
+  getServices(){
+    return this.http.get('http://localhost:8060/watchdogclient/services');
+  }
+
+  getclientCountMap(){
+    return this.http.get('http://localhost:8060/watchdogclient/clientCountMap');
+  }
+
+  getSpecificMessages(sessionId){
+    return this.http.get('http://localhost:8060/watchdogclient/messages/specific?sessionId='+sessionId);
+  }
+
   // service for specific message
 
-  fetchSpecificMessages() {
-    // this.currentSession = this.currentMessage.subscribe(message => this.message = message);
-    // console.log(this.currentSession['sessionId']);
-    // this.urlParameter = JSON.stringify(this.currentSession['sessionId']);
-    // console.log(this.urlParameter);
-    // this.urlForSession = 'http://localhost:8060/watchdogclient/responses/specific?sessionId=';
-    // this.urlForSession = this.urlForSession.concat(this.urlParameter);
-    // return this.http.get(this.urlForSession);
-  }
+  // fetchSpecificMessages() {
+  //   // this.currentSession = this.currentMessage.subscribe(message => this.message = message);
+  //   // console.log(this.currentSession['sessionId']);
+  //   // this.urlParameter = JSON.stringify(this.currentSession['sessionId']);
+  //   // console.log(this.urlParameter);
+  //   // this.urlForSession = 'http://localhost:8060/watchdogclient/responses/specific?sessionId=';
+  //   // this.urlForSession = this.urlForSession.concat(this.urlParameter);
+  //   // return this.http.get(this.urlForSession);
+  // }
 }

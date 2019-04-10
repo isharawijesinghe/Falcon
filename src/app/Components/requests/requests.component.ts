@@ -14,14 +14,16 @@ export class RequestsComponent implements OnInit {
   routeClientID: any;
   routes:any;
   routesHistory: any;
+  routeMainHide: boolean = true;
   routesDetailHide: boolean = true;
   routesHistoryDetailHide: boolean = true;
   routeHistoryClientID: any;
-  isLoading: any;
   displayedColumns :String[]=['client','nextNode'];
   displayedColumnsHistory : String[]=['historyClient','historyNextNode','updateTime']
   dataSource: MatTableDataSource<routes>;
   dataSourceHistory: MatTableDataSource<routesHistory>;
+  firstDataRowClient: any;
+  isDataAvailable:boolean =true;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   // @ViewChild(MatPaginator) paginator2: MatPaginator;
@@ -31,12 +33,16 @@ export class RequestsComponent implements OnInit {
 
 
   constructor(private restConnectionService: RestConnectionService) {
+
   }
 
   ngOnInit() {
-    this.isLoading = true;
     this.restConnectionService.getAllRoutes().subscribe(data =>{
       this.routes = data;
+
+      this.firstDataRowClient = this.routes[0]['client'];
+      this.getRoutesHistoryDefault((String)(this.firstDataRowClient));
+
       const routeData: routes[] = [];
       //this.dataSource = this.routes;
       this.routesDetailHide = false;
@@ -44,16 +50,22 @@ export class RequestsComponent implements OnInit {
       for(let routedata of this.routes){
         routeData.push(createNewroutedata(routedata));
       }
-      this.isLoading = false;
+      this.routeMainHide = false;
       this.dataSource = new MatTableDataSource(routeData);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+      // this.dataSource.paginator = this.paginator;
+      // this.dataSource.sort = this.sort;
+        setTimeout(() => this.dataSource.paginator = this.paginator);
+        setTimeout(() => this.dataSource.sort = this.sort);
     },
-      error => this.isLoading = false);
+      error => this.routeMainHide = false);
 
-
-
+    // this.firstDataRowClient = this.routes[0]['client'];
+    // setTimeout(()=>this.getRoutesHistoryDefault((String)(this.firstDataRowClient)));
+    // console.log(this.routes[0]['client']+'******');
   }
+
+
+
 
 
   setupFilter(column: string) {
@@ -77,14 +89,36 @@ export class RequestsComponent implements OnInit {
   }
 
   getRoutesHistory(){
-    this.restConnectionService.getRoutesHistoryDetails(this.routeHistoryClientID).subscribe(data =>{
+    this.routesHistoryDetailHide = true;
+    this.isDataAvailable = true;
+      this.restConnectionService.getRoutesHistoryDetails(this.routeHistoryClientID).subscribe(data =>{
       this.routesHistory = data;
       const routeHistorydata: routesHistory[] = [];
       //this.dataSource = this.routes;
-      this.routesHistoryDetailHide = false;
       for(let routeDataHistory of this.routesHistory){
         routeHistorydata.push(createNewHistoryroutedata(routeDataHistory));
       }
+      this.routesHistoryDetailHide = false;
+      this.dataSourceHistory = new MatTableDataSource(routeHistorydata);
+      // this.dataSourceHistory.paginator = this.paginators.toArray()[1];
+      // this.dataSourceHistory.sort = this.sorts.toArray()[1];
+      console.log(this.routesHistory);
+      if(this.routesHistory.length==0 && this.routesHistory!= null){
+        this.isDataAvailable = false;
+      }
+    });
+
+  }
+
+  getRoutesHistoryDefault(firstData:any){
+    this.restConnectionService.getRoutesHistoryDetails(firstData).subscribe(data =>{
+      this.routesHistory = data;
+      const routeHistorydata: routesHistory[] = [];
+      //this.dataSource = this.routes;
+      for(let routeDataHistory of this.routesHistory){
+        routeHistorydata.push(createNewHistoryroutedata(routeDataHistory));
+      }
+      this.routesHistoryDetailHide = false;
       this.dataSourceHistory = new MatTableDataSource(routeHistorydata);
       // this.dataSourceHistory.paginator = this.paginators.toArray()[1];
       // this.dataSourceHistory.sort = this.sorts.toArray()[1];
@@ -118,3 +152,5 @@ function createNewHistoryroutedata (routeHistorydata : any): routesHistory {
     updateTime: routeHistorydata['updateTime']
   };
 }
+
+

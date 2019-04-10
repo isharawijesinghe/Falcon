@@ -57,6 +57,8 @@ import {
 } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {DataSource} from '@angular/cdk/table';
+import { SlaConfigurationComponent } from './Components/sla-configuration/sla-configuration.component';
+import { SpecificMessagesComponent } from './Components/specific-messages/specific-messages.component';
 
 
 // import {CdkStepperModule} from '@angular/cdk/stepper';
@@ -81,6 +83,8 @@ import {DataSource} from '@angular/cdk/table';
     ClientCountGraphComponent,
     LoginComponent,
     LayoutComponent,
+    SlaConfigurationComponent,
+    SpecificMessagesComponent,
     // CdkStepperModule,
     // CdkTableModule,
     // CdkTreeModule,
@@ -131,7 +135,8 @@ import {DataSource} from '@angular/cdk/table';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+
   ],
   providers: [RestConnectionService, WebSocketConnectionService,AuthGuard],
   bootstrap: [AppComponent]
