@@ -17,6 +17,7 @@ export class SpecificMessagesComponent implements OnInit {
   @Input() loginID: any;
   @Input() channel: any;
   @Input() tenantCode: any;
+  isPoppingup = false;
 
 
   @Output() direct: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -29,7 +30,6 @@ export class SpecificMessagesComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   constructor() {
-
   }
 
   ngOnInit() {
@@ -47,11 +47,10 @@ export class SpecificMessagesComponent implements OnInit {
   }
 
   getMessageDetails(row:any){
-    console.log(row.uniqueReqID);
-
-
+    // console.log(row.uniqueReqID);
+    this.isPoppingup = true;
+    //yet to be completed
   }
-
 
   backToSession(showSpecificMessagesLocal:boolean){
     this.direct.emit(showSpecificMessagesLocal);

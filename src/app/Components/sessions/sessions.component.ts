@@ -192,7 +192,8 @@ export class SessionsComponent implements OnInit {
         this.showAllMessagesError = true;
       },()=>{
         this.showAllMessagesWaiting = false;
-        this.showSpecificMessages = true;
+        // this.showSpecificMessages = true;
+        this.router.navigate(['/specificmessages']);
       });
     }
   }

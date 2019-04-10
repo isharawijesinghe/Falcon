@@ -13,6 +13,7 @@ import {LoginComponent} from './Components/login/login.component';
 import {LayoutComponent} from './Components/CommonComponents/layout/layout.component';
 import {SlaConfigurationComponent} from "./Components/sla-configuration/sla-configuration.component";
 import {AuthGuard} from "./auth.guard";
+import {SpecificMessagesComponent} from "./Components/specific-messages/specific-messages.component";
 
 export const routes: Routes = [
   { path: '', component: LayoutComponent,
@@ -25,6 +26,7 @@ export const routes: Routes = [
       { path: 'manage', component: ManageComponent,canActivate: [AuthGuard] },
       { path: 'recouncile', component: ReconcileComponent,canActivate: [AuthGuard]  },
       { path: 'sessions', component: SessionsComponent,canActivate: [AuthGuard] },
+      { path: 'specificmessages', component: SpecificMessagesComponent,canActivate: [AuthGuard] },
       { path: 'slamesssages', component: SlaMessagsComponent ,canActivate: [AuthGuard]},
       { path: 'slaconfiguration', component: SlaConfigurationComponent ,canActivate: [AuthGuard]},
       { path: 'clientcount', component: ClientCountGraphComponent ,canActivate: [AuthGuard]},

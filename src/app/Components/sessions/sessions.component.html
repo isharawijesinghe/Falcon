@@ -134,8 +134,8 @@
 </div>
 
 <!--specific-messages-nested-component-->
-<div id="specific-messages" *ngIf="showSpecificMessages">
+<!--<div id="specific-messages" *ngIf="showSpecificMessages">-->
   <app-specific-messages [messages] = "messages" [showSpecificMessages] ="showSpecificMessages" [sessionID] = "sessionID"
                          [clientIP] = "clientIP" [loginID] = "loginID" [channel] = "channel" [tenantCode] = "tenantCode" (direct)="backToSession($event)"></app-specific-messages>
-</div>
+<!--</div>-->
 
