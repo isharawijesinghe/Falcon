@@ -57,7 +57,7 @@ import {
 } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {DataSource} from '@angular/cdk/table';
-import { SessionPopupComponent } from './session-popup/session-popup.component';
+
 
 // import {CdkStepperModule} from '@angular/cdk/stepper';
 // import {CdkTableModule} from '@angular/cdk/table';
@@ -81,7 +81,6 @@ import { SessionPopupComponent } from './session-popup/session-popup.component';
     ClientCountGraphComponent,
     LoginComponent,
     LayoutComponent,
-    SessionPopupComponent,
     // CdkStepperModule,
     // CdkTableModule,
     // CdkTreeModule,
