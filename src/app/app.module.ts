@@ -141,7 +141,7 @@ import {PopupService} from "./Services/login-popup-service.service";
     RouterModule.forRoot(routes),
 
   ],
-  providers: [RestConnectionService, WebSocketConnectionService,AuthGuard, PopupService, SessionPopupComponent],
+  providers: [RestConnectionService, WebSocketConnectionService,AuthGuard, PopupService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

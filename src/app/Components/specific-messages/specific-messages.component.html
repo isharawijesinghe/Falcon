@@ -72,8 +72,49 @@
     <mat-header-row *matHeaderRowDef="displayedColumns;sticky:true;" id="header-row" ></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
-  <mat-paginator [pageSize]="6" showFirstLastButtons></mat-paginator>
+  <mat-paginator *ngIf="!showAllMessagesWaiting" [pageSize]="6" showFirstLastButtons></mat-paginator>
 </div>
+
+
+<!-- Please Wait Modal -->
+<div class="overlay" id="pleaseWaitDialog" role="dialog" *ngIf="showAllMessagesWaiting">
+  <div class="box scale-up-center shadow">
+    <div class="box-header">
+      <h1>Processing...</h1>
+    </div>
+    <div class="box-body">
+      <div class="progress">
+        <div class="progress-bar progress-bar-success progress-bar-striped progress-bar-animated" role="progressbar"  style="width: 100%">
+          <span class="sr-only">Please Wait..</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Error Modal -->
+
+<!-- Error Modal -->
+
+<div class="overlay" id="errorModalSessions" role="dialog" *ngIf="showAllMessagesError">
+  <div class="box scale-up-center shadow">
+    <div class="box-header">
+      <h1 id="error-heading">Error!</h1>
+    </div>
+    <div class="box-body">
+      <div class="error">
+        <h4 id="error-message">Unfortunately, an error has occurred. Please try with correct configuration.</h4>
+      </div>
+    </div>
+    <div class="box-footer">
+      <button mat-raised-button class="btn btn-danger" id="error-close-button" (click)="errorMessageClose()">Close</button>
+    </div>
+  </div>
+</div>
+
+
 
 
 <!--Modal Dialog to display elaborated data-->

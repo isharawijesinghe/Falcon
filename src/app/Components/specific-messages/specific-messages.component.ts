@@ -24,6 +24,8 @@ export class SpecificMessagesComponent implements OnInit {
   messages=[];
   clickedRow:any;
   Sessiondata:any;
+  showAllMessagesWaiting:any;
+  showAllMessagesError:any;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -36,7 +38,9 @@ export class SpecificMessagesComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.sessionID = this.messages[0]['session_id'];
+
+    this.showAllMessagesWaiting = true;
+    this.showAllMessagesError = false;
     this.sessionID = this.clickedRow.sessionId;
     this.clientIP = this.clickedRow.clientIp;
     this.loginID = this.clickedRow.loginId;
@@ -78,6 +82,7 @@ export class SpecificMessagesComponent implements OnInit {
 
       },(err:any)=>{
         console.log('error:'+err);
+        this.showAllMessagesError = true;
       },()=>{
         const specificMsgData : SpecificMsgData[] = [];
         for(let specificmsgdata of this.messages){
@@ -86,6 +91,7 @@ export class SpecificMessagesComponent implements OnInit {
         this.dataSource = new MatTableDataSource(specificMsgData);
         setTimeout(() => this.dataSource.paginator = this.paginator);
         setTimeout(() => this.dataSource.sort = this.sort);
+        this.showAllMessagesWaiting = false;
       });
     }
   }
