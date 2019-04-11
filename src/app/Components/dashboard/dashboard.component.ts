@@ -14,6 +14,7 @@ export class DashboardComponent implements OnInit {
   private cpuHistory; any;
   private tpsHeight: any;
   private viewData: any;
+  private showKibanaDashboard:any;
   // private sysMetricObjectDummy: any;
   // private viewDataDummy: any;
 
@@ -25,6 +26,9 @@ export class DashboardComponent implements OnInit {
     // this.sysMetricObjectDummy = JSON.parse(sessionStorage.getItem('sys_metric_key'));
     // this.viewDataDummy = JSON.parse(sessionStorage.getItem('view_key'));
 
+    this.websocketConnectionService.showKibanaUpdated.subscribe((value) => {
+      this.showKibanaDashboard = value;
+    });
 
     this.tpsHeight = this.drawTps();
 

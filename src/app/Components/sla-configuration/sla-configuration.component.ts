@@ -10,6 +10,7 @@ export class SlaConfigurationComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
   }
 
 }

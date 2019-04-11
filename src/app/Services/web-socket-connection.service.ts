@@ -25,10 +25,12 @@ export class WebSocketConnectionService {
   tpsCount: any;
   gatewayMetric: any;
   isOmsConnected = false;
+  showKibana:boolean;
   nodeBlockUpdated: Subject<string> = new Subject<string>();
   cpuHistoryUpdated: Subject<{}> = new Subject<{}>();
   sysMetricUpdated: Subject<{}> = new Subject<{}>();
   viewDataUpdated: Subject<{}> = new Subject<{}>();
+  showKibanaUpdated: Subject<{}> = new Subject<{}>();
 
   public connect(url): Subject<MessageEvent> {
     if (!this.subject) {
@@ -87,5 +89,9 @@ export class WebSocketConnectionService {
   setviewData(viewData) {
     this.viewData = viewData;
     this.viewDataUpdated.next(this.viewData);
+  }
+  setShowKibana(showKibana){
+    this.showKibana = showKibana;
+    this.showKibanaUpdated.next(this.showKibana);
   }
 }

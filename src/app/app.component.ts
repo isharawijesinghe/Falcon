@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
 import {WebSocketConnectionService} from './services/web-socket-connection.service';
-import {NavigationStart, Router} from "@angular/router";
 
 
 // import { Runtime, Inspector } from "@observablehq/notebook-runtime";
@@ -14,7 +12,7 @@ import {NavigationStart, Router} from "@angular/router";
 export class AppComponent {
   title = 'Falcon';
 
-  constructor(private websocketService: WebSocketConnectionService,private router :Router) {
+  constructor(private websocketService: WebSocketConnectionService) {
 
     //track whether the browser is refreshed
     // let browserRefresh = true;
@@ -87,7 +85,10 @@ export class AppComponent {
         } else {
           this.websocketService.isOmsConnected = false;
         }
-      } else {
+      }
+      if(message.messageType === 'showKibanaDashboard'){
+        this.websocketService.setShowKibana(message.show);
+      }else {
         // unhandle message received
       }
     });
