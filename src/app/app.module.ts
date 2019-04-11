@@ -59,6 +59,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {DataSource} from '@angular/cdk/table';
 import { SlaConfigurationComponent } from './Components/sla-configuration/sla-configuration.component';
 import { SpecificMessagesComponent } from './Components/specific-messages/specific-messages.component';
+import { SessionPopupComponent } from './Components/session-popup/session-popup.component';
+import {PopupService} from "./Services/login-popup-service.service";
 
 
 // import {CdkStepperModule} from '@angular/cdk/stepper';
@@ -85,6 +87,7 @@ import { SpecificMessagesComponent } from './Components/specific-messages/specif
     LayoutComponent,
     SlaConfigurationComponent,
     SpecificMessagesComponent,
+    SessionPopupComponent,
     // CdkStepperModule,
     // CdkTableModule,
     // CdkTreeModule,
@@ -92,7 +95,7 @@ import { SpecificMessagesComponent } from './Components/specific-messages/specif
 
     // ScrollingModule,
   ],
-  imports: [
+   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
@@ -138,7 +141,7 @@ import { SpecificMessagesComponent } from './Components/specific-messages/specif
     RouterModule.forRoot(routes),
 
   ],
-  providers: [RestConnectionService, WebSocketConnectionService,AuthGuard],
+  providers: [RestConnectionService, WebSocketConnectionService,AuthGuard, PopupService, SessionPopupComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

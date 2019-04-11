@@ -2,6 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {AuthService} from "../../../Services/auth.service";
 import {Router} from "@angular/router";
 import {PopupService} from '../../../Services/login-popup-service.service';
+import {ComponentType} from "@angular/cdk/typings/portal";
+import {LoginComponent} from "../../login/login.component";
 
 
 
@@ -47,7 +49,7 @@ export class HeaderNavBarComponent implements OnInit {
     console.log("Login");
     // this.router.navigate(['/login']);
     if(!this.popup.currentlyLoaded){
-      this.popup.modal();
+      this.popup.modal(LoginComponent);
     }
   }
 }

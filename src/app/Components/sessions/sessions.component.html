@@ -72,31 +72,6 @@
   </mat-card>
 
 
-  <div class="popup overlay" *ngIf="isPoppingup" >
-    <div class="row">
-      <div class="popup-box slide-bottom shadow">
-        <form class="session-detalis">
-          <p><strong>Client Channel: </strong>{{clientChannel}} </p>
-          <p><strong>Client IP: </strong>{{clientIP}} </p>
-          <p><strong>Login ID: </strong>{{loginID}}</p>
-          <p><strong>Up Time: </strong> {{upTime}}</p>
-          <p><strong>Session ID: </strong>{{sessionID }}</p>
-          <p><strong>Start Time: </strong>{{startTime}}</p>
-          <!--<p *ngIf="dataArrived">arrived data:{{this.currentSessionData}}</p>-->
-        </form>
-        <div *ngIf="chart" id="chart-container">
-          <canvas *ngIf="!isGraphDataNull" id="canvas">{{chart}}</canvas>
-          <div *ngIf="isGraphDataNull" class="slide-bottom" id="no-data-alert"><p><strong>No Data Available</strong></p></div>
-        </div>
-        <div class="button-container" *ngIf="hideViewAllButton">
-          <button mat-raised-button class="btn btn-success" id="view-all-button" (click)="viewAllMessages()" >View all messages</button>
-        </div>
-        <button mat-raised-button class="btn btn-danger" id="popup-close-button" (click)="sessionDetailClose()" >Close</button>
-      </div>
-    </div>
-  </div>
-
-
   <!-- Please Wait Modal -->
   <div class="overlay" id="pleaseWaitDialog" role="dialog" *ngIf="showAllMessagesWaiting">
     <div class="box scale-up-center shadow">
@@ -133,9 +108,5 @@
   </div>
 </div>
 
-<!--specific-messages-nested-component-->
-<!--<div id="specific-messages" *ngIf="showSpecificMessages">-->
-  <app-specific-messages [messages] = "messages" [showSpecificMessages] ="showSpecificMessages" [sessionID] = "sessionID"
-                         [clientIP] = "clientIP" [loginID] = "loginID" [channel] = "channel" [tenantCode] = "tenantCode" (direct)="backToSession($event)"></app-specific-messages>
-<!--</div>-->
+
 

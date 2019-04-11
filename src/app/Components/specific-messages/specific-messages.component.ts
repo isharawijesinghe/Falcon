@@ -1,7 +1,9 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {SessionData} from "../sessions/sessions.component";
+import {Component,  OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from "@angular/material";
-import {Router} from "@angular/router";
+import {SessionPopupComponent} from "../session-popup/session-popup.component";
+import {RestConnectionService} from "../../Services/rest-connection.service";
+import {PopupService} from "../../Services/login-popup-service.service";
+
 
 @Component({
   selector: 'app-specific-messages',
@@ -10,51 +12,84 @@ import {Router} from "@angular/router";
 })
 export class SpecificMessagesComponent implements OnInit {
 
-  @Input() messages: any;
-  @Input() showSpecificMessages: any;
-  @Input() sessionID: any;
-  @Input() clientIP: any;
-  @Input() loginID: any;
-  @Input() channel: any;
-  @Input() tenantCode: any;
-  isPoppingup = false;
-
-
-  @Output() direct: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   dataSource:MatTableDataSource<SpecificMsgData>;
   displayedColumns = ['messageType','uniqueReqID','timeStamp','responseTime','message'];
-  showSpecificMessagesLocal:boolean;
+  channel :any;
+  tenantCode:any;
+  currentSessionData:any;
+  clientIP:any;
+  loginID:any;
+  sessionID:any;
+  messages=[];
+  clickedRow:any;
+  Sessiondata:any;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor() {
+  constructor(private popup:PopupService, private restConnectionService:RestConnectionService) {
+    if(popup.dataService2 !=undefined && popup.dataService1!=undefined){
+      this.clickedRow = popup.dataService2;
+      this.Sessiondata = popup.dataService1;
+    }
   }
 
   ngOnInit() {
     // this.sessionID = this.messages[0]['session_id'];
+    this.sessionID = this.clickedRow.sessionId;
+    this.clientIP = this.clickedRow.clientIp;
+    this.loginID = this.clickedRow.loginId;
 
-    const specificMsgData : SpecificMsgData[] = [];
-    for(let specificmsgdata of this.messages){
-      specificMsgData.push(createSpecificMsgData(specificmsgdata));
-    }
-    this.dataSource = new MatTableDataSource(specificMsgData);
-    setTimeout(() => this.dataSource.paginator = this.paginator);
-    setTimeout(() => this.dataSource.sort = this.sort);
+    this.restConnectionService.getCurrentSessionDetalis(this.sessionID).subscribe((data) => {
+      this.currentSessionData = data;
+      console.log(this.currentSessionData);
 
-    this.showSpecificMessagesLocal = false;
+    }, (err:any)=>{
+      console.log('error:'+err);
+    }, ()=>{
+
+      this.subscribeData();
+
+    });
+
   }
 
   getMessageDetails(row:any){
     // console.log(row.uniqueReqID);
-    this.isPoppingup = true;
+    // this.isPoppingup = true;
     //yet to be completed
   }
 
-  backToSession(showSpecificMessagesLocal:boolean){
-    this.direct.emit(showSpecificMessagesLocal);
+  subscribeData(){
+    if(this.currentSessionData != undefined && Object.keys(this.currentSessionData).length != 0) {
+
+      this.restConnectionService.getSpecificMessages(this.sessionID).subscribe((messages)=>{
+        console.log(messages);
+
+        if(Object.keys(messages).length!=0){
+          this.channel = messages[0]['channel'];
+          this.tenantCode = messages[0]['tenantCode'];
+        }
+        Object.values(messages).forEach((message)=>{
+          message['date'] = parseDates(message['date']);
+          this.messages.push(message);
+        });
+
+      },(err:any)=>{
+        console.log('error:'+err);
+      },()=>{
+        const specificMsgData : SpecificMsgData[] = [];
+        for(let specificmsgdata of this.messages){
+          specificMsgData.push(createSpecificMsgData(specificmsgdata));
+        }
+        this.dataSource = new MatTableDataSource(specificMsgData);
+        setTimeout(() => this.dataSource.paginator = this.paginator);
+        setTimeout(() => this.dataSource.sort = this.sort);
+      });
+    }
   }
+
 
 }
 
@@ -74,4 +109,9 @@ function createSpecificMsgData(specificmsgdata: any):SpecificMsgData {
     responseTime: specificmsgdata['responseTime'],
     message: specificmsgdata['message']
   };
+}
+function parseDates(date) {
+  var parsedDate = new Date(date);
+  return parsedDate.getDate() + "-" + (parsedDate.getMonth() + 1) + "-" + parsedDate. getFullYear()
+    + " " + parsedDate.getHours() + ":" + parsedDate.getMinutes() + ":" + parsedDate.getSeconds();
 }

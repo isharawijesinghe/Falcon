@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, CanActivateChild, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import {PopupService} from './Services/login-popup-service.service';
+import {LoginComponent} from "./Components/login/login.component";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -17,7 +18,7 @@ export class AuthGuard implements CanActivate {
     if(!this.isLoggedIn()){
       // this.router.navigate(['/login']);
       if(!this.popup.currentlyLoaded){
-        this.popup.modal();
+        this.popup.modal(LoginComponent);
       }
 
       return false;
