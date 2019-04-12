@@ -1,3 +1,34 @@
-<p>
-  sla-configuration works!
-</p>
+<div class="container">
+  <div class="row">
+    <div class="default-time">
+      <h2>Default Time:</h2>
+      <h4>Is Enabled:{{isEnabled}}</h4>
+      <h4>Time:{{defaultTime}}</h4>
+    </div>
+
+    <div class="round-time">
+      <td>
+        <tr *ngFor="let value of roundTimeVals; let i = index">
+          {{i}} --> {{value}}
+        </tr>
+      </td>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!--<div class="mat-elevation-z8" id="table-slaconfigRoundTime" >-->
+<!--<mat-table [dataSource]="dataSource" matSort id="slaconfigRoundTime-content">-->
+<!--<ng-container matColumnDef="number">-->
+<!--<mat-header-cell *matHeaderCellDef mat-sort-header>Number</mat-header-cell>-->
+<!--<mat-cell *matCellDef="let row"> {{row.number}}</mat-cell>-->
+<!--</ng-container>-->
+<!--<ng-container matColumnDef="roundTime">-->
+<!--<mat-header-cell *matHeaderCellDef mat-sort-header>Round Time</mat-header-cell>-->
+<!--<mat-cell *matCellDef="let row"> {{row.roundTime}} </mat-cell>-->
+<!--</ng-container>-->
+<!--<mat-header-row *matHeaderRowDef="displayedColumns;sticky:true;" id="header-row" ></mat-header-row>-->
+<!--</mat-table>-->
+<!--</div>-->

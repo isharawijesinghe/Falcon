@@ -59,10 +59,11 @@ export class SessionsComponent implements OnInit {
       this.popup.dataService1 = this.Sessiondata;
 
       const sessiondata: SessionData[] = [];
-      console.log(this.Sessiondata);
+
       for(let sessionData of this.Sessiondata){
         sessiondata.push(createNewSessionData(sessionData));
       }
+        console.log(sessiondata);
       this.isLoading = false;
       this.dataSource = new MatTableDataSource(sessiondata);
         setTimeout(() => this.dataSource.paginator = this.paginator);
@@ -96,16 +97,16 @@ export class SessionsComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
 
-
-  errorMessageClose(){
-    this.showAllMessagesError = false;
-  }
-
-  backToSession(){
-    this.showSpecificMessages = false;
-    this.hideViewAllButton = false;
-    this.messages = [];
-  }
+  //
+  // errorMessageClose(){
+  //   this.showAllMessagesError = false;
+  // }
+  //
+  // backToSession(){
+  //   this.showSpecificMessages = false;
+  //   this.hideViewAllButton = false;
+  //   this.messages = [];
+  // }
 
 }
 
