@@ -1,4 +1,4 @@
-<div class="container">
+<div class="data-container">
   <div class="row">
     <div class="default-time">
       <h2>Default Time:</h2>
@@ -7,11 +7,20 @@
     </div>
 
     <div class="round-time">
-      <td>
-        <tr *ngFor="let value of roundTimeVals; let i = index">
-          {{i}} --> {{value}}
+      <table id="round-time-table">
+        <tr>
+          <th>Message type</th>
+          <td *ngFor="let keys of roundTimeKeys">
+            {{keys}}
+          </td>
         </tr>
-      </td>
+        <tr>
+         <th>Round Time</th>
+         <td *ngFor="let value of roundTimeVals">
+          {{value}}
+         </td>
+        </tr>
+      </table>
     </div>
   </div>
 </div>

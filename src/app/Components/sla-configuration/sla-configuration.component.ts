@@ -21,7 +21,7 @@ export class SlaConfigurationComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  displayedColumns = ['number','roundTime'];
+  displayedColumns = ['messageType','roundTime'];
 
   ngOnInit() {
     this.restConnectionService.getSlaMapRoundTime().subscribe(data=>{
