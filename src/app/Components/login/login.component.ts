@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
     }
     else{
       if(this.f.username.value == this.model.username && this.f.password.value == this.model.password){
-        console.log("Login successful");
+        console.log("Logged in successful");
         //this.authService.authLogin(this.model);
         localStorage.setItem('isLoggedIn', "true");
         localStorage.setItem('token', this.f.username.value);

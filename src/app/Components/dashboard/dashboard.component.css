@@ -48,3 +48,14 @@ td.CONNECTED{
 #sys-load-avg{
   margin-bottom: 50px;
 }
+
+/*.chart-container{*/
+  /*width: 573px;*/
+  /*padding-top: 20px;*/
+  /*padding-right: 10px;*/
+/*}*/
+
+canvas{
+  height: 370px!important;
+  padding-right: 10px;
+}

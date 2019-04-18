@@ -16,7 +16,6 @@ export class WebSocketConnectionService {
   public messages: Subject<any>  = new Subject<any>();
   private websocketURL: any;
   websocketStatus: any;
-  view: any;
   cpuHistory: any;
   sysMetric: any;
   viewData: any;

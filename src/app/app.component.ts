@@ -54,7 +54,7 @@ export class AppComponent {
 
       if (message.messageType === 'metric') {
         const metric = message;
-        const view = this.websocketService.view;
+        const view = this.websocketService.viewData;
         if ( view ) {
           for (let i = 0, iLen = view.nodes.length; i < iLen; i++) {
             if (view.nodes[i].nodeName === metric.node) {
@@ -95,7 +95,7 @@ export class AppComponent {
   }
 
   addCpuUsage(node) {
-    let  nodeCpu = this.websocketService.cpuHistory[node.nodeName];
+    let nodeCpu = this.websocketService.cpuHistory[node.nodeName];
     if (nodeCpu == null) {
       nodeCpu = [];
       this.websocketService.cpuHistory[node.nodeName] = nodeCpu;

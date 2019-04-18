@@ -1,5 +1,6 @@
 import {Component, DoCheck, OnInit} from '@angular/core';
 import {WebSocketConnectionService} from '../../services/web-socket-connection.service';
+import { Chart } from 'chart.js';
 import * as d3 from 'd3';
 
 @Component({
@@ -15,6 +16,9 @@ export class DashboardComponent implements OnInit {
   private tpsHeight: any;
   private viewData: any;
   private showKibanaDashboard:any;
+  private chart: any;
+  private dataX = [];
+  private dataY = [];
   // private sysMetricObjectDummy: any;
   // private viewDataDummy: any;
 
@@ -30,7 +34,7 @@ export class DashboardComponent implements OnInit {
       this.showKibanaDashboard = value;
     });
 
-    this.tpsHeight = this.drawTps();
+    // this.tpsHeight = this.drawTps();
 
     this.websocketConnectionService.viewDataUpdated.subscribe((value) => {
       this.viewData = value;
@@ -52,7 +56,7 @@ export class DashboardComponent implements OnInit {
     this.websocketConnectionService.cpuHistoryUpdated.subscribe( (value => {
       this.cpuHistory = value;
       if (this.cpuHistory != null) {
-        this.drawSystemLoadAverage(this.tpsHeight);
+        this.drawSystemLoadAvg();
       }
     }));
 
@@ -61,8 +65,8 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
 
-    if(this.websocketConnectionService.cpuHistory != null && this.tpsHeight!= null ){
-      this.drawSystemLoadAverage(this.tpsHeight);
+    if(this.websocketConnectionService.cpuHistory != null ){
+      this.drawSystemLoadAvg();
     }
 
     if(this.websocketConnectionService.nodeBlock != null){
@@ -73,6 +77,93 @@ export class DashboardComponent implements OnInit {
     if(this.websocketConnectionService.viewData != null){
       this.viewData = this.websocketConnectionService.viewData;
     }
+
+  }
+
+  drawSystemLoadAvg(){
+    const data = [];
+    const dataPoint = {};
+    this.dataX = [];
+    this.dataY = [];
+    let maxX = 1;
+    const reference = this.websocketConnectionService.cpuHistory; // reference to access cpuhistry variable inside inner function
+    for (const node in this.websocketConnectionService.cpuHistory) {
+      if (this.websocketConnectionService.cpuHistory.hasOwnProperty(node)) {
+        this.websocketConnectionService.cpuHistory[node].forEach( (d: any, i: any)=> {
+          maxX = node.length > maxX ? reference[node].length : maxX;
+
+          dataPoint['tick'] = i;
+          dataPoint['cpu'] = d;
+          this.dataX.push(dataPoint['tick']);
+          this.dataY.push(dataPoint['cpu']);
+        });
+      }
+    }
+    console.log(this.dataX);
+    console.log(this.dataY);
+
+      this.chart = new Chart('canvas', {
+        type: 'line',
+        data: {
+          labels: this.dataX,
+          datasets: [{
+            label: 'CPU Usage',
+            fill: false,
+            lineTension: 0.1,
+            backgroundColor: "rgba(75,192,192,1)",
+            borderColor: "rgba(75,192,192,1)",
+            borderCapStyle: 'butt',
+            borderDash: [],
+            borderDashOffset: 0.0,
+            borderJoinStyle: 'miter',
+            pointBorderColor: "rgba(75,192,192,1)",
+            pointBackgroundColor: "#fff",
+            pointBorderWidth: 1,
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: "rgba(75,192,192,1)",
+            pointHoverBorderColor: "rgba(220,220,220,1)",
+            pointHoverBorderWidth: 2,
+            pointRadius: 3,
+            pointHitRadius: 6,
+            data: this.dataY,
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          legend: {
+            display: true,
+            labels: {
+              boxWidth: 20,
+              fontColor: 'white'
+            }
+          },
+          scales: {
+            xAxes: [{
+              scaleLabel: {
+                display: true,
+                labelString: 'GATEWAY'
+              },
+              ticks: {
+                fontColor: "white",
+                fontSize: 9,
+              }
+            }],
+            yAxes: [{
+              scaleLabel: {
+                display: true,
+                labelString: 'CPU %'
+              },
+              ticks: {
+                fontColor: "white",
+                fontSize: 9,
+                beginAtZero: true
+              }
+            }]
+          }
+        }
+      });
+
 
   }
 
@@ -321,7 +412,7 @@ export class DashboardComponent implements OnInit {
   }
 
 
-  drawSystemLoadAverage(tpsHeight) {
+  drawSystemLoadAverage() {
     let svg = d3.select('#dashboard-load svg');
     const margin = {top: 10, right: 20, bottom: 20, left: 40};
     const width = parseInt(svg.style('width'), 10 ) - margin.right - margin.left;
@@ -363,6 +454,8 @@ export class DashboardComponent implements OnInit {
           dataPoint['tick'] = i;
           dataPoint['cpu'] = d;
           nodeData.push(dataPoint);
+          // console.log(dataPoint['tick'] + 'this is the i'+' '+dataPoint['cpu']+' this is th d');
+
         });
         tempNode['id'] = node;
         tempNode['values'] = nodeData;

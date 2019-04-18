@@ -19,17 +19,15 @@ export class HeaderNavBarComponent implements OnInit {
   isLogged: boolean;
 
   constructor(private router: Router,public authService: AuthService, private popup: PopupService) {
-    this.id = localStorage.getItem('token');
 
-    // if(localStorage.getItem('isLoggedIn')==="true"){
-    //   this.isLogged = true;
-    // }
   }
 
   ngOnInit() {
+
   }
 
   getLogStatus():boolean{
+    this.id = localStorage.getItem('token');
     if(localStorage.getItem('isLoggedIn')==="true"){
       this.isLogged = true;
     }else{
