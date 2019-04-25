@@ -10,9 +10,10 @@ import { Chart } from 'chart.js';
 export class ClientCountGraphComponent implements OnInit {
 
   clientCount:any;
-  chart:any;
+  chart2:any;
   xValues = [];
   yValues = [];
+  isDataAvailable : any;
 
   constructor(private restConnectionService: RestConnectionService) { }
 
@@ -33,12 +34,12 @@ export class ClientCountGraphComponent implements OnInit {
       // console.log(this.yValues);
 
 
-      if(this.chart){
-        this.chart.data = this.clientCount;
-        this.chart.update();
+      if(this.chart2){
+        this.chart2.data = this.clientCount;
+        this.chart2.update();
       }else {
 
-        this.chart = new Chart('canvas', {
+        this.chart2 = new Chart('canvas2', {
           type: 'line',
           data: {
             labels: this.xValues,
@@ -99,6 +100,10 @@ export class ClientCountGraphComponent implements OnInit {
         });
       }
 
+    },(err)=>{
+      console.log('error: '+ err);
+    },()=>{
+      this.isDataAvailable = true;
     });
   }
 

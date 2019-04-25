@@ -27,14 +27,12 @@ export class DashboardComponent implements OnInit {
   constructor(private websocketConnectionService: WebSocketConnectionService) {
 
 
-    // this.sysMetricObjectDummy = JSON.parse(sessionStorage.getItem('sys_metric_key'));
-    // this.viewDataDummy = JSON.parse(sessionStorage.getItem('view_key'));
-
-    this.websocketConnectionService.showKibanaUpdated.subscribe((value) => {
-      this.showKibanaDashboard = value;
-    });
-
     // this.tpsHeight = this.drawTps();
+
+    // this.websocketConnectionService.showKibanaUpdated.subscribe((value) => {
+    //   this.showKibanaDashboard = value;
+    //   console.log(this.showKibanaDashboard);
+    // });
 
     this.websocketConnectionService.viewDataUpdated.subscribe((value) => {
       this.viewData = value;
@@ -64,6 +62,11 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.websocketConnectionService.showKibanaUpdated.subscribe((value) => {
+      this.showKibanaDashboard = value;
+      console.log(this.showKibanaDashboard);
+    });
 
     if(this.websocketConnectionService.cpuHistory != null ){
       this.drawSystemLoadAvg();
@@ -99,8 +102,8 @@ export class DashboardComponent implements OnInit {
         });
       }
     }
-    console.log(this.dataX);
-    console.log(this.dataY);
+    // console.log(this.dataX);
+    // console.log(this.dataY);
 
       this.chart = new Chart('canvas', {
         type: 'line',

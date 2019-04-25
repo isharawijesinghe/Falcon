@@ -1,3 +1,10 @@
-#canvas{
+#canvas2{
   height: 570px!important;
+}
+
+#no-data{
+  text-align: center;
+  position: relative;
+  left: 40%;
+  padding: 30px;
 }

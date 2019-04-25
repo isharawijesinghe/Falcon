@@ -2,11 +2,6 @@
   font-size: medium;
 }
 
-.row{
-  background-color: #9d9d9d;
-  margin-right: 10px;
-}
-
 .data-container{
   width: 100%;
   height: 100%;
@@ -18,12 +13,15 @@
   position: relative;
   float: left;
   padding: 30px;
+  left: 25px;
 }
 
 .round-time {
   padding-top: 30px;
   padding-bottom: 30px;
   padding-left: 10px;
+  position: relative;
+  left: 20px;
 }
 
 table, th, td {
@@ -44,5 +42,11 @@ ul {
   columns: 2;
   -webkit-columns: 2;
   -moz-columns: 2;
+}
+#no-data{
+  text-align: center;
+  position: relative;
+  left: 40%;
+  padding: 30px;
 }
 

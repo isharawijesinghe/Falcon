@@ -18,13 +18,16 @@ export class SlaConfigurationComponent implements OnInit {
   defaultTime:any;
   roundTimeKeys:any;
   roundTimeVals:any;
+  isDataAvailable:any;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   displayedColumns = ['messageType','roundTime'];
 
+
   ngOnInit() {
     this.restConnectionService.getSlaMapRoundTime().subscribe(data=>{
+
       this.roundTimeData = data;
       // const roundTime : RoundTimeData[] = [] ;
       this.roundTimeKeys = Object.keys(this.roundTimeData);
@@ -32,6 +35,8 @@ export class SlaConfigurationComponent implements OnInit {
 
     }, (err:any)=>{
       console.log('error:'+err);
+    }, ()=>{
+      this.isDataAvailable = true;
     });
 
     this.restConnectionService.getSlaMapDefaultTime().subscribe(data=>{

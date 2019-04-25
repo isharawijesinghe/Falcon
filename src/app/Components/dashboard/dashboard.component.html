@@ -89,7 +89,7 @@
   </div>
 
   <!--dashboard load average display-->
-  <div class="row" id="first-kibana-row">
+  <div class="row" *ngIf="showKibanaDashboard"   id="first-kibana-row">
     <div class="col-md-6 load-panel" id="dashboard-tps">
       <div class="panel wd-panel" id="dashboard-load">
         <div class="wd-panel-heading" id="sys-load-avg">
@@ -105,7 +105,7 @@
 
   <!--kibana blocks-->
 
-    <div *ngIf="showKibanaDashboard"  class="col-md-6 load-panel" >
+    <div class="col-md-6 load-panel" >
       <div class="panel wd-panel" id="tps-kibana-wrap-all">
         <div class="wd-panel-heading">
           TPS (Executions + Orders) Graph
