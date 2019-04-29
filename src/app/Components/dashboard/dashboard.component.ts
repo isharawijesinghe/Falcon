@@ -105,6 +105,11 @@ export class DashboardComponent implements OnInit {
     // console.log(this.dataX);
     // console.log(this.dataY);
 
+
+    if(this.dataX.length !=0){
+      this.chart.destroy();
+    }
+
       this.chart = new Chart('canvas', {
         type: 'line',
         data: {
@@ -166,7 +171,6 @@ export class DashboardComponent implements OnInit {
           }
         }
       });
-
 
   }
 
