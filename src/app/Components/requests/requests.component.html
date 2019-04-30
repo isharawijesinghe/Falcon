@@ -4,6 +4,8 @@
 
       <div id="request-results-history" class="get-routes">
 
+        <h3>Client Distribution</h3>
+
         <div class="mat-elevation-z8" *ngIf="!routeMainHide">
 
           <mat-table [dataSource]="dataSource" matSort id="table01">
@@ -56,7 +58,8 @@
     <div class="row">
       <div class="col-md-12">
         <div id="main-request" class="panel wd-panel">
-          <form class="col-md-12 form-inline" >
+          <h3 id="client-routes-title">Client Routes</h3>
+          <form class="col-md-12 form-inline" id="client-routes-form" >
             Client ID: <input class="form-control display-inline" type="text"  name="routeClientID" [(ngModel)]="routeClientID">
             <input type="submit" value="GET ROUTES" class="btn btn-primary"  (click)="getRoutes()">
           </form>
@@ -76,7 +79,8 @@
 
     <div class="row">
       <div class="col-md-12">
-        <div id="main-request-history" class="panel wd-panel input-group">
+        <div id="main-request-history" class="panel wd-panel">
+          <h3 id="history-title">Client History</h3>
           <div class="form-wrapper">
             <form class="col-md-12 form-inline" id="form-history">
               Client ID: <input class="form-control display-inline" type="text"  name="routeHistoryClientID"  [(ngModel)]="routeHistoryClientID">
@@ -131,6 +135,7 @@
               <h3 id="no-data-banner" class="slide-bottom">No Data Available</h3>
             </div>
           </div>
+
       </div>
     </div>
   </div>

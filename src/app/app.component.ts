@@ -41,6 +41,10 @@ export class AppComponent {
 
       this.websocketService.websocketStatus = JSON.stringify(message);
 
+      if(message.messageType === 'showKibanaDashboard'){
+        this.websocketService.setShowKibana(message.show);
+      }
+
       if (message.messageType === 'sys_metric') {
         this.websocketService.setsysMetrics(message);
         // sessionStorage.setItem('sys_metric_key',JSON.stringify(message));
@@ -85,9 +89,6 @@ export class AppComponent {
         } else {
           this.websocketService.isOmsConnected = false;
         }
-      }
-      if(message.messageType === 'showKibanaDashboard'){
-        this.websocketService.setShowKibana(message.show);
       }else {
         // unhandle message received
       }

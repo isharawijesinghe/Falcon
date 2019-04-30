@@ -55,23 +55,17 @@ export class DashboardComponent implements OnInit {
     this.websocketConnectionService.cpuHistoryUpdated.subscribe( (value => {
       this.cpuHistory = value;
       if (this.cpuHistory != null) {
-        console.log('called by constructor');
         this.isOnInit = false;
         this.drawSystemLoadAvg();
       }
     }));
 
 
+
   }
 
   ngOnInit() {
 
-
-
-    // this.websocketConnectionService.showKibanaUpdated.subscribe((value) => {
-    //   this.showKibanaDashboard = value;
-    //   console.log(this.showKibanaDashboard);
-    // });
 
     if(this.websocketConnectionService.showKibana != null){
       this.showKibanaDashboard = this.websocketConnectionService.showKibana;
@@ -86,44 +80,38 @@ export class DashboardComponent implements OnInit {
       this.viewData = this.websocketConnectionService.viewData;
     }
 
+    if(this.websocketConnectionService.sysMetric != null){
+      this.sysMetricObject = this.websocketConnectionService.sysMetric;
+    }
+
     if(this.websocketConnectionService.cpuHistory != null ){
-      console.log('Called by init.');
+      this.cpuHistory = this.websocketConnectionService.cpuHistory;
       this.isOnInit = true;
       this.drawSystemLoadAvg();
     }
 
-
-
   }
 
   drawSystemLoadAvg(){
-    const data = [];
     const dataPoint = {};
     this.dataX = [];
     this.dataY = [];
-    let maxX = 1;
-    const reference = this.websocketConnectionService.cpuHistory; // reference to access cpuhistry variable inside inner function
-    for (const node in this.websocketConnectionService.cpuHistory) {
-      // if (this.websocketConnectionService.cpuHistory.hasOwnProperty(node)) {
-        this.websocketConnectionService.cpuHistory[node].forEach( (d: any, i: any)=> {
-          // maxX = node.length > maxX ? reference[node].length : maxX;
-
+    for (const node in this.cpuHistory) {
+        this.cpuHistory[node].forEach( (d: any, i: any)=> {
           dataPoint['tick'] = i;
           dataPoint['cpu'] = d;
+          console.log(i+' '+d);
           this.dataX.push(dataPoint['tick']);
           this.dataY.push(dataPoint['cpu']);
         });
-      // }
     }
     // console.log(this.dataX);
     // console.log(this.dataY);
 
-    // console.log(this.dataX.length+' is the length');
     if(this.dataX.length !=0 && !this.isOnInit){
       this.chart.destroy();
     }
 
-    // this.isOnInit = false;
       this.chart = new Chart('canvas', {
         type: 'line',
         data: {
