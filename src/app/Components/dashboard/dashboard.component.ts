@@ -19,6 +19,7 @@ export class DashboardComponent implements OnInit {
   private chart: any;
   private dataX = [];
   private dataY = [];
+  private isOnInit: boolean;
   // private sysMetricObjectDummy: any;
   // private viewDataDummy: any;
 
@@ -29,10 +30,10 @@ export class DashboardComponent implements OnInit {
 
     // this.tpsHeight = this.drawTps();
 
-    // this.websocketConnectionService.showKibanaUpdated.subscribe((value) => {
-    //   this.showKibanaDashboard = value;
-    //   console.log(this.showKibanaDashboard);
-    // });
+    this.websocketConnectionService.showKibanaUpdated.subscribe((value) => {
+      this.showKibanaDashboard = value;
+      console.log(this.showKibanaDashboard);
+    });
 
     this.websocketConnectionService.viewDataUpdated.subscribe((value) => {
       this.viewData = value;
@@ -54,6 +55,8 @@ export class DashboardComponent implements OnInit {
     this.websocketConnectionService.cpuHistoryUpdated.subscribe( (value => {
       this.cpuHistory = value;
       if (this.cpuHistory != null) {
+        console.log('called by constructor');
+        this.isOnInit = false;
         this.drawSystemLoadAvg();
       }
     }));
@@ -63,13 +66,15 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
 
-    this.websocketConnectionService.showKibanaUpdated.subscribe((value) => {
-      this.showKibanaDashboard = value;
-      console.log(this.showKibanaDashboard);
-    });
 
-    if(this.websocketConnectionService.cpuHistory != null ){
-      this.drawSystemLoadAvg();
+
+    // this.websocketConnectionService.showKibanaUpdated.subscribe((value) => {
+    //   this.showKibanaDashboard = value;
+    //   console.log(this.showKibanaDashboard);
+    // });
+
+    if(this.websocketConnectionService.showKibana != null){
+      this.showKibanaDashboard = this.websocketConnectionService.showKibana;
     }
 
     if(this.websocketConnectionService.nodeBlock != null){
@@ -81,6 +86,14 @@ export class DashboardComponent implements OnInit {
       this.viewData = this.websocketConnectionService.viewData;
     }
 
+    if(this.websocketConnectionService.cpuHistory != null ){
+      console.log('Called by init.');
+      this.isOnInit = true;
+      this.drawSystemLoadAvg();
+    }
+
+
+
   }
 
   drawSystemLoadAvg(){
@@ -91,25 +104,26 @@ export class DashboardComponent implements OnInit {
     let maxX = 1;
     const reference = this.websocketConnectionService.cpuHistory; // reference to access cpuhistry variable inside inner function
     for (const node in this.websocketConnectionService.cpuHistory) {
-      if (this.websocketConnectionService.cpuHistory.hasOwnProperty(node)) {
+      // if (this.websocketConnectionService.cpuHistory.hasOwnProperty(node)) {
         this.websocketConnectionService.cpuHistory[node].forEach( (d: any, i: any)=> {
-          maxX = node.length > maxX ? reference[node].length : maxX;
+          // maxX = node.length > maxX ? reference[node].length : maxX;
 
           dataPoint['tick'] = i;
           dataPoint['cpu'] = d;
           this.dataX.push(dataPoint['tick']);
           this.dataY.push(dataPoint['cpu']);
         });
-      }
+      // }
     }
     // console.log(this.dataX);
     // console.log(this.dataY);
 
-
-    if(this.dataX.length !=0){
+    // console.log(this.dataX.length+' is the length');
+    if(this.dataX.length !=0 && !this.isOnInit){
       this.chart.destroy();
     }
 
+    // this.isOnInit = false;
       this.chart = new Chart('canvas', {
         type: 'line',
         data: {
