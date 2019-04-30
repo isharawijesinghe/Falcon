@@ -80,6 +80,7 @@
 #history-table{
   width: 98%;
   padding-left: 12px;
+  display: flow-root;
 }
 
 th.mat-header-cell:first-of-type,th.mat-header-cell:last-of-type  {
@@ -115,4 +116,8 @@ mat-row {
 
 #client-routes-form{
   height: 50px;
+}
+
+#client-distribution-title{
+  margin-bottom: 20px;
 }

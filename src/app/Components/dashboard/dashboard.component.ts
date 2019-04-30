@@ -100,7 +100,6 @@ export class DashboardComponent implements OnInit {
         this.cpuHistory[node].forEach( (d: any, i: any)=> {
           dataPoint['tick'] = i;
           dataPoint['cpu'] = d;
-          console.log(i+' '+d);
           this.dataX.push(dataPoint['tick']);
           this.dataY.push(dataPoint['cpu']);
         });
