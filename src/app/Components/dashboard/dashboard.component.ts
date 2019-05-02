@@ -16,7 +16,7 @@ export class DashboardComponent implements OnInit {
   private tpsHeight: any;
   private viewData: any;
   private showKibanaDashboard:any;
-  private chart: any;
+  private chart:any;
   private dataX :any;
   private dataY :any;
   private dataYtotal: any;
@@ -59,6 +59,8 @@ export class DashboardComponent implements OnInit {
       this.cpuHistory = value;
       if (this.cpuHistory != null) {
         this.isOnInit = false;
+        console.log('constuctor called');
+
         this.drawSystemLoadAvg();
       }
     }));
@@ -90,6 +92,8 @@ export class DashboardComponent implements OnInit {
     if(this.websocketConnectionService.cpuHistory != null ){
       this.cpuHistory = this.websocketConnectionService.cpuHistory;
       this.isOnInit = true;
+      console.log('init called');
+
       this.drawSystemLoadAvg();
     }
 
@@ -97,7 +101,6 @@ export class DashboardComponent implements OnInit {
 
   drawSystemLoadAvg(){
     const dataPoint = {};
-
     this.dataX = [];
     this.dataY = [];
     this.labels = [];
@@ -116,8 +119,14 @@ export class DashboardComponent implements OnInit {
 
       this.dataY[node] = dataPoint['cpu'];
 
-      if(this.dataYtotal[node].length < 2){
-        this.drawChart(node);
+      if(this.dataYtotal[node].length < 2 || this.isOnInit){
+        console.log('chart is drawn');
+        // this.chart = [];
+        if(this.chart==undefined){
+          // this.chart.destroy();
+          this.drawChart(node);
+        }
+
       }else{
         this.addData(this.chart,this.dataX,this.dataY[node]);
       }
