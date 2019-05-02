@@ -14,24 +14,6 @@ export class AppComponent {
 
   constructor(private websocketService: WebSocketConnectionService) {
 
-    //track whether the browser is refreshed
-    // let browserRefresh = true;
-    // this.subscription = router.events.subscribe((event) => {
-    //   if (event instanceof NavigationStart) {
-    //     browserRefresh = !router.navigated;
-    //   }
-    // });
-    // if(browserRefresh){
-    //
-    //   // console.log(JSON.parse(sessionStorage.getItem('sys_metric_key')).disconnects);
-    //   // this.websocketService.setsysMetrics(message);
-    //   console.log('browser refreshed..!')
-    // }else{
-    //   this.websocketService.setsysMetrics(JSON.parse(sessionStorage.getItem('sys_metric_key')));
-    //   console.log('browser not refreshed..!')
-    // }
-    /////////
-
     websocketService.initializeWebsocket();
     this.websocketService.cpuHistory = {};
     // this.websocketService.messages.o
@@ -96,17 +78,21 @@ export class AppComponent {
   }
 
   addCpuUsage(node) {
-    let nodeCpu = this.websocketService.cpuHistory[node.nodeName];
-    if (nodeCpu == null) {
-      nodeCpu = [];
-      this.websocketService.cpuHistory[node.nodeName] = nodeCpu;
-    }
-    if (nodeCpu.length > 200) {
-      nodeCpu.shift();
-      nodeCpu.push(node.metric.systemCpuUsage);
-    } else {
-      nodeCpu.push(node.metric.systemCpuUsage);
-    }
+    // let nodeCpu = this.websocketService.cpuHistory[node.nodeName];
+    // if (nodeCpu == null) {
+    //   nodeCpu = [];
+    //   this.websocketService.cpuHistory[node.nodeName] = nodeCpu;
+    // }
+    // if (nodeCpu.length > 200) {
+    //   nodeCpu.shift();
+    //   nodeCpu.push(node.metric.systemCpuUsage);
+    // } else {
+    //   nodeCpu.push(node.metric.systemCpuUsage);
+    // }
+    // this.websocketService.setcpuHistory(this.websocketService.cpuHistory);
+
+    let nodeCpu = node.metric.systemCpuUsage;
+    this.websocketService.cpuHistory[node.nodeName] = nodeCpu;
     this.websocketService.setcpuHistory(this.websocketService.cpuHistory);
   }
 

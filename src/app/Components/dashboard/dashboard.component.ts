@@ -17,8 +17,11 @@ export class DashboardComponent implements OnInit {
   private viewData: any;
   private showKibanaDashboard:any;
   private chart: any;
-  private dataX = [];
-  private dataY = [];
+  private dataX :any;
+  private dataY :any;
+  private dataYtotal: any;
+  private labels = [];
+  private i = 0;
   private isOnInit: boolean;
   // private sysMetricObjectDummy: any;
   // private viewDataDummy: any;
@@ -94,85 +97,107 @@ export class DashboardComponent implements OnInit {
 
   drawSystemLoadAvg(){
     const dataPoint = {};
+
     this.dataX = [];
     this.dataY = [];
+    this.labels = [];
     for (const node in this.cpuHistory) {
-        this.cpuHistory[node].forEach( (d: any, i: any)=> {
-          dataPoint['tick'] = i;
-          dataPoint['cpu'] = d;
-          this.dataX.push(dataPoint['tick']);
-          this.dataY.push(dataPoint['cpu']);
-        });
-    }
-    // console.log(this.dataX);
-    // console.log(this.dataY);
+      this.labels.push(node);
+      if(this.dataYtotal == undefined){
+        this.dataYtotal = [];
+        this.dataYtotal[node] = [];
+      }
+      this.dataYtotal[node].push(this.cpuHistory[node]);    // implement max case
+      this.dataX.push(this.i++);
+      this.dataY[node] =[];
+      dataPoint['cpu'] = this.cpuHistory[node];
 
-    if(this.dataX.length !=0 && !this.isOnInit){
-      this.chart.destroy();
+      console.log(this.cpuHistory);
+
+      this.dataY[node] = dataPoint['cpu'];
+
+      if(this.dataYtotal[node].length < 2){
+        this.drawChart(node);
+      }else{
+        this.addData(this.chart,this.dataX,this.dataY[node]);
+      }
     }
 
-      this.chart = new Chart('canvas', {
-        type: 'line',
-        data: {
-          labels: this.dataX,
-          datasets: [{
-            label: 'CPU Usage',
-            fill: false,
-            lineTension: 0.1,
-            backgroundColor: "rgba(75,192,192,1)",
-            borderColor: "rgba(75,192,192,1)",
-            borderCapStyle: 'butt',
-            borderDash: [],
-            borderDashOffset: 0.0,
-            borderJoinStyle: 'miter',
-            pointBorderColor: "rgba(75,192,192,1)",
-            pointBackgroundColor: "#fff",
-            pointBorderWidth: 1,
-            pointHoverRadius: 5,
-            pointHoverBackgroundColor: "rgba(75,192,192,1)",
-            pointHoverBorderColor: "rgba(220,220,220,1)",
-            pointHoverBorderWidth: 2,
-            pointRadius: 3,
-            pointHitRadius: 6,
-            data: this.dataY,
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          legend: {
-            display: true,
-            labels: {
-              boxWidth: 20,
-              fontColor: 'white'
-            }
-          },
-          scales: {
-            xAxes: [{
-              scaleLabel: {
-                display: true,
-                labelString: 'GATEWAY'
-              },
-              ticks: {
-                fontColor: "white",
-                fontSize: 9,
-              }
-            }],
-            yAxes: [{
-              scaleLabel: {
-                display: true,
-                labelString: 'CPU %'
-              },
-              ticks: {
-                fontColor: "white",
-                fontSize: 9,
-                beginAtZero: true
-              }
-            }]
+  }
+
+  drawChart(node){
+    let color:any;
+    color = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
+    this.chart = new Chart('canvas', {
+      type: 'line',
+      data: {
+        // labels: this.dataX[node],
+        datasets: [{
+          label: this.labels,
+          fill: false,
+          lineTension: 0.1,
+          backgroundColor: color,
+          borderColor: color,
+          borderCapStyle: 'butt',
+          borderDash: [],
+          borderDashOffset: 0.0,
+          borderJoinStyle: 'miter',
+          pointBorderColor: color,
+          pointBackgroundColor: "#fff",
+          pointBorderWidth: 1,
+          pointHoverRadius: 5,
+          pointHoverBackgroundColor: color,
+          pointHoverBorderColor: "rgba(220,220,220,1)",
+          pointHoverBorderWidth: 2,
+          pointRadius: 3,
+          pointHitRadius: 6,
+          data: [] = [],
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+          display: true,
+          labels: {
+            boxWidth: 20,
+            fontColor: 'white'
           }
+        },
+        scales: {
+          xAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: 'Iteration'
+            },
+            ticks: {
+              fontColor: "white",
+              fontSize: 9,
+            }
+          }],
+          yAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: 'CPU %'
+            },
+            ticks: {
+              fontColor: "white",
+              fontSize: 9,
+              beginAtZero: true
+            }
+          }]
         }
-      });
+      }
+    });
+  }
 
+  addData(chart,label, data) {
+    chart.data.labels.push(label);
+    // chart.options.scales.xAxes.ticks.max = maxX;
+    chart.data.datasets.forEach((dataset) => {
+      dataset.data.push(data);
+    });
+    chart.update();
   }
 
 
@@ -522,3 +547,4 @@ export class DashboardComponent implements OnInit {
   }
 
 }
+
