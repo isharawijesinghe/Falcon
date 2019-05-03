@@ -89,13 +89,13 @@ export class DashboardComponent implements OnInit {
       this.sysMetricObject = this.websocketConnectionService.sysMetric;
     }
 
-    if(this.websocketConnectionService.cpuHistory != null ){
-      this.cpuHistory = this.websocketConnectionService.cpuHistory;
-      this.isOnInit = true;
-      console.log('init called');
-
-      this.drawSystemLoadAvg();
-    }
+    // if(this.websocketConnectionService.cpuHistory != null ){
+    //   this.cpuHistory = this.websocketConnectionService.cpuHistory;
+    //   this.isOnInit = true;
+    //   console.log('init called');
+    //
+    //   this.drawSystemLoadAvg();
+    // }
 
   }
 
