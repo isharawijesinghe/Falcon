@@ -17,12 +17,11 @@ export class DashboardComponent implements OnInit {
   private viewData: any;
   private showKibanaDashboard:any;
   private chart:any;
-  private dataX :any;
-  private dataY :any;
-  private dataYtotal: any;
+  private ticks :any[] = [];
+
   private labels = [];
   private i = 0;
-  private isOnInit: boolean;
+  private isStartingPoint: boolean = true;
   // private sysMetricObjectDummy: any;
   // private viewDataDummy: any;
 
@@ -58,7 +57,6 @@ export class DashboardComponent implements OnInit {
     this.websocketConnectionService.cpuHistoryUpdated.subscribe( (value => {
       this.cpuHistory = value;
       if (this.cpuHistory != null) {
-        this.isOnInit = false;
         console.log('constuctor called');
 
         this.drawSystemLoadAvg();
@@ -101,48 +99,66 @@ export class DashboardComponent implements OnInit {
 
   drawSystemLoadAvg(){
     const dataPoint = {};
-    this.dataX = [];
-    this.dataY = [];
-    this.labels = [];
-    for (const node in this.cpuHistory) {
-      this.labels.push(node);
-      if(this.dataYtotal == undefined){
-        this.dataYtotal = [];
-        this.dataYtotal[node] = [];
-      }
-      this.dataYtotal[node].push(this.cpuHistory[node]);    // implement max case
-      this.dataX.push(this.i++);
-      this.dataY[node] =[];
-      dataPoint['cpu'] = this.cpuHistory[node];
+    // this.dataX = [];
+    // this.dataY = [];
+    // this.labels = [];
+    this.chart = [];
+    let data: any;
+    this.ticks.push(this.i++);
+    // for (const node in this.cpuHistory) {
+    for(const node in this.cpuHistory){
 
-      console.log(this.cpuHistory);
+      // this.labels.push(node);
+      // if(this.dataYtotal[node] == undefined){
+      //   this.dataYtotal = [];
+      //   this.dataYtotal[node] = [];
+      // }
+      // this.dataYtotal[node].push(this.cpuHistory[node]);    // implement max case
+      // this.dataX.push(this.i++);
+      // this.dataY[node] =[];
+      // dataPoint['cpu'] = this.cpuHistory[node];
+      //
+      // console.log(this.cpuHistory);
+      //
+      // this.dataY[node] = dataPoint['cpu'];
+      //
+      // if(this.dataYtotal[node].length < 2 ){
+      //   console.log('chart is drawn');
+      //   // this.chart = [];
+      //   if(this.chart==undefined){
+      //     // this.chart.destroy();
+      //     this.drawChart(node);
+      //   }
+      //
+      // }else{
+      //   this.addData(this.chart,this.dataX,this.dataY[node]);
+      // }
+      data = this.cpuHistory[node];
 
-      this.dataY[node] = dataPoint['cpu'];
-
-      if(this.dataYtotal[node].length < 2 || this.isOnInit){
-        console.log('chart is drawn');
-        // this.chart = [];
-        if(this.chart==undefined){
-          // this.chart.destroy();
-          this.drawChart(node);
-        }
-
+      if(this.isStartingPoint){
+        this.isStartingPoint = false;
+        console.log(this.cpuHistory[node]+' '+node+' starting point');
+        this.drawChart(node, data,this.ticks);
       }else{
-        this.addData(this.chart,this.dataX,this.dataY[node]);
+        console.log(this.cpuHistory[node]+' '+node+ ' rest');
+        // this.addData(this.chart,node, data)
       }
+
+
     }
 
   }
 
-  drawChart(node){
+  drawChart(node,data,ticks){
     let color:any;
-    color = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
+    // color = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
+    color = '#3e82c2'
     this.chart = new Chart('canvas', {
       type: 'line',
       data: {
-        // labels: this.dataX[node],
-        datasets: [{
-          label: this.labels,
+        labels: ticks,
+        datasets: [{    //implement dataset array and push when adding
+          label: node,
           fill: false,
           lineTension: 0.1,
           backgroundColor: color,
@@ -160,7 +176,7 @@ export class DashboardComponent implements OnInit {
           pointHoverBorderWidth: 2,
           pointRadius: 3,
           pointHitRadius: 6,
-          data: [] = [],
+          data: data,
         }]
       },
       options: {
