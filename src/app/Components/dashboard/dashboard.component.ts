@@ -10,18 +10,20 @@ import * as d3 from 'd3';
 })
 
 export class DashboardComponent implements OnInit {
-  private sysMetricObject: any;
-  private blockData: any;
-  private cpuHistory; any;
-  private tpsHeight: any;
-  private viewData: any;
-  private showKibanaDashboard:any;
-  private chart:any;
-  private ticks :any[] = [];
+  sysMetricObject: any;
+  blockData: any;
+  cpuHistory; any;
+  tpsHeight: any;
+  viewData: any;
+  showKibanaDashboard:any;
+  chart:any;
+  ticks :any[] = [];
+  dataset :any [] = [];
+  nodeListMap : Map<String,number> = new Map<String,number>();
 
-  private labels = [];
-  private i = 0;
-  private isStartingPoint: boolean = true;
+  labels = [];
+  i = 0;
+  isStartingPoint: boolean = true;
   // private sysMetricObjectDummy: any;
   // private viewDataDummy: any;
 
@@ -135,18 +137,52 @@ export class DashboardComponent implements OnInit {
       // }
       data = this.cpuHistory[node];
 
+
       if(this.isStartingPoint){
         this.isStartingPoint = false;
         console.log(this.cpuHistory[node]+' '+node+' starting point');
+        this.nodeListMap.set(node,this.nodeListMap.size+1);
+        this.createDataSet(data,node);
         this.drawChart(node, data,this.ticks);
       }else{
         console.log(this.cpuHistory[node]+' '+node+ ' rest');
-        // this.addData(this.chart,node, data)
+        if(!this.nodeListMap.has(node)){
+          this.nodeListMap.set(node,this.nodeListMap.size+1);
+          this.createDataSet(data,node);
+        }
+        this.addData(this.chart,this.ticks, data);
       }
 
 
     }
 
+  }
+
+  createDataSet(data,node){
+    let color:any;
+    color = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
+    let dataset = {
+      label: node,
+      fill: false,
+      lineTension: 0.1,
+      backgroundColor: color,
+      borderColor: color,
+      borderCapStyle: 'butt',
+      borderDash: [],
+      borderDashOffset: 0.0,
+      borderJoinStyle: 'miter',
+      pointBorderColor: color,
+      pointBackgroundColor: "#fff",
+      pointBorderWidth: 1,
+      pointHoverRadius: 5,
+      pointHoverBackgroundColor: color,
+      pointHoverBorderColor: "rgba(220,220,220,1)",
+      pointHoverBorderWidth: 2,
+      pointRadius: 3,
+      pointHitRadius: 6,
+      data: data,
+    };
+    this.dataset.push(dataset);
   }
 
   drawChart(node,data,ticks){
@@ -157,27 +193,30 @@ export class DashboardComponent implements OnInit {
       type: 'line',
       data: {
         labels: ticks,
-        datasets: [{    //implement dataset array and push when adding
-          label: node,
-          fill: false,
-          lineTension: 0.1,
-          backgroundColor: color,
-          borderColor: color,
-          borderCapStyle: 'butt',
-          borderDash: [],
-          borderDashOffset: 0.0,
-          borderJoinStyle: 'miter',
-          pointBorderColor: color,
-          pointBackgroundColor: "#fff",
-          pointBorderWidth: 1,
-          pointHoverRadius: 5,
-          pointHoverBackgroundColor: color,
-          pointHoverBorderColor: "rgba(220,220,220,1)",
-          pointHoverBorderWidth: 2,
-          pointRadius: 3,
-          pointHitRadius: 6,
-          data: data,
-        }]
+        datasets:
+        this.dataset
+
+        //   [{    //implement dataset array and push when adding
+        //   label: node,
+        //   fill: false,
+        //   lineTension: 0.1,
+        //   backgroundColor: color,
+        //   borderColor: color,
+        //   borderCapStyle: 'butt',
+        //   borderDash: [],
+        //   borderDashOffset: 0.0,
+        //   borderJoinStyle: 'miter',
+        //   pointBorderColor: color,
+        //   pointBackgroundColor: "#fff",
+        //   pointBorderWidth: 1,
+        //   pointHoverRadius: 5,
+        //   pointHoverBackgroundColor: color,
+        //   pointHoverBorderColor: "rgba(220,220,220,1)",
+        //   pointHoverBorderWidth: 2,
+        //   pointRadius: 3,
+        //   pointHitRadius: 6,
+        //   data: data,
+        // }]
       },
       options: {
         responsive: true,

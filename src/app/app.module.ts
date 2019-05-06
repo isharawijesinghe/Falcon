@@ -138,7 +138,7 @@ import {PopupService} from "./Services/login-popup-service.service";
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes,{onSameUrlNavigation: 'reload'}),
 
   ],
   providers: [RestConnectionService, WebSocketConnectionService,AuthGuard, PopupService],
