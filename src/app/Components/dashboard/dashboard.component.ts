@@ -104,7 +104,7 @@ export class DashboardComponent implements OnInit {
     // this.dataX = [];
     // this.dataY = [];
     // this.labels = [];
-    this.chart = [];
+    // this.chart = [];
     let data: any;
     this.ticks.push(this.i++);
     // for (const node in this.cpuHistory) {

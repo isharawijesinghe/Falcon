@@ -68,11 +68,6 @@ export class SessionPopupComponent implements OnInit {
       this.currentSessionData = data;
       console.log(this.currentSessionData);
 
-    },(err:any)=>{
-
-      console.log('error occured while subscribing session data..!');
-
-    },()=>{
 
 
       if(Object.keys(this.currentSessionData).length!=0){
@@ -128,6 +123,12 @@ export class SessionPopupComponent implements OnInit {
           maintainAspectRatio: false
         }
       });
+
+
+
+    },(err:any)=>{
+
+      console.log('error occured while subscribing session data..!');
 
     });
   }
