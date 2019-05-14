@@ -93,6 +93,10 @@ export class RestConnectionService {
     return this.http.get('http://localhost:8060/watchdogclient/slaconfigdefaulttime');
   }
 
+  getSlaServices(){
+    return this.http.get('http://localhost:8060/watchdogclient/slaconfigservice')
+  }
+
   // service for specific message
 
   // fetchSpecificMessages() {

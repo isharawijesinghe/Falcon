@@ -16,20 +16,82 @@
     </div>
 
     <div class="round-time">
-      <table id="round-time-table">
-        <tr>
-          <th>Message type</th>
-          <td *ngFor="let keys of roundTimeKeys">
-            {{keys}}
-          </td>
-        </tr>
-        <tr>
-         <th>Round Time</th>
-         <td *ngFor="let value of roundTimeVals">
-          {{value}}
-         </td>
-        </tr>
-      </table>
+
+      <!--<div class="mat-elevation-z8" id="mat-table-container">-->
+
+        <!--<mat-table [dataSource]="dataSource" matSort >-->
+          <!--<ng-container matColumnDef="serviceID">-->
+            <!--<mat-header-cell *matHeaderCellDef mat-sort-header>Service ID</mat-header-cell>-->
+            <!--<mat-cell *matCellDef="let row"> {{row.serviceID}}-->
+              <!--<editable (update)="updateField(index, 'serviceID')">-->
+                <!--<ng-template viewMode>-->
+                  <!--{{element.name}}-->
+                <!--</ng-template>-->
+                <!--<ng-template editMode>-->
+                  <!--<mat-form-field class="example-full-width">-->
+                    <!--<input matInput [formControl]="getControl(index, 'name')">-->
+                    <!--<mat-error *ngIf="getControl(index, 'name').hasError('required')">-->
+                      <!--Field is <strong>required</strong>-->
+                    <!--</mat-error>-->
+                  <!--</mat-form-field>-->
+                  <!--&lt;!&ndash; <input  [formControl]="getControl(index, 'name')" focusable editableOnEnter> &ndash;&gt;-->
+                <!--</ng-template>-->
+              <!--</editable>-->
+
+            <!--</mat-cell>-->
+          <!--</ng-container>-->
+          <!--<ng-container matColumnDef="serviceName">-->
+            <!--<mat-header-cell *matHeaderCellDef mat-sort-header>Service Name</mat-header-cell>-->
+            <!--<mat-cell *matCellDef="let row"> {{row.serviceName}} </mat-cell>-->
+          <!--</ng-container>-->
+          <!--<ng-container matColumnDef="roundTime">-->
+            <!--<mat-header-cell *matHeaderCellDef mat-sort-header>Round Time</mat-header-cell>-->
+            <!--<mat-cell *matCellDef="let row"> {{row.roundTime}} </mat-cell>-->
+          <!--</ng-container>-->
+
+          <!--<mat-header-row *matHeaderRowDef="displayedColumns;sticky:true;"></mat-header-row>-->
+          <!--<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>-->
+        <!--</mat-table>-->
+        <!--<mat-paginator [pageSizeOptions]="[8,20,30]"[pageSize]="8" showFirstLastButtons></mat-paginator>-->
+      <!--</div>-->
+
+      <div class="card">
+        <div class="card-body">
+          <div id="table" class="table-editable">
+            <div *ngIf= editEnabled ><h2 class="scale-up-top" id="status-banner">Edit Mode</h2></div>
+            <span class="table-add float-right mb-3 mr-2">
+              <button mat-raised-button class="btn-default table-btn" *ngIf=editEnabled (click)="add()">Add row</button>
+              <button mat-raised-button class="btn-success table-btn" (click)="toggleEdit()">{{editBtnText}}</button>
+            </span>
+            <table class="table table-bordered table-responsive-md table-striped text-center tables-scrollable">
+              <tr>
+                <th class="text-center">Service ID</th>
+                <th class="text-center">Service Name</th>
+                <th class="text-center">Round Time</th>
+                <th class="text-center" *ngIf=editEnabled></th>
+              </tr>
+              <tr *ngFor="let entity of slaconfigurationdata; let id = index">
+                <td>
+                  <span [contentEditable]=editEnabled (keyup)="changeValue(id, 'serviceID', $event); this.setSelectionRange(0, this.value.length)" (blur)="updateList(id, 'serviceID', $event)" >{{entity.serviceID}}</span>
+                </td>
+                <td>
+                  <span [contentEditable]=editEnabled (keyup)="changeValue(id, 'serviceName', $event); this.setSelectionRange(0, this.value.length)" (blur)="updateList(id, 'serviceName', $event)" >{{entity.serviceName}}</span>
+                </td>
+                <td>
+                  <span [contentEditable]=editEnabled (keyup)="changeValue(id, 'roundTime', $event); this.setSelectionRange(0, this.value.length)" (blur)="updateList(id, 'roundTime', $event)" >{{entity.roundTime}}</span>
+                </td>
+                <td *ngIf=editEnabled>
+                  <span class="table-remove">
+                    <button mat-raised-button class="btn-danger table-btn"  (click)="remove(id)">Remove</button>
+                  </span>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+
     </div>
   </div>
 </div>
