@@ -8,12 +8,6 @@
     </div>
   </div>
 
-  <div class="example-header" *ngIf="!isLoading">
-    <mat-form-field>
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-    </mat-form-field>
-  </div>
-
   <div class="mat-elevation-z8" id="table-sessions" *ngIf="!isLoading">
 
     <mat-table [dataSource]="dataSource" matSort id="session-content">
@@ -61,7 +55,24 @@
         <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.status}} </mat-cell>
       </ng-container>
 
+      <ng-container matColumnDef="header-client-channel">
+        <th mat-header-cell *matHeaderCellDef >
+          <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('clientChannel')" placeholder="Filter">
+          </mat-form-field>
+        </th>
+      </ng-container>
+
+      <ng-container matColumnDef="header-login-id">
+        <th mat-header-cell *matHeaderCellDef >
+          <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('loginId')" placeholder="Filter">
+          </mat-form-field>
+        </th>
+      </ng-container>
+
       <mat-header-row *matHeaderRowDef="displayedColumns;sticky:true;" id="header-row" ></mat-header-row>
+      <mat-header-row *matHeaderRowDef="['header-client-channel','header-login-id'];sticky:true;" id="header-filter-row" ></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
     <mat-paginator [pageSizeOptions]="[8,20,30]"[pageSize]="8" showFirstLastButtons></mat-paginator>

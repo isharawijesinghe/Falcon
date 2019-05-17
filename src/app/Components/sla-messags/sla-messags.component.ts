@@ -39,13 +39,16 @@ export class SlaMessagsComponent implements OnInit {
     this.restConnectionService.getSLAMessage().subscribe(data =>{
       this.SLAMessage = data;
 
-      const sessiondata: SLAMessage[] = [];
+      const slaMessages: SLAMessage[] = [];
       console.log( this.SLAMessage);
-      for(let sessionData of this.SLAMessage){
-        sessiondata.push(createNewSlaMessage(sessionData));
+      for(let slamessage of this.SLAMessage){
+        let date:any;
+        date = new Date(slamessage['date']);
+        slamessage['date'] = date.toString().slice(0,-21);
+        slaMessages.push(createNewSlaMessage(slamessage));
       }
       this.isLoading = false;
-      this.dataSource = new MatTableDataSource(sessiondata);
+      this.dataSource = new MatTableDataSource(slaMessages);
       // this.dataSource.paginator = this.paginator;
       // this.dataSource.sort = this.sort;
         setTimeout(() => this.dataSource.paginator = this.paginator);

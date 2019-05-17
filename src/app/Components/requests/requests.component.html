@@ -83,7 +83,7 @@
           <h3 id="history-title">Client History</h3>
           <div class="form-wrapper">
             <form class="col-md-12 form-inline" id="form-history">
-              Client ID: <input class="form-control display-inline" type="text"  name="routeHistoryClientID"  [(ngModel)]="routeHistoryClientID">
+              Client ID: <input class="form-control display-inline" type="text"  name="routeHistoryClientID"  value="{{firstClient}}" [(ngModel)]="routeHistoryClientID">
               <input type="submit" value="GET HISTORY" class="btn btn-primary" (click)= "getRoutesHistory()">
             </form>
           </div>

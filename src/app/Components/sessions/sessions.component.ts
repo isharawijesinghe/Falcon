@@ -91,11 +91,17 @@ export class SessionsComponent implements OnInit {
   //   this.hideViewAllButton = false;
   // }
 
-  applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
-    this.dataSource.filter = filterValue;
+
+  setupFilter(column: string) {
+    this.dataSource.filterPredicate = (data: SessionData, filter: string) => {
+      return data[column] == filter;
+    };
   }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
 
   //
   // errorMessageClose(){
@@ -111,13 +117,13 @@ export class SessionsComponent implements OnInit {
 }
 
 export interface SessionData {
-  clientChannel: string
-  clientIp: string;
-  startTime: string;
-  loginId: string;
-  upTime: string;
-  sessionId: string;
-  status: string;
+  clientChannel: String;
+  clientIp: String;
+  startTime: String;
+  loginId: String;
+  upTime: String;
+  sessionId: String;
+  status: String;
 }
 
 function createNewSessionData(sessionData: any):SessionData {

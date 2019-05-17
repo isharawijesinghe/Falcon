@@ -67,6 +67,23 @@
   justify-content: space-evenly;
 }
 
+.mat-column-header-client-channel{
+  flex: 0 0 5% ;
+  min-width: 120px ;
+  justify-content: space-evenly;
+  overflow: hidden;
+  border: none;
+}
+
+.mat-column-header-login-id{
+  margin-left: 290px;
+  flex: 0 0 5% ;
+  min-width: 80px ;
+  justify-content: space-evenly;
+  overflow: hidden;
+  border: none;
+}
+
 .mat-row{
   position: relative;
 }
@@ -125,6 +142,12 @@ a:hover{
 
 #header-row{
   z-index: 10!important;
+  border: none;
+  min-height: 40px;
+}
+
+#header-filter-row{
+  min-height: 40px;
 }
 
 #no-data-alert{

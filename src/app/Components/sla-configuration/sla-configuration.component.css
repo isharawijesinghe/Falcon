@@ -3,10 +3,8 @@
   padding-top: 30px;
   padding-bottom: 30px;
   padding-left: 50px;
+  padding-right: 50px;
   position: relative;
-  left: 20px;
-  width: 75%;
-  height: 539px;
 }
 
 .data-container{
@@ -17,11 +15,10 @@
 }
 
 .default-time{
+  display: -webkit-box;
   position: relative;
   float: left;
-  padding: 30px;
-  left: 25px;
-  max-height: 60px;
+  padding: 20px;
 }
 
 table, th, td {
@@ -52,6 +49,7 @@ ul {
 
 #bulk-container{
   max-height: 550px;
+  display: grid;
 }
 
 .mat-column-serviceID{
@@ -74,7 +72,7 @@ ul {
 .tables-scrollable {
   height: 400px;
   overflow: auto;
-  display: inline-block;
+  /*display: inline-block;*/
   border: none;
   padding: 0px;
 }

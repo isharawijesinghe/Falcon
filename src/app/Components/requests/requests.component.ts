@@ -24,6 +24,7 @@ export class RequestsComponent implements OnInit {
   dataSourceHistory: MatTableDataSource<routesHistory>;
   firstDataRowClient: any;
   isDataAvailable:boolean =true;
+  firstClient :any;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   // @ViewChild(MatPaginator) paginator2: MatPaginator;
@@ -113,6 +114,7 @@ export class RequestsComponent implements OnInit {
   getRoutesHistoryDefault(firstData:any){
     this.restConnectionService.getRoutesHistoryDetails(firstData).subscribe(data =>{
       this.routesHistory = data;
+      this.firstClient = this.routesHistory[0]['client'];
       const routeHistorydata: routesHistory[] = [];
       //this.dataSource = this.routes;
       for(let routeDataHistory of this.routesHistory){
