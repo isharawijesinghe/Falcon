@@ -61,6 +61,11 @@ import { SlaConfigurationComponent } from './Components/sla-configuration/sla-co
 import { SpecificMessagesComponent } from './Components/specific-messages/specific-messages.component';
 import { SessionPopupComponent } from './Components/session-popup/session-popup.component';
 import {PopupService} from "./Services/login-popup-service.service";
+import { EditableComponent } from './Components/sla-configuration/editable/editable.component';
+import { ViewModeDirective } from './Components/sla-configuration/editable/view-mode.directive';
+import { EditModeDirective } from './Components/sla-configuration/editable/edit-mode.directive';
+import { EditOnEnterDirective } from './Components/sla-configuration/editable/edit-on-enter.directive';
+import { DialogOverviewComponent } from './Components/sla-configuration/dialog-overview/dialog-overview.component';
 
 
 // import {CdkStepperModule} from '@angular/cdk/stepper';
@@ -88,6 +93,11 @@ import {PopupService} from "./Services/login-popup-service.service";
     SlaConfigurationComponent,
     SpecificMessagesComponent,
     SessionPopupComponent,
+    EditableComponent,
+    ViewModeDirective,
+    EditModeDirective,
+    EditOnEnterDirective,
+    DialogOverviewComponent,
     // CdkStepperModule,
     // CdkTableModule,
     // CdkTreeModule,
@@ -141,6 +151,7 @@ import {PopupService} from "./Services/login-popup-service.service";
     RouterModule.forRoot(routes,{onSameUrlNavigation: 'reload'}),
 
   ],
+  entryComponents: [DialogOverviewComponent],
   providers: [RestConnectionService, WebSocketConnectionService,AuthGuard, PopupService],
   bootstrap: [AppComponent]
 })

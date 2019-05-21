@@ -5,6 +5,7 @@
   padding-left: 50px;
   padding-right: 50px;
   position: relative;
+  display: -webkit-box;
 }
 
 .data-container{
@@ -52,6 +53,26 @@ ul {
   display: grid;
 }
 
+#mat-table-container{
+  width: 80%;
+}
+
+#btn-panel{
+  display: inline-grid;
+}
+
+.side-panel{
+  width: 20%;
+  padding-left: 4%;
+  padding-top: 2%;
+}
+
+.mat-column-select{
+  flex: 0 0 7% ;
+  min-width: 20px ;
+  justify-content: space-evenly;
+}
+
 .mat-column-serviceID{
   justify-content: space-evenly;
 }
@@ -63,7 +84,7 @@ ul {
 }
 
 .table-btn{
- margin: 5px;
+ margin: 20px;
 }
 
 #status-banner{

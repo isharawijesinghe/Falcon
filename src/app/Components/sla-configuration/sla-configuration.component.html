@@ -13,7 +13,6 @@
       <h2 *ngIf="isEnabled"> Enabled</h2>
       <h2 *ngIf="!isEnabled"> Disabled</h2>
       <h2 *ngIf="isEnabled">. Round time is {{defaultTime}}</h2>
-      <button mat-raised-button class="btn-danger table-btn"  (click)="submit()">Submit</button>
     </div>
 
     <div class="round-time">
@@ -22,14 +21,29 @@
 
         <mat-table [dataSource]="dataSource" matSort class="tables-scrollable" >
 
+          <ng-container *ngIf="editable"  matColumnDef="select">
+            <mat-header-cell *matHeaderCellDef>
+              <!--<mat-checkbox (change)="$event ? masterToggle() : null"-->
+              <!--[checked]="selection.hasValue() && isAllSelected()"-->
+              <!--[indeterminate]="selection.hasValue() && !isAllSelected()">-->
+              <!--</mat-checkbox>-->
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <mat-checkbox *ngIf="editable" (click)="$event.stopPropagation()"
+                            (change)="$event ? selection.toggle(row) : null"
+                            [checked]="selection.isSelected(row)">
+              </mat-checkbox>
+            </mat-cell>
+          </ng-container>
+
           <ng-container matColumnDef="serviceID">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Service ID</mat-header-cell>
-            <mat-cell *matCellDef="let row;let index = index">
+            <mat-cell  *matCellDef="let row;let index = index">
               <editable (update)="updateField(index, 'serviceID')">
                 <ng-template viewMode>
                   {{row.serviceID}}
                 </ng-template>
-                <ng-template editMode>
+                <ng-template *ngIf="editable" editMode>
                   <mat-form-field class="example-full-width">
                     <input matInput [formControl]="getControl(index, 'serviceID')">
                     <mat-error *ngIf="getControl(index, 'serviceID').hasError('required')">
@@ -49,7 +63,7 @@
                 <ng-template viewMode>
                   {{row.serviceName}}
                 </ng-template>
-                <ng-template editMode>
+                <ng-template *ngIf="editable" editMode>
                   <mat-form-field class="example-full-width">
                     <input matInput [formControl]="getControl(index, 'serviceName')">
                     <mat-error *ngIf="getControl(index, 'serviceName').hasError('required')">
@@ -69,7 +83,7 @@
                 <ng-template viewMode>
                   {{row.roundTime}}
                 </ng-template>
-                <ng-template editMode>
+                <ng-template *ngIf="editable" editMode>
                   <mat-form-field class="example-full-width">
                     <input matInput [formControl]="getControl(index, 'roundTime')">
                     <mat-error *ngIf="getControl(index, 'roundTime').hasError('required')">
@@ -88,6 +102,18 @@
         </mat-table>
         <!--<mat-paginator [pageSizeOptions]="[8,20,30]"[pageSize]="8" showFirstLastButtons></mat-paginator>-->
       </div>
+
+      <div class="side-panel">
+        <div id="btn-panel">
+          <button mat-raised-button class="btn-danger table-btn" (click)="toggleEdit()">{{editBtnText}}</button>
+          <button mat-raised-button class="btn-danger table-btn scale-up-top" *ngIf="editable" (click)="addRow()">Add row</button>
+          <button mat-raised-button class="btn-danger table-btn scale-up-top" *ngIf="editable" (click)="removeSelectedRows()">Remove selected</button>
+          <button mat-raised-button class="btn-danger table-btn scale-up-top" *ngIf="changesSaved"  (click)="submit()">Submit</button>
+          <button mat-raised-button class="btn-danger table-btn scale-up-top" *ngIf="editable"  (click)="cancel()">Cancel</button>
+        </div>
+      </div>
+
+
 
       <!--<div class="card">-->
         <!--<div class="card-body">-->

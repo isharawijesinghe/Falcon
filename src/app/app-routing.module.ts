@@ -29,7 +29,7 @@ export const routes: Routes = [
       { path: 'sessions', component: SessionsComponent,canActivate: [AuthGuard] },
       { path: 'sessionpopup', component: SessionPopupComponent,canActivate: [AuthGuard] },
       { path: 'specificmessages', component: SpecificMessagesComponent,canActivate: [AuthGuard] },
-      { path: 'slamesssages', component: SlaMessagsComponent ,canActivate: [AuthGuard]},
+      { path: 'slamessages', component: SlaMessagsComponent ,canActivate: [AuthGuard]},
       { path: 'slaconfiguration', component: SlaConfigurationComponent ,canActivate: [AuthGuard]},
       { path: 'clientcount', component: ClientCountGraphComponent ,canActivate: [AuthGuard]},
     ]},

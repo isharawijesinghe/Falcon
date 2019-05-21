@@ -7,12 +7,6 @@
   </div>
 </div>
 
-<div class="example-header" *ngIf="!isLoading">
-  <mat-form-field>
-    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-  </mat-form-field>
-</div>
-
 <div class="mat-elevation-z8" id="table-slamessage" *ngIf="!isLoading">
 
   <mat-table [dataSource]="dataSource" matSort>
@@ -83,7 +77,32 @@
       <mat-cell *matCellDef="let row"> {{row.tenantCode}} </mat-cell>
     </ng-container>
 
-    <mat-header-row *matHeaderRowDef="displayedColumns;sticky:true"></mat-header-row>
+    <ng-container matColumnDef="header-channel">
+      <th mat-header-cell *matHeaderCellDef >
+        <mat-form-field>
+          <input matInput (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('channel')" placeholder="Filter">
+        </mat-form-field>
+      </th>
+    </ng-container>
+
+    <ng-container matColumnDef="header-login-id">
+      <th mat-header-cell *matHeaderCellDef >
+        <mat-form-field>
+          <input matInput (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('login_id')" placeholder="Filter">
+        </mat-form-field>
+      </th>
+    </ng-container>
+
+    <ng-container matColumnDef="header-message-type">
+      <th mat-header-cell *matHeaderCellDef >
+        <mat-form-field>
+          <input matInput (keyup)="applyFilter($event.target.value)" (focus)="setupFilter('message_type')" placeholder="Filter">
+        </mat-form-field>
+      </th>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns;sticky:true" id="header-row"></mat-header-row>
+    <mat-header-row *matHeaderRowDef="['header-channel','header-login-id','header-message-type'];sticky:true;" id="header-filter-row" ></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 
   </mat-table>

@@ -63,7 +63,7 @@
             Client ID: <input class="form-control display-inline" type="text"  name="routeClientID" [(ngModel)]="routeClientID">
             <input type="submit" value="GET ROUTES" class="btn btn-primary"  (click)="getRoutes()">
           </form>
-          <div *ngIf="routesDetailHide" id="request-results" class="get-routes">
+          <div *ngIf="!routesDetailHide" id="request-results" class="get-routes">
             <div>Client ID: {{routes.client}}</div>
             <div>Endpoints: {{routes.endPoints}}</div>
             <ul>

@@ -81,3 +81,42 @@
   /*min-width: 65px ;*/
   justify-content: space-evenly;
 }
+
+.mat-column-header-channel{
+  flex: 0 0 5% ;
+  min-width: 65px ;
+  margin-left: 150px;
+  padding-left: 0px !important;
+  justify-content: space-evenly;
+  overflow: hidden;
+  border: none;
+}
+
+.mat-column-header-login-id{
+  flex: 0 0 5% ;
+  min-width: 65px ;
+  margin-left: 365px;
+  justify-content: space-evenly;
+  overflow: hidden;
+  border: none;
+}
+
+.mat-column-header-message-type{
+  flex: 0 0 5% ;
+  min-width: 65px ;
+  margin-left: 237px;
+  justify-content: space-evenly;
+  overflow: hidden;
+  border: none;
+}
+
+#header-row{
+  border: none;
+  min-height: 36px;
+  padding-top: 10px;
+}
+
+#header-filter-row{
+  top: 0px !important;
+  min-height: 40px;
+}

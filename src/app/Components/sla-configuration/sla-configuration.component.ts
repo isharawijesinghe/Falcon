@@ -1,9 +1,11 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {RestConnectionService} from "../../Services/rest-connection.service";
-import {MatPaginator, MatSort, MatTableDataSource} from "@angular/material";
+import {MatDialog, MatPaginator, MatSort} from "@angular/material";
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {BehaviorSubject} from "rxjs";
 import {HttpClient} from "@angular/common/http";
+import {DialogOverviewComponent} from "./dialog-overview/dialog-overview.component";
+import {SelectionModel} from "@angular/cdk/collections";
 
 @Component({
   selector: 'app-sla-configuration',
@@ -13,7 +15,7 @@ import {HttpClient} from "@angular/common/http";
 export class SlaConfigurationComponent implements OnInit {
 
 
-  constructor(private restConnectionService: RestConnectionService, private httpClient: HttpClient) { }
+  constructor(private restConnectionService: RestConnectionService, private httpClient: HttpClient,public dialog: MatDialog) { }
 
   roundTimeData :any;
   defaultTimeData:any;
@@ -27,17 +29,24 @@ export class SlaConfigurationComponent implements OnInit {
   serviceName:any;
   isMatched: boolean;
   slaconfigurationdata : SlaConfigurationData [] = [];
-  editField: string;
-  editEnabled:boolean = false;
+  changesSaved: boolean = false;
   editBtnText:string = "Enable Edit";
   controls: FormArray;
   dataSource:any;
+  editable:boolean= false;
+  newServiceID:any;
+  newServiceName:any;
+  newRoutingTime:any;
+  editEnabled:boolean = false;
+  sladata:any;
+  displayedColumns = ['serviceID','serviceName','roundTime'];
+
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  displayedColumns = ['serviceID','serviceName','roundTime'];
 
   slaConfigList: BehaviorSubject<SlaConfigurationData[]> ;
+  selection = new SelectionModel<SlaConfigurationData>(true, []);
 
   ngOnInit() {
 
@@ -77,10 +86,12 @@ export class SlaConfigurationComponent implements OnInit {
             break;
           }
 
-          this.slaconfigurationdata.push(createNewSlaConfigurationData(this.serviceID[servicedataid],this.serviceName[servicedataid],this.roundTime[servicedataid]));
+          this.slaconfigurationdata.push(createNewSlaConfigurationData(
+            this.serviceID[servicedataid],this.serviceName[servicedataid],this.roundTime[servicedataid]));
         }
 
         this.slaConfigList = new BehaviorSubject(this.slaconfigurationdata);
+        this.sladata = Object.assign(this.slaconfigurationdata);
 
         const toGroups = this.slaConfigList.value.map(entity => {
           return new FormGroup({
@@ -91,13 +102,7 @@ export class SlaConfigurationComponent implements OnInit {
         });
 
         this.controls = new FormArray(toGroups);
-
-
-        // console.log(slaconfigurationdata);
-        // for(let index in this.serviceIDs)
         this.dataSource = this.slaConfigList;
-        // this.dataSource.paginator = this.paginator;
-        // this.dataSource.sort = this.sort;
 
       },(err)=>{
         console.log('error:'+err);
@@ -112,39 +117,6 @@ export class SlaConfigurationComponent implements OnInit {
 
   }
 
-  // updateList(id: number, property: string, event: any) {
-  //   const editField = event.target.textContent;
-  //   this.slaconfigurationdata[id][property] = editField;
-  // }
-  //
-  // remove(id: any) {
-  //   // this.awaitingPersonList.push(this.personList[id]);
-  //   this.slaconfigurationdata.splice(id, 1);
-  // }
-  //
-  // add() {
-  //   // if (this.awaitingPersonList.length > 0) {
-  //   //   const person = this.awaitingPersonList[0];
-  //   //   this.personList.push(person);
-  //   //   this.awaitingPersonList.splice(0, 1);
-  //   // }
-  //   this.slaconfigurationdata.push(createNewSlaConfigurationData(".....",".....","....."));
-  //   console.log('adding to table');
-  // }
-  //
-  // changeValue(id: number, property: string, event: any) {
-  //   this.editField = event.target.textContent;
-  // }
-  //
-  // toggleEdit(){
-  //   this.editEnabled = !this.editEnabled;
-  //   if(this.editEnabled){
-  //     this.editBtnText = "Save Changes";
-  //   }else{
-  //     this.editBtnText = "Enable Edit";
-  //   }
-  //
-  // }
 
   updateField(index, field) {
     const control = this.getControl(index, field);
@@ -168,13 +140,66 @@ export class SlaConfigurationComponent implements OnInit {
     return this.controls.at(index).get(fieldName) as FormControl;
   }
 
+  toggleEdit(){
+    this.editable = !this.editable;
+
+    if(!this.editable){
+      this.editBtnText = "Enable Edit";
+      this.displayedColumns = ['serviceID','serviceName','roundTime'];
+      this.changesSaved = false;
+    }else{
+      this.editBtnText = "Save Changes";
+      this.displayedColumns = ['select','serviceID','serviceName','roundTime'];
+      this.changesSaved = true;
+    }
+  }
+
+  addRow(){
+    const dialogRef = this.dialog.open(DialogOverviewComponent, {
+      width: '300px',
+      data: {serviceID: this.newServiceID, serviceName: this.newServiceName, routingTime: this.newRoutingTime}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.slaconfigurationdata.push(createNewSlaConfigurationData(result['serviceID'],result['serviceName'],result['routingTime']));
+      this.slaConfigList = new BehaviorSubject(this.slaconfigurationdata);
+
+      const toGroups = this.slaConfigList.value.map(entity => {
+        return new FormGroup({
+          serviceID:  new FormControl(entity.serviceID, Validators.required),
+          serviceName: new FormControl(entity.serviceName, Validators.required),
+          roundTime: new FormControl(entity.roundTime, Validators.required),
+        },{updateOn: "blur"});
+      });
+
+      this.controls = new FormArray(toGroups);
+      this.dataSource = this.slaConfigList;
+      this.dataSource._updateChangeSubscription();
+    });
+  }
+
+  removeSelectedRows() {
+    if(this.selection.selected){
+      this.selection.selected.forEach(item => {
+        if(this.sladata){
+          let index: number = this.sladata.findIndex(d => d === item);
+          console.log(this.sladata.findIndex(d => d === item));
+          this.sladata.splice(index,1)
+          this.dataSource = new BehaviorSubject<SlaConfigurationData>(this.sladata);
+        }
+      });
+      this.selection = new SelectionModel<SlaConfigurationData>(true, []);
+    }
+  }
+
   submit(){
     let jsonDefaultTime:any;
     let roundTime:any;
     let serviceList: any;
     let dataBundle :any;
-    jsonDefaultTime = JSON.stringify(this.defaultTimeData);
-    // console.log(this.slaconfigurationdata);
+    this.editEnabled = false;
+    jsonDefaultTime = '{';
+    jsonDefaultTime = jsonDefaultTime.concat('\"enabled\" :'+'"'+this.isEnabled+'"  ,'+' \"defaultTime\" :'+this.defaultTime+'}');
 
     roundTime = '{';
     serviceList = '{';
@@ -199,13 +224,23 @@ export class SlaConfigurationComponent implements OnInit {
     // console.log((serviceList));
     console.log(JSON.parse(dataBundle));
 
-
+    this.changesSaved = !this.changesSaved;
 
     this.httpClient.post('http://localhost:8060/watchdogclient/slamapdata',JSON.parse(dataBundle)).subscribe((data)=>{
-      console.log('SLA Map data posted');
+      alert("Changes submitted to the server successfully..!");
     },(err)=>{
       console.log(err);
     });
+  }
+
+  enableEdit(){
+    this.toggleEdit();
+    this.editEnabled = true;
+  }
+
+  cancel(){
+    this.toggleEdit();
+    this.editEnabled = false;
   }
 
 }
@@ -216,16 +251,6 @@ export interface SlaConfigurationData{
   roundTime: string
 }
 
-// export interface RoundTimeData{
-//   serviceID: string,
-//   roundTime: string
-// }
-//
-// export interface ServiceData{
-//   serviceID: string,
-//   serviceName: string
-// }
-
 function createNewSlaConfigurationData(serviceID:any,serviceName:any,roundTimeVals:any):SlaConfigurationData{
   return{
     serviceID: serviceID,
@@ -233,18 +258,3 @@ function createNewSlaConfigurationData(serviceID:any,serviceName:any,roundTimeVa
     roundTime: roundTimeVals,
   }
 }
-
-// function createNewServiceData(serviceID:any,serviceName:any):ServiceData{
-//   return{
-//     serviceID: serviceID,
-//     serviceName: serviceName
-//   }
-// }
-//
-// function createNewRoundTimeData(serviceID:any, roundTime:any):RoundTimeData{
-//   return{
-//     serviceID: serviceID,
-//     roundTime: roundTime
-//   }
-// }
-

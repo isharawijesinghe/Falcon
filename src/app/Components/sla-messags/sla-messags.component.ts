@@ -58,13 +58,16 @@ export class SlaMessagsComponent implements OnInit {
 
   }
 
-  applyFilter(filterValue: string) {
-
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
-    this.dataSource.filter = filterValue;
-
+  setupFilter(column: string) {
+    this.dataSource.filterPredicate = (data: SLAMessage, filter: string) => {
+      return data[column] == filter;
+    };
   }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
 
 }
 
