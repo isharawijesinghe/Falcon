@@ -86,6 +86,10 @@ export class RestConnectionService {
     return this.http.get('http://localhost:8060/watchdogclient/messages/specific?sessionId='+sessionId);
   }
 
+  getSpecificResponses(uId){
+    return this.http.get('http://localhost:8060/watchdogclient/responses/specific?uid='+uId);
+  }
+
   getSlaMapRoundTime(){
     return this.http.get('http://localhost:8060/watchdogclient/slaconfigroundtime');
   }

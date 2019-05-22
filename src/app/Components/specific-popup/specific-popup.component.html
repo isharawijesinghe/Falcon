@@ -1,0 +1,67 @@
+<div class="popup" >
+  <div class="row">
+    <div class="popup-box slide-bottom shadow">
+      <!--<div class="popup-header">-->
+        <!--<h3>Request and Response</h3>-->
+      <!--</div>-->
+      <div class="popup-body">
+        <div class="request-body">
+          <div class="popup-header">
+            <h3>Request</h3>
+          </div>
+          <div class="table-container">
+            <div class="mat-elevation-z8">
+              <mat-table [dataSource]="dataSourceReq">
+                <ng-container matColumnDef="reqUniqueId">
+                  <mat-header-cell *matHeaderCellDef>Unique ID</mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{row.uniqueIDReq}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="reqTenantCode">
+                  <mat-header-cell *matHeaderCellDef>Tenant Code</mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{row.tenantCodeReq}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="reqMessage">
+                  <mat-header-cell *matHeaderCellDef>Message</mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{row.messageReq}} </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumnsReq;sticky:true" id="headings-request"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumnsReq;"></mat-row>
+              </mat-table>
+            </div>
+          </div>
+        </div>
+
+        <div class="response-body">
+          <div class="popup-header">
+            <h3>Response</h3>
+          </div>
+          <div *ngIf="!noData" class="table-container">
+            <div class="mat-elevation-z8">
+              <mat-table [dataSource]="dataSourceRes">
+                <ng-container matColumnDef="resUniqueId">
+                  <mat-header-cell *matHeaderCellDef>Unique ID</mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{row.uniqueIDRes}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="resTenantCode">
+                  <mat-header-cell *matHeaderCellDef>Tenant Code</mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{row.tenantCodeRes}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="resMessage">
+                  <mat-header-cell *matHeaderCellDef>Message</mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{row.messageRes}} </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumnsRes;sticky:true" id="headings-response"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumnsRes;"></mat-row>
+              </mat-table>
+            </div>
+          </div>
+          <h3 *ngIf="noData" id="no-data" class="slide-bottom">No Data Available</h3>
+        </div>
+      </div>
+
+      <button mat-raised-button class="btn btn-danger" id="popup-close-button" (click)="closePopup()" >Close</button>
+    </div>
+  </div>
+</div>
+
+

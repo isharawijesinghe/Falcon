@@ -66,6 +66,7 @@ import { ViewModeDirective } from './Components/sla-configuration/editable/view-
 import { EditModeDirective } from './Components/sla-configuration/editable/edit-mode.directive';
 import { EditOnEnterDirective } from './Components/sla-configuration/editable/edit-on-enter.directive';
 import { DialogOverviewComponent } from './Components/sla-configuration/dialog-overview/dialog-overview.component';
+import { SpecificPopupComponent } from './Components/specific-popup/specific-popup.component';
 
 
 // import {CdkStepperModule} from '@angular/cdk/stepper';
@@ -98,6 +99,7 @@ import { DialogOverviewComponent } from './Components/sla-configuration/dialog-o
     EditModeDirective,
     EditOnEnterDirective,
     DialogOverviewComponent,
+    SpecificPopupComponent,
     // CdkStepperModule,
     // CdkTableModule,
     // CdkTreeModule,
@@ -151,7 +153,7 @@ import { DialogOverviewComponent } from './Components/sla-configuration/dialog-o
     RouterModule.forRoot(routes,{onSameUrlNavigation: 'reload'}),
 
   ],
-  entryComponents: [DialogOverviewComponent],
+  entryComponents: [DialogOverviewComponent,SpecificPopupComponent],
   providers: [RestConnectionService, WebSocketConnectionService,AuthGuard, PopupService],
   bootstrap: [AppComponent]
 })

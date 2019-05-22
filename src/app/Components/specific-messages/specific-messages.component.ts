@@ -3,6 +3,7 @@ import {MatPaginator, MatSort, MatTableDataSource} from "@angular/material";
 import {SessionPopupComponent} from "../session-popup/session-popup.component";
 import {RestConnectionService} from "../../Services/rest-connection.service";
 import {PopupService} from "../../Services/login-popup-service.service";
+import {SpecificPopupComponent} from "../specific-popup/specific-popup.component";
 
 
 @Component({
@@ -28,6 +29,7 @@ export class SpecificMessagesComponent implements OnInit {
   showAllMessagesError:any;
   typeName:any[] = [];
   serviceNames:any;
+  clickedRowSpecific:any;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -62,6 +64,11 @@ export class SpecificMessagesComponent implements OnInit {
   }
 
   getMessageDetails(row:any){
+    this.clickedRowSpecific = row;
+    this.popup.dataService1 = this.clickedRowSpecific;
+    if(!this.popup.currentlyLoaded){
+      this.popup.modal(SpecificPopupComponent)
+    }
     // console.log(row.uniqueReqID);
     // this.isPoppingup = true;
     //yet to be completed
@@ -85,23 +92,18 @@ export class SpecificMessagesComponent implements OnInit {
 
         this.restConnectionService.getServices().subscribe((data)=>{
           this.serviceNames = data['services'];
-          console.log('type names here after');
           const specificMsgData : SpecificMsgData[] = [];
           for(let message in this.messages){
             for(let service in this.serviceNames){
-              // console.log(this.messages[message]['message_type']);
               if(this.messages[message]['message_type'] == this.serviceNames[service]['id']){
-                // this.typeName.push(this.serviceNames[service]['serviceName']);
                 this.typeName[message] = this.serviceNames[service]['serviceName'];
-                // console.log(this.typeName[message]);
               }
             }
-            console.log(this.typeName[message]);
           }
 
           let i=0;
           for(let specificmsgdata of this.messages){
-            specificMsgData.push(createSpecificMsgData(specificmsgdata,this.typeName[i++]));
+            specificMsgData.push(createSpecificMsgData(specificmsgdata,this.typeName[i++],this.tenantCode));
           }
           // console.log(specificMsgData.length);
           this.dataSource = new MatTableDataSource(specificMsgData);
@@ -129,16 +131,18 @@ export interface SpecificMsgData {
   timeStamp:string;
   responseTime:string;
   message:string;
+  tenantCode: string
 }
 
-function createSpecificMsgData(specificmsgdata: any,typeName:any):SpecificMsgData {
+function createSpecificMsgData(specificmsgdata: any,typeName:any,tenantCode:any):SpecificMsgData {
   return {
     messageType: specificmsgdata['message_type'],
     typeName:typeName,
     uniqueReqID: specificmsgdata['unique_request_id'],
     timeStamp: specificmsgdata['date'],
     responseTime: specificmsgdata['responseTime'],
-    message: specificmsgdata['message']
+    message: specificmsgdata['message'],
+    tenantCode: tenantCode
   };
 }
 function parseDates(date) {
