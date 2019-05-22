@@ -12,9 +12,15 @@
   justify-content: space-evenly;
 }
 
+.mat-column-typeName {
+  flex: 0 0 5% ;
+  min-width: 120px ;
+  justify-content: space-evenly;
+}
+
 .mat-column-uniqueReqID {
   flex: 0 0 5% ;
-  min-width: 280px ;
+  min-width: 200px ;
   justify-content: space-evenly;
 }
 
@@ -98,4 +104,16 @@ a:hover{
 
 mat-header-row{
   z-index: 10!important;
+}
+
+.tables-scrollable {
+  height: 400px;
+  overflow: auto;
+  /*display: inline-block;*/
+  border: none;
+  padding: 0px;
+}
+.tables-scrollable tbody {
+  width: 100%;
+  display: inline-table;
 }

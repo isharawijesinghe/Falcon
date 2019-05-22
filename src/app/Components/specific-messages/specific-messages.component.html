@@ -45,12 +45,16 @@
 
 
 <div class="mat-elevation-z8" id="specific-messages-table">
-  <mat-table [dataSource]="dataSource" matSort id="specific-messages-content">
+  <mat-table [dataSource]="dataSource" matSort id="specific-messages-content" class="tables-scrollable">
 
     <ng-container matColumnDef="messageType">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Message Type</mat-header-cell>
       <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.messageType}}
         <a fxFlexFill (click) ="getMessageDetails(row)"   class="mat-row-link"></a></mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="typeName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Service Name</mat-header-cell>
+      <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.typeName}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="uniqueReqID">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Unique Request ID</mat-header-cell>
@@ -72,7 +76,7 @@
     <mat-header-row *matHeaderRowDef="displayedColumns;sticky:true;" id="header-row" ></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
-  <mat-paginator *ngIf="!showAllMessagesWaiting" [pageSize]="6" showFirstLastButtons></mat-paginator>
+  <!--<mat-paginator *ngIf="!showAllMessagesWaiting" [pageSize]="6" showFirstLastButtons></mat-paginator>-->
 </div>
 
 

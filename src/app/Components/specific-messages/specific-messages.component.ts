@@ -14,7 +14,7 @@ export class SpecificMessagesComponent implements OnInit {
 
 
   dataSource:MatTableDataSource<SpecificMsgData>;
-  displayedColumns = ['messageType','uniqueReqID','timeStamp','responseTime','message'];
+  displayedColumns = ['messageType','typeName','uniqueReqID','timeStamp','responseTime','message'];
   channel :any;
   tenantCode:any;
   currentSessionData:any;
@@ -26,6 +26,8 @@ export class SpecificMessagesComponent implements OnInit {
   Sessiondata:any;
   showAllMessagesWaiting:any;
   showAllMessagesError:any;
+  typeName:any[] = [];
+  serviceNames:any;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -80,18 +82,39 @@ export class SpecificMessagesComponent implements OnInit {
           this.messages.push(message);
         });
 
+
+        this.restConnectionService.getServices().subscribe((data)=>{
+          this.serviceNames = data['services'];
+          console.log('type names here after');
+          const specificMsgData : SpecificMsgData[] = [];
+          for(let message in this.messages){
+            for(let service in this.serviceNames){
+              // console.log(this.messages[message]['message_type']);
+              if(this.messages[message]['message_type'] == this.serviceNames[service]['id']){
+                // this.typeName.push(this.serviceNames[service]['serviceName']);
+                this.typeName[message] = this.serviceNames[service]['serviceName'];
+                // console.log(this.typeName[message]);
+              }
+            }
+            console.log(this.typeName[message]);
+          }
+
+          let i=0;
+          for(let specificmsgdata of this.messages){
+            specificMsgData.push(createSpecificMsgData(specificmsgdata,this.typeName[i++]));
+          }
+          // console.log(specificMsgData.length);
+          this.dataSource = new MatTableDataSource(specificMsgData);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+          this.showAllMessagesWaiting = false;
+
+        });
+
+
       },(err:any)=>{
         console.log('error:'+err);
         this.showAllMessagesError = true;
-      },()=>{
-        const specificMsgData : SpecificMsgData[] = [];
-        for(let specificmsgdata of this.messages){
-          specificMsgData.push(createSpecificMsgData(specificmsgdata));
-        }
-        this.dataSource = new MatTableDataSource(specificMsgData);
-        setTimeout(() => this.dataSource.paginator = this.paginator);
-        setTimeout(() => this.dataSource.sort = this.sort);
-        this.showAllMessagesWaiting = false;
       });
     }
   }
@@ -101,15 +124,17 @@ export class SpecificMessagesComponent implements OnInit {
 
 export interface SpecificMsgData {
   messageType:string;
+  typeName: string;
   uniqueReqID:string;
   timeStamp:string;
   responseTime:string;
   message:string;
 }
 
-function createSpecificMsgData(specificmsgdata: any):SpecificMsgData {
+function createSpecificMsgData(specificmsgdata: any,typeName:any):SpecificMsgData {
   return {
     messageType: specificmsgdata['message_type'],
+    typeName:typeName,
     uniqueReqID: specificmsgdata['unique_request_id'],
     timeStamp: specificmsgdata['date'],
     responseTime: specificmsgdata['responseTime'],
