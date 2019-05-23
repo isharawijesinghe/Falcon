@@ -23,7 +23,7 @@ export class PopupService {
       .centerVertically();
 
     const overlayConfig: OverlayConfig = {
-      backdropClass: 'popover-backdrop',
+      backdropClass: 'cdk-overlay-dark-backdrop',
       panelClass: 'g-class',
       width:'100%',
       height:'100%',
