@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   message: string;
   returnUrl: string;
+  hashedpwd:any;
 
 
   constructor(private formBuilder: FormBuilder,private router: Router, public authService: AuthService, private popup:PopupService) {}
@@ -36,8 +37,11 @@ export class LoginComponent implements OnInit {
     // stop here if form is invalid
     if (this.loginForm.invalid) {
       return;
-    }
-    else{
+    }else{
+
+
+
+
       if(this.f.username.value == this.model.username && this.f.password.value == this.model.password){
         console.log("Logged in successful");
         //this.authService.authLogin(this.model);

@@ -77,7 +77,7 @@
           </ng-container>
 
           <ng-container matColumnDef="roundTime">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Round Time</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Round Trip Time</mat-header-cell>
             <mat-cell *matCellDef="let row;let index = index">
               <editable (update)="updateField(index, 'roundTime')">
                 <ng-template viewMode>

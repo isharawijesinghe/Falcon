@@ -85,7 +85,7 @@ export class SpecificMessagesComponent implements OnInit {
           this.tenantCode = messages[0]['tenantCode'];
         }
         Object.values(messages).forEach((message)=>{
-          message['date'] = parseDates(message['date']);
+          message['date'] = new Date(message['date']).toString().slice(0,-21);
           this.messages.push(message);
         });
 

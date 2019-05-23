@@ -65,7 +65,7 @@
       <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.timeStamp}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="responseTime">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Response Time</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Response Time (ms)</mat-header-cell>
       <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.responseTime}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="message">
