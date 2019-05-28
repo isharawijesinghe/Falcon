@@ -5,10 +5,21 @@
     <input matInput [(ngModel)]="dataDialog.serviceID">
   </mat-form-field>
   <p>Service Name</p>
-  <mat-form-field class="data-form">
-    <input matInput [(ngModel)]="dataDialog.serviceName">
+  <!--<mat-form-field class="data-form">-->
+  <!--<input matInput [(ngModel)]="dataDialog.serviceName">-->
+  <!--</mat-form-field>-->
+  <mat-form-field>
+    <mat-select placeholder="Search service by name" #singleSelect>
+      <mat-option>
+        <ngx-mat-select-search [formControl]="serviceFilterCtrl"></ngx-mat-select-search>
+      </mat-option>
+
+      <mat-option *ngFor="let service of filteredServices | async" [value]="service">
+        {{service.serviceName}}
+      </mat-option>
+    </mat-select>
   </mat-form-field>
-  <p>Round Trip Time</p>
+  <p>Round Trip Time (ms)</p>
   <mat-form-field class="data-form">
     <input matInput [(ngModel)]="dataDialog.routingTime">
   </mat-form-field>

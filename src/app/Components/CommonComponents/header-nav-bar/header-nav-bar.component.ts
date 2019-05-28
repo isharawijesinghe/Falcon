@@ -2,7 +2,6 @@ import {Component, Input, OnInit} from '@angular/core';
 import {AuthService} from "../../../Services/auth.service";
 import {Router} from "@angular/router";
 import {PopupService} from '../../../Services/login-popup-service.service';
-import {ComponentType} from "@angular/cdk/typings/portal";
 import {LoginComponent} from "../../login/login.component";
 
 
@@ -27,8 +26,8 @@ export class HeaderNavBarComponent implements OnInit {
   }
 
   getLogStatus():boolean{
-    this.id = localStorage.getItem('token');
-    if(localStorage.getItem('isLoggedIn')==="true"){
+    this.id = atob(sessionStorage.getItem('token')).split(":",2)[0];
+    if(sessionStorage.getItem('isLoggedIn')==="true"){
       this.isLogged = true;
     }else{
       this.isLogged = false;

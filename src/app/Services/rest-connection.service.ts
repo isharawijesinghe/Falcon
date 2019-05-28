@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import {Observable} from "rxjs";
+import {Router} from "@angular/router";
+import {PopupService} from "./login-popup-service.service";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +14,7 @@ export class RestConnectionService {
   message: any;
 
 
-  constructor(private  http: HttpClient) {  }
+  constructor(private  http: HttpClient, private router: Router, private popup : PopupService) {  }
 
   authenticate = true;
 
@@ -20,15 +22,23 @@ export class RestConnectionService {
   // changeMessage(message: any) {
   //   this.messageSource.next(message);
   // }
-  getUsers(userCredentials, authenticated) {
-
-    const url = 'http://127.0.0.1:8060/user';
-    const headers = new HttpHeaders(userCredentials ? {
-      authorization : 'Basic ' + btoa(userCredentials.userName + ':' + userCredentials.password)
-    } : {});
-
-    return this.http.get(url, {headers: headers})
-      .pipe(map(data => data));
+  login(username, password) {
+    let url = 'http://localhost:8060/login';
+    this.http.post<Observable<boolean>>(url, {
+      userName: username,
+      password: password
+    }).subscribe(isValid => {
+      if (isValid) {
+        sessionStorage.setItem('token', btoa(username + ':' + password));
+        sessionStorage.setItem('isLoggedIn',"true");
+        // console.log(atob(sessionStorage.getItem('token')).split(":",2)[0]);
+        this.router.navigate(['']);
+        // localStorage.setItem("isLoggedIn","true");
+        this.popup.close();
+      } else {
+        alert("Authentication failed.")
+      }
+    });
   }
 
   firstclick() { // test method

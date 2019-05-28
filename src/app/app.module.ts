@@ -67,6 +67,7 @@ import { EditModeDirective } from './Components/sla-configuration/editable/edit-
 import { EditOnEnterDirective } from './Components/sla-configuration/editable/edit-on-enter.directive';
 import { DialogOverviewComponent } from './Components/sla-configuration/dialog-overview/dialog-overview.component';
 import { SpecificPopupComponent } from './Components/specific-popup/specific-popup.component';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 
 // import {CdkStepperModule} from '@angular/cdk/stepper';
@@ -151,6 +152,7 @@ import { SpecificPopupComponent } from './Components/specific-popup/specific-pop
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot(routes,{onSameUrlNavigation: 'reload'}),
+     NgxMatSelectSearchModule
 
   ],
   entryComponents: [DialogOverviewComponent,SpecificPopupComponent],
