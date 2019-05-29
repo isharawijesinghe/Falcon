@@ -23,10 +23,10 @@ export class RestConnectionService {
   //   this.messageSource.next(message);
   // }
   login(username, password) {
-    let url = 'http://localhost:8060/login';
+    let url = 'http://localhost:8060/watchdogclient/login';
     this.http.post<Observable<boolean>>(url, {
-      userName: username,
-      password: password
+      "userName": username,
+      "password": password
     }).subscribe(isValid => {
       if (isValid) {
         sessionStorage.setItem('token', btoa(username + ':' + password));

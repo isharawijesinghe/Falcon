@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
 
       this.encpwd = "#dfnfalcon#12345";
       this.cryptopassword = CryptoJS.AES.encrypt(this.f.password.value.trim(),this.encpwd.trim()).toString();
-      // console.log(this.cryptopassword);
+      console.log(this.cryptopassword);
 
 
       // console.log(CryptoJS.AES.decrypt(this.cryptousername.trim(),this.encpwd.trim()).toString(CryptoJS.enc.Utf8));
