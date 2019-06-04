@@ -12,7 +12,7 @@ import * as d3 from 'd3';
 export class DashboardComponent implements OnInit {
   sysMetricObject: any;
   blockData: any;
-  cpuHistory; any;
+  cpuHistory: any;
   tpsHeight: any;
   viewData: any;
   showKibanaDashboard:any;
@@ -20,19 +20,18 @@ export class DashboardComponent implements OnInit {
   ticks :any[] = [];
   dataset :any [] = [];
   nodeListMap : Map<String,number> = new Map<String,number>();
+  nodeListMapCount: any = 0;
 
   labels = [];
   i = 0;
   isStartingPoint: boolean = true;
-  // private sysMetricObjectDummy: any;
-  // private viewDataDummy: any;
+  data : any [][]= [];
 
 
 
   constructor(private websocketConnectionService: WebSocketConnectionService) {
 
 
-    // this.tpsHeight = this.drawTps();
 
     this.websocketConnectionService.showKibanaUpdated.subscribe((value) => {
       this.showKibanaDashboard = value;
@@ -59,7 +58,7 @@ export class DashboardComponent implements OnInit {
     this.websocketConnectionService.cpuHistoryUpdated.subscribe( (value => {
       this.cpuHistory = value;
       if (this.cpuHistory != null) {
-        console.log('constuctor called');
+        // console.log('constuctor called');
 
         this.drawSystemLoadAvg();
       }
@@ -89,70 +88,37 @@ export class DashboardComponent implements OnInit {
       this.sysMetricObject = this.websocketConnectionService.sysMetric;
     }
 
-    // if(this.websocketConnectionService.cpuHistory != null ){
-    //   this.cpuHistory = this.websocketConnectionService.cpuHistory;
-    //   this.isOnInit = true;
-    //   console.log('init called');
-    //
-    //   this.drawSystemLoadAvg();
-    // }
-
   }
 
   drawSystemLoadAvg(){
-    const dataPoint = {};
-    // this.dataX = [];
-    // this.dataY = [];
-    // this.labels = [];
-    // this.chart = [];
-    let data: any;
+
     this.ticks.push(this.i++);
-    // for (const node in this.cpuHistory) {
     for(const node in this.cpuHistory){
 
-      // this.labels.push(node);
-      // if(this.dataYtotal[node] == undefined){
-      //   this.dataYtotal = [];
-      //   this.dataYtotal[node] = [];
-      // }
-      // this.dataYtotal[node].push(this.cpuHistory[node]);    // implement max case
-      // this.dataX.push(this.i++);
-      // this.dataY[node] =[];
-      // dataPoint['cpu'] = this.cpuHistory[node];
-      //
-      // console.log(this.cpuHistory);
-      //
-      // this.dataY[node] = dataPoint['cpu'];
-      //
-      // if(this.dataYtotal[node].length < 2 ){
-      //   console.log('chart is drawn');
-      //   // this.chart = [];
-      //   if(this.chart==undefined){
-      //     // this.chart.destroy();
-      //     this.drawChart(node);
-      //   }
-      //
-      // }else{
-      //   this.addData(this.chart,this.dataX,this.dataY[node]);
-      // }
-      data = this.cpuHistory[node];
-
-
       if(this.isStartingPoint){
+        this.data[0] = [];
+        this.data[0].push(this.cpuHistory[node]);
         this.isStartingPoint = false;
-        console.log(this.cpuHistory[node]+' '+node+' starting point');
+        console.log(this.cpuHistory[node]+' '+node);
         this.nodeListMap.set(node,this.nodeListMap.size+1);
-        this.createDataSet(data,node);
-        this.drawChart(node, data,this.ticks);
+        this.nodeListMapCount++;
+        this.createDataSet(this.data[this.nodeListMap.get(node)-1],node);
+        this.drawChart(node, this.data[this.nodeListMap.get(node)-1],this.ticks);
       }else{
-        console.log(this.cpuHistory[node]+' '+node+ ' rest');
+        console.log(this.cpuHistory[node]+' '+node);
+
         if(!this.nodeListMap.has(node)){
           this.nodeListMap.set(node,this.nodeListMap.size+1);
-          this.createDataSet(data,node);
-        }
-        this.addData(this.chart,this.ticks, data);
-      }
+          this.nodeListMapCount++;
+          this.data[this.nodeListMap.get(node)-1] = [];
+          this.data[this.nodeListMap.get(node)-1].push(this.cpuHistory[node]);
 
+          this.createDataSet(this.data[this.nodeListMap.get(node)-1],node);
+        }else{
+          this.data[this.nodeListMap.get(node)-1].push(this.cpuHistory[node]);
+        }
+        this.addData(this.chart,this.ticks, this.data[this.nodeListMap.get(node)-1]);
+      }
 
     }
 
@@ -172,23 +138,21 @@ export class DashboardComponent implements OnInit {
       borderDashOffset: 0.0,
       borderJoinStyle: 'miter',
       pointBorderColor: color,
-      pointBackgroundColor: "#fff",
+      pointBackgroundColor: color,
       pointBorderWidth: 1,
       pointHoverRadius: 5,
       pointHoverBackgroundColor: color,
       pointHoverBorderColor: "rgba(220,220,220,1)",
       pointHoverBorderWidth: 2,
-      pointRadius: 3,
-      pointHitRadius: 6,
+      pointRadius: 1,
+      pointHitRadius: 3,
       data: data,
     };
     this.dataset.push(dataset);
   }
 
   drawChart(node,data,ticks){
-    let color:any;
-    // color = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
-    color = '#3e82c2'
+
     this.chart = new Chart('canvas', {
       type: 'line',
       data: {
@@ -196,27 +160,6 @@ export class DashboardComponent implements OnInit {
         datasets:
         this.dataset
 
-        //   [{    //implement dataset array and push when adding
-        //   label: node,
-        //   fill: false,
-        //   lineTension: 0.1,
-        //   backgroundColor: color,
-        //   borderColor: color,
-        //   borderCapStyle: 'butt',
-        //   borderDash: [],
-        //   borderDashOffset: 0.0,
-        //   borderJoinStyle: 'miter',
-        //   pointBorderColor: color,
-        //   pointBackgroundColor: "#fff",
-        //   pointBorderWidth: 1,
-        //   pointHoverRadius: 5,
-        //   pointHoverBackgroundColor: color,
-        //   pointHoverBorderColor: "rgba(220,220,220,1)",
-        //   pointHoverBorderWidth: 2,
-        //   pointRadius: 3,
-        //   pointHitRadius: 6,
-        //   data: data,
-        // }]
       },
       options: {
         responsive: true,
@@ -236,7 +179,7 @@ export class DashboardComponent implements OnInit {
             },
             ticks: {
               fontColor: "white",
-              fontSize: 9,
+              fontSize: 9
             }
           }],
           yAxes: [{
@@ -256,11 +199,9 @@ export class DashboardComponent implements OnInit {
   }
 
   addData(chart,label, data) {
-    chart.data.labels.push(label);
+    chart.data.labels = label;
     // chart.options.scales.xAxes.ticks.max = maxX;
-    chart.data.datasets.forEach((dataset) => {
-      dataset.data.push(data);
-    });
+    chart.data.datasets.data = data;
     chart.update();
   }
 
